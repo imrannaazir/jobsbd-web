@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Card,
   CardBody,
@@ -8,7 +10,7 @@ import {
   Link,
 } from "@nextui-org/react";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <div className="flex items-center justify-center h-screen">
       <Card className="max-w-[400px]">
