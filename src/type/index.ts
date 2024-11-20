@@ -1,6 +1,8 @@
-import { ReactNode } from "react";
-
-export type TContainerProps = {
-  children: ReactNode;
-  className?: string;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export type TFloatingLabelInput = {
+  label: string;
+  type?: string;
+  props?: {
+    [key: string]: any;
+  };
 };
