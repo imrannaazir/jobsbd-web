@@ -13,6 +13,7 @@ export default {
     extend: {
       colors: {
         background: "var(--background)",
+        primary: "#0079c1",
         foreground: "var(--foreground)",
       },
     },
