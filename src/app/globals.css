@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .bg-candidate-background {
+    background-image: url("../assets/candidateBackground.png");
+    @apply h-[350px] w-full;
+  }
+}
+
+/* rewriting react number css */
+
+.react-international-phone-input, .react-international-phone-country-selector-button{
+  padding: 27px 20px !important;
+  width: 100%;
+}
+
+.react-international-phone-country-selector-button{
+background: #dbdbdb !important;
+}
