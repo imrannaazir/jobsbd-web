@@ -56,7 +56,7 @@ const CandidateRegisterPage = () => {
         </form>
         <p className="font-semibold text-center mt-20 pb-10">
           Already have an account?
-          <Link href="/login" className="text-primary">
+          <Link href="/login" className="text-primary ml-1">
             Login In
           </Link>
         </p>
