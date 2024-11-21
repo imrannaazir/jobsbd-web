@@ -2,7 +2,6 @@
 
 /* eslint-disable react/no-unescaped-entities */
 
-import FloatingLabelInput from "@/components/ui/CustomInput";
 import EmployeeAuthContainer from "@/components/ui/EmployeeAuthContainer";
 import EmployeeAuthInput from "@/components/ui/EmployeeAuthInput";
 import ORDivider from "@/components/ui/ORDivider";
@@ -72,7 +71,7 @@ const EmployeeRegister = () => {
 
         <p className="font-semibold text-center mt-8 pb-10">
           Already have an account?
-          <Link href="/login" className="text-primary ml-1">
+          <Link href="/employee-login" className="text-primary ml-1">
             Login In
           </Link>
         </p>
