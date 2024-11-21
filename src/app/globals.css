@@ -7,6 +7,10 @@
     background-image: url("../assets/candidateBackground.png");
     @apply h-[350px] w-full;
   }
+  .bg-employee-background{
+    background-image: url("../assets/employeeBackground.png");
+    @apply h-[50vh] w-full;
+  }
 }
 
 /* rewriting react number css */

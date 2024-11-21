@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export type TFloatingLabelInput = {
+export type TInput = {
   label: string;
   type?: string;
   props?: {
     [key: string]: any;
   } ;
+  placeholder?:string
 };
