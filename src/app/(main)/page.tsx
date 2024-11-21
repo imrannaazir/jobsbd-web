@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import MainNavbar from "@/components/main/Navbar";
+import PostJobSection from "@/components/main/home/post-job-section";
 
 export default function HomePage() {
   return (
     <>
-      <MainNavbar/>
+      <PostJobSection />
     </>
   );
 }

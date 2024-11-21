@@ -1,7 +1,7 @@
 import { MenuManager } from "@/type";
 import Link from "next/link";
 import { BiX } from "react-icons/bi";
-import logo from "../../../assets/main/logo-transparent.png";
+import logo from "@/assets/main/logo-transparent.png";
 import Image from "next/image";
 
 const MobileNavbar = ({ toggleMenu }: MenuManager) => {

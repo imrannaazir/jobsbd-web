@@ -5,9 +5,9 @@ import Image from "next/image";
 import Container from "./Container";
 import { BiMenu } from "react-icons/bi";
 import { useState } from "react";
-import logo from "../../assets/main/logo-transparent.png";
+import logo from "@/assets/main/logo-transparent.png";
 import { usePathname } from "next/navigation";
-import MobileNavbar from "./home/MobileNavbar";
+import MobileNavbar from "./MobileNavbar";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,7 +17,7 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   return (
-    <header className="fixed w-full border-b-2 h-20 lg:h-28 flex justify-center items-center">
+    <header className="fixed top-0 w-full border-b-2 h-20 lg:h-28 flex justify-center items-center z-50 bg-white">
       <Container>
         <div className="flex items-center justify-between py-2">
           <div className="inline-flex items-center space-x-2">
@@ -82,7 +82,7 @@ const Navbar = () => {
               <li>
                 <Link
                   href="/contact-us"
-                  className="nav-link bg-[#155EAD] text-white"
+                  className="nav-link bg-[#155EAD] text-white hover:bg-primary"
                 >
                   Register
                 </Link>

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { TContainerProps } from "@/type";
+import { TContainerProps } from '@/type';
 
 const Container = ({ children, className }: TContainerProps) => {
   return (
