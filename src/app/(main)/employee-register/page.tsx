@@ -9,7 +9,7 @@ import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
 import SocialLogin from "@/components/ui/SocialLogin";
 import { Button, Checkbox } from "@nextui-org/react";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 const EmployeeRegister = () => {
   const [phone, setPhone] = useState("");
   return (

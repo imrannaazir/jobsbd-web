@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer base {
+    .nav-link{
+        @apply text-[#155EAD] px-5 py-3 rounded font-semibold;
+    }
+    .nav-not-active{
+        @apply hover:bg-[#DCEFFF] text-[#424447];
+    }
+}
+
 @layer components {
   .bg-candidate-background {
     background-image: url("../assets/auth/candidateBackground.png");
