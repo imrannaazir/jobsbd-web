@@ -1,14 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import Container from "../Container";
 import Image from "next/image";
-import {
-  FaAngleLeft,
-  FaAngleRight,
-  FaMapMarkerAlt,
-} from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { FaAngleLeft, FaAngleRight, FaMapMarkerAlt } from "react-icons/fa";
 import { LiaStopwatchSolid } from "react-icons/lia";
+import Container from "../Container";
 
 const array = [
   {
@@ -39,26 +35,33 @@ const array = [
 
 const ThisMonthJobs = () => {
   const [currentSlider, setCurrentSlider] = useState(0);
-  // The slider images array
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth <= 768);
+    };
+
+    // Check on initial render
+    checkScreenSize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", checkScreenSize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
   const prevSlider = () =>
     setCurrentSlider((currentSlider) =>
       currentSlider === 0 ? array.length - 2 : currentSlider - 1
     );
+
   const nextSlider = () =>
     setCurrentSlider((currentSlider) =>
       currentSlider === array.length - 4 ? 0 : currentSlider + 1
     );
 
-  // useEffect(() => {
-  //     const intervalId = setInterval(() => {
-  //         nextSlider();
-  //     }, 3000);
-  //     return () => {
-  //         clearInterval(intervalId);
-  //     };
-  // }, [currentSlider]);
-
-  const isSmallScreen = window.innerWidth <= 768;
   return (
     <section className="py-10">
       <Container>
@@ -126,7 +129,6 @@ const ThisMonthJobs = () => {
                         <FaMapMarkerAlt className="inline-block mr-1 text-blue-500" />
                         Dhaka South City Corporat, Dhaka
                       </p>
-                      
                     </div>
 
                     {/* Buttons */}

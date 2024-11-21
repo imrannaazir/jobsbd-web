@@ -1,68 +1,59 @@
 "use client";
 
-import { useState } from "react";
-import Container from "../Container";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { LiaStopwatchSolid } from "react-icons/lia";
+import Container from "../Container";
 
 const array = [
-  {
-    name: "John Doe",
-  },
-  {
-    name: "Jane Doe",
-  },
-  {
-    name: "Shiyam Sarker",
-  },
-  {
-    name: "Bob Smith",
-  },
-  {
-    name: "Eva Williams",
-  },
-  {
-    name: "Chris Brown",
-  },
-  {
-    name: "Olivia Davis",
-  },
-  {
-    name: "Liam Wilson",
-  },
+  { name: "John Doe" },
+  { name: "Jane Doe" },
+  { name: "Shiyam Sarker" },
+  { name: "Bob Smith" },
+  { name: "Eva Williams" },
+  { name: "Chris Brown" },
+  { name: "Olivia Davis" },
+  { name: "Liam Wilson" },
 ];
 
 const ExpireSoonJobs = () => {
   const [currentSlider, setCurrentSlider] = useState(0);
-  // The slider images array
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth <= 768);
+    };
+
+    // Check on initial render
+    checkScreenSize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", checkScreenSize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
   const prevSlider = () =>
     setCurrentSlider((currentSlider) =>
       currentSlider === 0 ? array.length - 2 : currentSlider - 1
     );
+
   const nextSlider = () =>
     setCurrentSlider((currentSlider) =>
       currentSlider === array.length - 4 ? 0 : currentSlider + 1
     );
 
-  // useEffect(() => {
-  //     const intervalId = setInterval(() => {
-  //         nextSlider();
-  //     }, 3000);
-  //     return () => {
-  //         clearInterval(intervalId);
-  //     };
-  // }, [currentSlider]);
-
-  const isSmallScreen = window.innerWidth <= 768;
   return (
     <section className="py-10">
       <Container>
         {/* title section */}
         <div className="flex flex-wrap justify-between items-center gap-4">
           <h2 className="text-2xl text-center lg:text-left lg:text-3xl font-semibold w-full lg:w-auto">
-          Expire Soon Jobs 
-          <span className="text-red-600"> (651)</span>
+            Expire Soon Jobs
+            <span className="text-red-600"> (651)</span>
           </h2>
           <button className="hidden lg:block px-5 py-2 text-base font-semibold rounded border text-primary border-primary hover:bg-[#DCEFFF]">
             EXPLORE ALL
@@ -136,7 +127,8 @@ const ExpireSoonJobs = () => {
                           <LiaStopwatchSolid className="size-5" />
                         </span>
                         <p className="text-gray-600 text-sm font-semibold">
-                          Deadline: Dec 31st, 24  <span className="text-red-600">(3 days left)</span>
+                          Deadline: Dec 31st, 24{" "}
+                          <span className="text-red-600">(3 days left)</span>
                         </p>
                       </div>
                       <button className="nav-link bg-[#155EAD] text-white hover:bg-primary py-2 cursor-pointer text-sm">

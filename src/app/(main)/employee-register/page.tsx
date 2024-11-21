@@ -2,7 +2,6 @@
 
 /* eslint-disable react/no-unescaped-entities */
 
-import FloatingLabelInput from "@/components/ui/CustomInput";
 import EmployeeAuthContainer from "@/components/ui/EmployeeAuthContainer";
 import EmployeeAuthInput from "@/components/ui/EmployeeAuthInput";
 import ORDivider from "@/components/ui/ORDivider";
@@ -10,7 +9,7 @@ import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
 import SocialLogin from "@/components/ui/SocialLogin";
 import { Button, Checkbox } from "@nextui-org/react";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 const EmployeeRegister = () => {
   const [phone, setPhone] = useState("");
   return (

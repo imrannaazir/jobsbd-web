@@ -7,6 +7,7 @@ export type TInput = {
   props?: {
     [key: string]: any;
   };
+  placeholder?: string;
 };
 
 export type TContainerProps = {

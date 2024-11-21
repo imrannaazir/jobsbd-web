@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import Container from "../Container";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { LiaStopwatchSolid } from "react-icons/lia";
+import Container from "../Container";
 
 const array = [
   {
@@ -35,20 +35,33 @@ const array = [
 
 const LiveJobs = () => {
   const [currentSlider, setCurrentSlider] = useState(0);
-    // The slider images array
-    const prevSlider = () => setCurrentSlider((currentSlider) => (currentSlider === 0 ? array.length - 2 : currentSlider - 1));
-    const nextSlider = () => setCurrentSlider((currentSlider) => (currentSlider === array.length - 4 ? 0 : currentSlider + 1));
-    
-    // useEffect(() => {
-    //     const intervalId = setInterval(() => {
-    //         nextSlider();
-    //     }, 3000);
-    //     return () => {
-    //         clearInterval(intervalId);
-    //     };
-    // }, [currentSlider]);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-    const isSmallScreen = window.innerWidth <= 768;
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth <= 768);
+    };
+
+    // Check on initial render
+    checkScreenSize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", checkScreenSize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  const prevSlider = () =>
+    setCurrentSlider((currentSlider) =>
+      currentSlider === 0 ? array.length - 2 : currentSlider - 1
+    );
+
+  const nextSlider = () =>
+    setCurrentSlider((currentSlider) =>
+      currentSlider === array.length - 4 ? 0 : currentSlider + 1
+    );
+
   return (
     <section className="py-10">
       <Container>
@@ -101,12 +114,14 @@ const LiveJobs = () => {
                     <div className="flex justify-between items-center">
                       <div>
                         <h3 className="text-lg font-semibold text-primary">
-                        Senior Officer (International Business Development)
+                          Senior Officer (International Business Development)
                         </h3>
                         <p className="text-gray-600 my-3 font-semibold">
                           Pilot Tours & Travels Ltd
                         </p>
-                        <p className="text-gray-600 font-semibold">Salary: Negotiable</p>
+                        <p className="text-gray-600 font-semibold">
+                          Salary: Negotiable
+                        </p>
                       </div>
                       <Image
                         src="https://atbjobs.s3.ap-southeast-1.amazonaws.com/employer/profile_photo/blob_1731916855."
@@ -124,7 +139,7 @@ const LiveJobs = () => {
                     <div className="flex justify-between items-center">
                       <div className="flex items-center gap-2">
                         <span className="text-blue-600 bg-[#E9F5FF] p-2 rounded-full flex items-center justify-center">
-                        <LiaStopwatchSolid className="size-5" />
+                          <LiaStopwatchSolid className="size-5" />
                         </span>
                         <p className="text-gray-600 text-sm font-semibold">
                           Deadline: Dec 31st, 24
@@ -142,7 +157,7 @@ const LiveJobs = () => {
         </div>
 
         <div className="flex items-center justify-center my-5">
-        <button className="lg:hidden px-5 py-2 text-base font-semibold rounded border text-primary border-primary hover:bg-[#DCEFFF]">
+          <button className="lg:hidden px-5 py-2 text-base font-semibold rounded border text-primary border-primary hover:bg-[#DCEFFF]">
             EXPLORE ALL
           </button>
         </div>
