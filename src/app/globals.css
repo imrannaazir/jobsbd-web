@@ -10,6 +10,12 @@
     .nav-not-active{
         @apply hover:bg-[#DCEFFF] text-[#424447];
     }
+    .footer-link{
+      @apply transition-colors font-semibold duration-300 hover:text-primary text-lg;
+    }
+    .footer-title{
+      @apply font-bold text-primary text-lg md:text-xl uppercase;
+    }
 }
 
 @layer components {
