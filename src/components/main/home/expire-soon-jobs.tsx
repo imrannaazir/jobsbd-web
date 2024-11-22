@@ -15,6 +15,14 @@ const array = [
   { name: "Chris Brown" },
   { name: "Olivia Davis" },
   { name: "Liam Wilson" },
+  { name: "John Doe" },
+  { name: "Jane Doe" },
+  { name: "Shiyam Sarker" },
+  { name: "Bob Smith" },
+  { name: "Eva Williams" },
+  { name: "Chris Brown" },
+  { name: "Olivia Davis" },
+  { name: "Liam Wilson" },
 ];
 
 const ExpireSoonJobs = () => {

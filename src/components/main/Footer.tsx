@@ -19,10 +19,10 @@ const Footer = () => {
               <p className="footer-title">For Job Seekers</p>
 
               <div className="flex flex-col items-start mt-5 space-y-2 text-white">
-                <Link href="#" className="footer-link">
+                <Link href="/candidate-register" className="footer-link">
                   Register as Candidate
                 </Link>
-                <Link href="#" className="footer-link">
+                <Link href="/login" className="footer-link">
                   Login
                 </Link>
                 <Link href="#" className="footer-link">
@@ -38,10 +38,10 @@ const Footer = () => {
                 <Link href="#" className="footer-link">
                   Post a Job
                 </Link>
-                <Link href="#" className="footer-link">
+                <Link href="/employee-register" className="footer-link">
                   Register
                 </Link>
-                <Link href="#" className="footer-link">
+                <Link href="/employee-login" className="footer-link">
                   Recruiter Login
                 </Link>
               </div>
@@ -52,7 +52,7 @@ const Footer = () => {
 
               <div className="flex flex-col items-start mt-5 space-y-2 text-white">
                 <Link href="#" className="footer-link">
-                  About atB Jobs
+                  About JobsBD
                 </Link>
                 <Link href="/contact-us" className="footer-link">
                   Get Support

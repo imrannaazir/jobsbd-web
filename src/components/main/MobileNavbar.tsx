@@ -15,12 +15,7 @@ const MobileNavbar = ({ toggleMenu }: MenuManager) => {
           <div className="flex items-center justify-between">
             {/* Logo Section */}
             <div className="inline-flex items-center space-x-2">
-              <Image
-                src={logo}
-                width={100}
-                height={100}
-                alt="logo"
-              />
+              <Image src={logo} width={100} height={100} alt="logo" />
             </div>
             {/* Close Button */}
             <div className="-mr-2">
@@ -67,18 +62,24 @@ const MobileNavbar = ({ toggleMenu }: MenuManager) => {
             <hr className="my-2 border-gray-300" />
 
             {/* Employer Section */}
-            <button className="py-2 px-4 font-semibold text-sm bg-gray-200 rounded-md hover:bg-gray-300">
-              FOR EMPLOYERS
-            </button>
+            <Link href="/employee-login">
+              <button className="py-2 px-4 font-semibold text-sm bg-gray-200 rounded-md hover:bg-gray-300">
+                FOR EMPLOYERS
+              </button>
+            </Link>
 
             {/* Login & Register Buttons */}
             <div className="flex flex-col justify-between gap-2 mt-2">
-              <button className="w-full py-2 px-4 border rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">
-                LOGIN
-              </button>
-              <button className="w-full py-2 px-4 bg-primary text-white rounded-md text-sm font-semibold hover:bg-blue-600">
-                REGISTER
-              </button>
+              <Link href="/login">
+                <button className="w-full py-2 px-4 border rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">
+                  LOGIN
+                </button>
+              </Link>
+              <Link href="/candidate-register">
+                <button className="w-full py-2 px-4 bg-primary text-white rounded-md text-sm font-semibold hover:bg-blue-600">
+                  REGISTER
+                </button>
+              </Link>
             </div>
           </nav>
         </div>

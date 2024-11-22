@@ -10,7 +10,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "JobsBD",
+  title: "JobsBD - Redefine Recuitment.",
   description: "JobsBd is an online source for job opportunities.",
 };
 

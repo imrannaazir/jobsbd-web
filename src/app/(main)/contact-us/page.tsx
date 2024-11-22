@@ -1,4 +1,4 @@
-import contactHeroImg from "@/assets/contact-us-herro-bg.jpg";
+import contactHeroImg from "@/assets/contact-us-herro-bg.png";
 import waveImg from "@/assets/wave.png";
 import ContactUs from "@/components/ui/ContactUs";
 import SendUsMessage from "@/components/ui/SendUsMessage";
