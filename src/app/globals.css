@@ -14,11 +14,11 @@
 
 @layer components {
   .bg-candidate-background {
-    background-image: url("../assets/candidateBackground.png");
+    background-image: url("../assets/auth/candidateBackground.png");
     @apply h-[350px] w-full;
   }
   .bg-employee-background{
-    background-image: url("../assets/employeeBackground.png");
+    background-image: url("../assets/auth/employeeBackground.png");
     @apply h-[50vh] w-full;
   }
 }
