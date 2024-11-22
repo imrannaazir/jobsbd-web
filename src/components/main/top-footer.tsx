@@ -2,7 +2,7 @@ import Container from "./Container";
 
 const TopFooter = () => {
   return (
-    <section className="bg-[#1F2131] py-10">
+    <section className="bg-[#1F2131] py-14">
       <Container>
         <div className="flex flex-col md:flex-row justify-between items-center gap-5">
           <div className="text-white w-full">

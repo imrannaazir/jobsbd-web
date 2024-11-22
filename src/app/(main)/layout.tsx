@@ -5,7 +5,7 @@ import Footer from "@/components/main/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "JobsBD",
+  title: "JobsBD - Redefine Recuitment.",
   description: "JobsBd is an online source for job opportunities.",
 };
 
