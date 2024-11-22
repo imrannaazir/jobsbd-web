@@ -57,7 +57,7 @@ const MobileNavbar = ({ toggleMenu }: MenuManager) => {
               High Paid Job
             </Link>
             <Link
-              href="/get-support"
+              href="/contact-us"
               className="font-semibold text-gray-700 hover:text-blue-500"
             >
               Get Support
@@ -73,10 +73,10 @@ const MobileNavbar = ({ toggleMenu }: MenuManager) => {
 
             {/* Login & Register Buttons */}
             <div className="flex flex-col justify-between gap-2 mt-2">
-              <button className="w-1/2 py-2 px-4 border rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">
+              <button className="w-full py-2 px-4 border rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">
                 LOGIN
               </button>
-              <button className="w-1/2 py-2 px-4 bg-blue-500 text-white rounded-md text-sm font-semibold hover:bg-blue-600">
+              <button className="w-full py-2 px-4 bg-primary text-white rounded-md text-sm font-semibold hover:bg-blue-600">
                 REGISTER
               </button>
             </div>

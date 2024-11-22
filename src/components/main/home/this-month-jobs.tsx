@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FaAngleLeft, FaAngleRight, FaMapMarkerAlt } from "react-icons/fa";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { LiaStopwatchSolid } from "react-icons/lia";
 import Container from "../Container";
+import { IoLocationOutline } from "react-icons/io5";
 
 const array = [
   {
@@ -119,16 +120,29 @@ const ThisMonthJobs = () => {
                       className="w-full h-36 object-cover rounded-t-lg"
                     />
                   </div>
-                  <div className="border rounded-lg shadow-lg px-5 py-4">
+                  <div className="border rounded-b-lg shadow-md px-5 py-4">
                     {/* Content */}
-                    <div className="p-4 text-center">
-                      <h3 className="text-xl font-bold">
+                    <div>
+                      <div className="flex items-center justify-center gap-3">
+                      <Image
+                        src="https://atbjobs.s3.ap-southeast-1.amazonaws.com/employer/profile_photo/blob_1731916855."
+                        alt="Company Logo"
+                        width={60}
+                        height={60}
+                        className="w-12 h-12 object-cover rounded-md"
+                      />
+                      <h3 className="text-base font-bold">
                         WeGro Technologies Limited
                       </h3>
-                      <p className="text-gray-600 mt-2">
-                        <FaMapMarkerAlt className="inline-block mr-1 text-blue-500" />
-                        Dhaka South City Corporat, Dhaka
-                      </p>
+                      </div>
+                      <div className="flex items-center gap-2 my-5">
+                        <span className="text-blue-600 bg-[#E9F5FF] p-2 rounded-full flex items-center justify-center">
+                          <IoLocationOutline className="size-5" />
+                        </span>
+                        <p className="text-gray-600 text-sm font-semibold">
+                          Job Opening
+                        </p>
+                      </div>
                     </div>
 
                     {/* Buttons */}
@@ -143,7 +157,7 @@ const ThisMonthJobs = () => {
                         </p>
                       </div>
                       <button className="nav-link bg-[#155EAD] text-white hover:bg-primary py-2 cursor-pointer text-sm">
-                        View Details
+                        View Profile
                       </button>
                     </div>
                   </div>
