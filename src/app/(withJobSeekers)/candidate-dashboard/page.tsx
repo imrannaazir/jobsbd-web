@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import React from "react";
 import { BsBuildings } from "react-icons/bs";
@@ -40,7 +41,7 @@ const CandidateDashboard = () => {
         ))}
       </div>
       {/* body */}
-      <div className="border rounded shadow-lg mt-8 px-4 py-7">
+      <div className="border rounded shadow-lg mt-8 px-4 py-7 bg-white">
         <div className="flex items-center gap-5">
           <h3 className="text-xl font-bold">My job feed (Recommended jobs)</h3>
           <p className="bg-bgColour p-2 rounded-full">

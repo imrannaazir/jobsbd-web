@@ -26,6 +26,7 @@
     "react-international-phone": "^4.3.0",
     "react-redux": "^9.1.2",
     "styled-components": "^6.1.13",
+    "sweetalert2": "^11.14.5",
     "tailwind-merge": "^2.5.4",
     "zod": "^3.23.8"
   },
