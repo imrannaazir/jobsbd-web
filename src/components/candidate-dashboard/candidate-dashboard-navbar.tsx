@@ -1,3 +1,4 @@
+"use client"
 import CircularProgressBar from "@/components/candidate-dashboard/circular-progress-bar";
 import img from "@/assets/candidate-dashboard/candidate-default.png";
 import Image from "next/image";

@@ -73,7 +73,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
-                  href="/contact-us"
+                  href="/login"
                   className="nav-link border-2 border-[#155EAD] hover:bg-[#DCEFFF]"
                 >
                   Login
@@ -81,7 +81,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
-                  href="/contact-us"
+                  href="/candidate-register"
                   className="nav-link bg-[#155EAD] text-white hover:bg-primary"
                 >
                   Register
@@ -89,7 +89,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
-                  href="/contact-us"
+                  href="/employee-login"
                   className="nav-link text-[#424447] bg-[#93949572] hover:bg-[#DCEFFF]"
                 >
                   For Employers
