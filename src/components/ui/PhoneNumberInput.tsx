@@ -13,8 +13,8 @@ const PhoneNumberInput = ({
     <PhoneInput
       defaultCountry="bd"
       value={phone}
-      onChange={(phone) => setPhone(phone)}
-      
+      onChange={(phone: string) => setPhone(phone)}
+      required
     />
   );
 };

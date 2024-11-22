@@ -1,4 +1,4 @@
-import React from "react";
+"use client"
 
 const CircularProgressBar = ({ size = 120, progress = 30, strokeWidth = 5 }) => {
   const center = size / 2;
