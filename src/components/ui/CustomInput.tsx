@@ -1,58 +1,90 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 
-import { TInput } from "@/type";
-import React, { useState } from "react";
+import React, { InputHTMLAttributes, useState, useEffect } from "react";
+import { useFormContext, RegisterOptions } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-const FloatingLabelInput: React.FC<TInput> = ({
+interface FloatingLabelInputProps
+  extends InputHTMLAttributes<HTMLInputElement> {
+  name: string;
+  label: string;
+  rules?: RegisterOptions;
+}
+
+const FloatingLabelInput: React.FC<FloatingLabelInputProps> = ({
+  name,
   label,
   type = "text",
+  rules,
   ...props
 }) => {
-  const [focused, setFocused] = useState(false);
-  const [isVisible, setIsVisible] = React.useState(false);
+  const {
+    register,
+    formState: { errors },
+    watch,
+  } = useFormContext();
+  const [elevated, setElevated] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const inputValue = watch(name);
+  const inputType = type === "password" && isVisible ? "text" : type;
+  const error = errors[name]?.message as string | undefined;
+
+  useEffect(() => {
+    setElevated(!!inputValue);
+  }, [inputValue]);
+
+  const handleFocus = () => setElevated(true);
+  const handleBlur = () => setElevated(!!inputValue);
+
   return (
-    <div className="relative w-full">
-      <input
-        type={
-          (type === "password" && isVisible === true ? "text" : type) 
-        }
-        className={`peer w-full border rounded-md px-[14px]  py-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-primary
+    <>
+      <div className="relative w-full mb-4">
+        <input
+          id={name}
+          type={inputType}
+          className={`peer w-full border rounded-md px-[14px] py-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-primary focus:bg-transparent
+          ${error ? "border-red-500" : "border-gray-300"}
         `}
-        onFocus={() => setFocused(true)}
-        onBlur={(e) => setFocused(e.target.value !== "")}
-        {...props}
-      />
+          onFocus={handleFocus}
+          // @ts-ignore
+          onBlur={handleBlur}
+          {...register(name, rules)}
+          {...props}
+        />
 
-      {type === "password" && (
-        <button
-          className="absolute top-4 right-3"
-          type="button"
-          onClick={() => setIsVisible(!isVisible)}
-          aria-label="toggle password visibility"
-        >
-          {isVisible ? (
-            <FaEye className="text-2xl text-default-400 pointer-events-none" />
-          ) : (
-            <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
-          )}
-        </button>
-      )}
+        {type === "password" && (
+          <button
+            className="absolute top-4 right-3"
+            type="button"
+            onClick={() => setIsVisible(!isVisible)}
+            aria-label={isVisible ? "Hide password" : "Show password"}
+          >
+            {isVisible ? (
+              <FaEye className="text-2xl text-gray-400" />
+            ) : (
+              <FaEyeSlash className="text-2xl text-gray-400" />
+            )}
+          </button>
+        )}
 
-      <label
-        className={`absolute left-3 top-2/4 transform -translate-y-1/2 text-gray-500 text-lg transition-all duration-200 
-          peer-placeholder-shown:top-2/4 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-gray-400
-          peer-focus:top-0 peer-focus:translate-y-[-50%] peer-focus:text-primary
-          peer-focus:bg-white
-          peer-focus:px-2
-          peer-focus:text-sm
+        <label
+          htmlFor={name}
+          className={`absolute left-3 transform transition-all duration-200 
+          ${
+            elevated
+              ? "top-0 translate-y-[-50%] text-primary bg-white px-2 text-sm"
+              : "top-2/4 -translate-y-1/2 text-gray-500 text-lg"
+          }
           pointer-events-none
         `}
-      >
-        {label}
-      </label>
-    </div>
+        >
+          {label}
+        </label>
+      </div>
+      {error && <p className=" text-xs text-red-500">{error}</p>}
+    </>
   );
 };
 

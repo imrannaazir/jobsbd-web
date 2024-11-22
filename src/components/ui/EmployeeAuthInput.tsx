@@ -1,22 +1,47 @@
-import { TInput } from "@/type";
-import React from "react";
+"use client";
+
+import React, { InputHTMLAttributes, useState } from "react";
+import { useFormContext, RegisterOptions } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-const EmployeeAuthInput: React.FC<TInput> = ({
+interface EmployeeAuthInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  name: string;
+  label: string;
+  rules?: RegisterOptions;
+}
+
+const EmployeeAuthInput: React.FC<EmployeeAuthInputProps & { placeholder?: string }> = ({
+  name,
   label,
   type = "text",
   placeholder,
+  rules,
 }) => {
-  const [isVisible, setIsVisible] = React.useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const formContext = useFormContext();
+  
+  if (!formContext) {
+    return null; // or a loading state
+  }
+
+  const {
+    register,
+    formState: { errors },
+  } = formContext;
+  
+  const error = errors[name]?.message as string | undefined;
+
   return (
     <div className="relative">
-      <label className="text-sm font-medium text-[#424447]">
+      <label htmlFor={name} className="text-sm font-medium text-[#424447]">
         {label} <span className="text-red-500 ml-1">*</span>
       </label>
       <input
-        type={type}
-        className="w-full rounded-sm border-2 border-gray-300 focus:outline-none focus:border-primary p-2 mt-1"
+        id={name}
+        type={type === "password" && isVisible ? "text" : type}
+        className={`w-full rounded-sm border-2 ${error ? "border-red-500" : "border-gray-300"} focus:outline-none focus:border-primary p-2 mt-1`}
         placeholder={placeholder}
+        {...register(name, rules)}
       />
       {type === "password" && (
         <button
@@ -32,8 +57,10 @@ const EmployeeAuthInput: React.FC<TInput> = ({
           )}
         </button>
       )}
+      {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
     </div>
   );
 };
 
 export default EmployeeAuthInput;
+

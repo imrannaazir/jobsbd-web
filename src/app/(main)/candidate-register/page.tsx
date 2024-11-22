@@ -7,10 +7,47 @@ import FloatingLabelInput from "@/components/ui/CustomInput";
 import ORDivider from "@/components/ui/ORDivider";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
 import SocialLogin from "@/components/ui/SocialLogin";
+import { useSignUpMutation } from "@/redux/api/auth/authApi";
 import { Button, Checkbox } from "@nextui-org/react";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useForm, FormProvider, FieldValues } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
+
 const CandidateRegisterPage = () => {
+  const router = useRouter();
+
+  // candidate register
+  const [signUp] = useSignUpMutation();
+  const methods = useForm<FormData>();
+
+  // on submit handle
+  const onSubmit = async (data: FieldValues) => {
+    const formData = {
+      ...data,
+      phoneNumber: phone,
+      role: "CANDIDATE",
+    };
+    const response = await signUp(formData);
+    if (response.data) {
+      Swal.fire({
+        title: "Success",
+        text: "You have been registered successfully",
+        icon: "success",
+      });
+      router.push("/login");
+      methods.reset();
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: "Registration failed",
+        icon: "error",
+      });
+      console.log(response.error);
+    }
+  };
+
   const [phone, setPhone] = useState("");
   return (
     <CandidateAuthContainer>
@@ -34,26 +71,44 @@ const CandidateRegisterPage = () => {
           <ORDivider />
         </div>
         {/* register form */}
-        <form className="space-y-5">
-          <FloatingLabelInput label="Enter Your full Name *" />
-          <PhoneNumberInput phone={phone} setPhone={setPhone} />
-          <FloatingLabelInput label="Enter Your Email Address *" />
-          <FloatingLabelInput label="Enter Your Password *" type="password" />
-          <div className="flex">
-            <Checkbox radius="none" />
-            <p className="text-sm">
-              By clicking "Create an account", you confirm that you agree to ATB
-              Jobs Terms and Conditions and Privacy Policy.
-            </p>
-          </div>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-5">
+            <FloatingLabelInput
+              name="fullName"
+              label="Enter Your full Name *"
+              rules={{ required: "Full name is required" }}
+            />
+            {/* <FloatingLabelInput label="Enter Your full Name *" /> */}
+            <PhoneNumberInput phone={phone} setPhone={setPhone} />
+            <FloatingLabelInput
+              name="email"
+              label="Enter Your Email Address *"
+              type="email"
+              rules={{ required: "Full name is required" }}
+            />
+            <FloatingLabelInput
+              name="password"
+              label="Enter Your Password *"
+              type="password"
+              rules={{ required: "Full name is required" }}
+            />
+            <div className="flex">
+              <Checkbox radius="none" />
+              <p className="text-sm">
+                By clicking "Create an account", you confirm that you agree to
+                ATB Jobs Terms and Conditions and Privacy Policy.
+              </p>
+            </div>
 
-          <Button
-            type="submit"
-            className="uppercase w-full bg-primary text-white shadow rounded-md"
-          >
-            Create an account
-          </Button>
-        </form>
+            <Button
+              type="submit"
+              className="uppercase w-full bg-primary text-white shadow rounded-md"
+            >
+              Create an account
+            </Button>
+          </form>
+        </FormProvider>
+
         <p className="font-semibold text-center mt-20 pb-10">
           Already have an account?
           <Link href="/login" className="text-primary ml-1">
