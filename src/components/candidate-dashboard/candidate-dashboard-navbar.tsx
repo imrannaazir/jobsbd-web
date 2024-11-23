@@ -26,7 +26,7 @@ const CandidateDashboardNavbar: React.FC = () => {
     {
       label: "Applied Jobs",
       icon: <MdOutlineWorkHistory size={25} />,
-      href: "/applied-jobs",
+      href: "/candidate-dashboard/applied-jobs",
     },
     {
       label: "Saved Jobs",
