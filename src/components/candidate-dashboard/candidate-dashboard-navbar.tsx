@@ -1,15 +1,16 @@
-"use client"
-import CircularProgressBar from "@/components/candidate-dashboard/circular-progress-bar";
+"use client";
 import img from "@/assets/candidate-dashboard/candidate-default.png";
-import Image from "next/image";
+import CircularProgressBar from "@/components/candidate-dashboard/circular-progress-bar";
 import { Divider } from "@nextui-org/react";
-import React from "react";
-import { MdOutlineDashboard, MdOutlineWorkHistory } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
-import { FaRegHeart } from "react-icons/fa";
-import { BsBuildings } from "react-icons/bs";
-import { CiLogout } from "react-icons/ci";
+import Image from "next/image";
 import Link from "next/link";
+import React from "react";
+import { BsBuildings } from "react-icons/bs";
+import { CgProfile } from "react-icons/cg";
+import { CiLogout } from "react-icons/ci";
+import { FaRegHeart } from "react-icons/fa";
+import { MdOutlineDashboard, MdOutlineWorkHistory } from "react-icons/md";
+import { RiListSettingsLine } from "react-icons/ri";
 
 const CandidateDashboardNavbar: React.FC = () => {
   const navLinks = [
@@ -37,6 +38,11 @@ const CandidateDashboardNavbar: React.FC = () => {
       label: "Followed Company",
       icon: <BsBuildings size={25} />,
       href: "/followed-company",
+    },
+    {
+      label: "Setting",
+      icon: <RiListSettingsLine size={25} />,
+      href: "/candidate-dashboard/candidate-change-password",
     },
     {
       label: "Logout",
