@@ -6,13 +6,16 @@ import FloatingLabelInput from "@/components/ui/CustomInput";
 import ORDivider from "@/components/ui/ORDivider";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
 import SocialLogin from "@/components/ui/SocialLogin";
-import { Button, Radio, RadioGroup } from "@nextui-org/react";
 import Link from "next/link";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useLoginMutation } from "@/redux/api/auth/authApi";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+
 const LoginPage = () => {
   const [loginMethod, setLoginMethod] = useState("email");
   const [phone, setPhone] = useState("");
@@ -48,7 +51,10 @@ const LoginPage = () => {
       {/* login method selection */}
 
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full lg:w-[600px] lg:mx-auto pt-14 space-y-5 p-4">
+        <form
+          onSubmit={methods.handleSubmit(onSubmit)}
+          className="w-full lg:w-[600px] lg:mx-auto pt-14 space-y-5 p-4"
+        >
           <div className="text-center">
             <h3 className="font-medium mb-2">Welcome Back!</h3>
             <p className="text-primary text-lg font-medium">
@@ -57,15 +63,21 @@ const LoginPage = () => {
             </p>
           </div>
           <div className="flex items-center justify-center py-5">
-            <RadioGroup
-              onChange={(e) => setLoginMethod(e.target.value)}
-              orientation="horizontal"
-              defaultValue="email"
-            >
-              <Radio value="email">Email Address</Radio>
-              <Radio value="phone">Mobile Number</Radio>
-            </RadioGroup>
-          </div>
+      <RadioGroup
+        defaultValue="email"
+        onValueChange={(value) => setLoginMethod(value)}
+        className="flex flex-row space-x-4"
+      >
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="email" id="email" />
+          <Label htmlFor="email">Email Address</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="phone" id="phone" />
+          <Label htmlFor="phone">Mobile Number</Label>
+        </div>
+      </RadioGroup>
+    </div>
 
           {loginMethod === "email" ? (
             <FloatingLabelInput

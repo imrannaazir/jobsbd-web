@@ -1,7 +1,7 @@
 "use client";
 import img from "@/assets/candidate-dashboard/candidate-default.png";
 import CircularProgressBar from "@/components/candidate-dashboard/circular-progress-bar";
-import { Divider } from "@nextui-org/react";
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -11,6 +11,7 @@ import { CiLogout } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineDashboard, MdOutlineWorkHistory } from "react-icons/md";
 import { RiListSettingsLine } from "react-icons/ri";
+import Divider from "../ui/Divider";
 
 const CandidateDashboardNavbar: React.FC = () => {
   const navLinks = [
@@ -68,7 +69,7 @@ const CandidateDashboardNavbar: React.FC = () => {
           {/* user Name */}
           <h3 className="text-xl font-bold text-center py-5">User Name</h3>
         </div>
-        <Divider />
+        <Divider/>
         <ul className="mt-2 grid grid-cols-2 lg:grid-cols-1 gap-2">
           {navLinks.map((link, index) => (
             <li key={index} className="border lg:border-none p-2 lg:p-0">

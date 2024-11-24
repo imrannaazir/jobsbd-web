@@ -4,7 +4,6 @@
 import React, { useState } from "react";
 import { useForm, FormProvider, FieldValues } from "react-hook-form";
 import Link from "next/link";
-import { Button, Radio, RadioGroup } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useLoginMutation } from "@/redux/api/auth/authApi";
 
@@ -14,6 +13,10 @@ import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
 import SocialLogin from "@/components/ui/SocialLogin";
 import Swal from "sweetalert2";
 import EmployeeAuthInput from "@/components/ui/EmployeeAuthInput";
+
+import { Button } from "@/components/ui/button";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 
 const EmployeeLoginPage = () => {
   const router = useRouter();
@@ -59,15 +62,21 @@ const EmployeeLoginPage = () => {
             </p>
           </div>
           <div className="flex items-center justify-center py-5">
-            <RadioGroup
-              onChange={(e) => setLoginMethod(e.target.value)}
-              orientation="horizontal"
-              defaultValue="email"
-            >
-              <Radio value="email">Email Address</Radio>
-              <Radio value="phone">Mobile Number</Radio>
-            </RadioGroup>
-          </div>
+      <RadioGroup
+        defaultValue="email"
+        onValueChange={(value) => setLoginMethod(value)}
+        className="flex flex-row space-x-4"
+      >
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="email" id="email" />
+          <Label htmlFor="email">Email Address</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="phone" id="phone" />
+          <Label htmlFor="phone">Mobile Number</Label>
+        </div>
+      </RadioGroup>
+    </div>
 
           {loginMethod === "email" ? (
             <EmployeeAuthInput

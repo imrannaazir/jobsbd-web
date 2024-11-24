@@ -5,7 +5,6 @@ import { useState } from "react";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 
 import Link from "next/link";
-import { Button, Checkbox } from "@nextui-org/react";
 
 import EmployeeAuthContainer from "@/components/ui/EmployeeAuthContainer";
 import ORDivider from "@/components/ui/ORDivider";
@@ -15,14 +14,16 @@ import EmployeeAuthInput from "@/components/ui/EmployeeAuthInput";
 import { useSignUpMutation } from "@/redux/api/auth/authApi";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 
 
 const EmployeeRegister = () => {
   const router = useRouter();
   const [phone, setPhone] = useState("");
   const methods = useForm<FieldValues>();
-// Recruiter register
-const [signUp] = useSignUpMutation();
+  // Recruiter register
+  const [signUp] = useSignUpMutation();
   // on submit handle
   const onSubmit = async (data: FieldValues) => {
     const formData = {
@@ -106,12 +107,15 @@ const [signUp] = useSignUpMutation();
                 },
               }}
             />
-            <div className="flex">
-              <Checkbox radius="none" />
-              <p className="text-sm">
+            <div className="flex items-center space-x-2">
+              <Checkbox id="terms" />
+              <label
+                htmlFor="terms"
+                className="text-sm  text-gray-500 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
                 By clicking "Create an account", you confirm that you agree to
                 ATB Jobs Terms and Conditions and Privacy Policy.
-              </p>
+              </label>
             </div>
 
             <Button
