@@ -55,7 +55,7 @@ const RecruiterSidebar: React.FC = () => {
   ];
 
   return (
-    <div className="bg-white lg:w-[316px] shadow-md lg:min-h-screen rounded z-10">
+    <div className="bg-white shadow-md lg:min-h-screen rounded z-10">
       <div className="flex flex-col items-center gap-5 p-5 border-b shadow-md lg:shadow-none">
         {/* Profile Picture and Progress */}
         <div className="relative flex items-center justify-center">

@@ -13,7 +13,7 @@ const CandidateDashboard = () => {
       href: "/applied-jobs",
     },
     {
-      label: "Saved Jobs",
+      label: "Applied Candidate",
       icon: <FaRegHeart size={25} />,
       href: "/saved-jobs",
     },
@@ -24,7 +24,7 @@ const CandidateDashboard = () => {
     },
   ];
   return (
-    <section>
+    <section className="relative z-20">
       {/* section top button*/}
       <div className="hidden lg:flex items-center gap-3">
         {buttons.map((button, index) => (
