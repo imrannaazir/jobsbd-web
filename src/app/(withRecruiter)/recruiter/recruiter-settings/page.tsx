@@ -18,7 +18,7 @@ const PasswordInput = ({
   const { register } = useForm();
 
   return (
-    <div className="relative space-y-1">
+    <div className="relative space-y-1 ">
       <label htmlFor={name} className="block text-gray-700 font-medium">
         {label}
       </label>
@@ -51,7 +51,7 @@ const RecruiterSettingPage = () => {
   };
 
   return (
-    <div className="w-full bg-white rounded-lg">
+    <div className="w-full bg-white rounded-lg relative z-20">
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}

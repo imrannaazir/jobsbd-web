@@ -70,7 +70,7 @@ const RecruiterSidebar: React.FC = () => {
         <h3 className="text-xl font-bold text-primary text-center">User Name</h3>
       </div>
 
-      <ul>
+      <ul className="mt-2 md:mt-0 grid grid-cols-2 lg:grid-cols-1 gap-2 md:gap-0">
         {navLinks.map((link, index) => (
           <li key={index}>
             <Link

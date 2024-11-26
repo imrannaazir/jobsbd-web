@@ -13,8 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
+   
+      <>
+        {/* Small devices */}
         <section className="relative md:hidden">
           <RecruiterNavbar />
           <div className="mt-28">
@@ -30,19 +31,21 @@ export default function RootLayout({
             </div>
           </div>
         </section>
+
+        {/* Large devices */}
         <section className="hidden md:block relative h-full">
           <RecruiterNavbar />
           <div className="flex h-full">
             <div className="fixed top-20 left-0 h-[calc(100%-5rem)] w-64 bg-gray-100 z-20 shadow-lg">
               <RecruiterSidebar />
             </div>
-            <div className="h-28 bg-[#00457C] mt-20 fixed z-10 w-full"></div>
+            <div className="h-28 bg-[#00457C] mt-20 fixed w-full"></div>
             <div className="flex-1 ml-64 mt-20 overflow-auto p-5 bg-gray-50">
               {children}
             </div>
           </div>
         </section>
-      </body>
-    </html>
+      </>
+ 
   );
 }
