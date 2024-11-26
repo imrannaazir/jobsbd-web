@@ -51,7 +51,6 @@ const ProfileEditModal = () => {
                 name="totalExperience"
                 label="Total Year Of Experience"
                 type="number"
-                //  @ts-ignore
                 min={1}
                 required
               />
