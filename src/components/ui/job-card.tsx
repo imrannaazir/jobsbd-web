@@ -1,0 +1,81 @@
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import SavedJobButton from "./saved-job-button";
+import Image from "next/image";
+import img from "@/assets/location.png";
+import { TbMoneybag } from "react-icons/tb";
+import { FaGraduationCap } from "react-icons/fa";
+import { IoLocationSharp } from "react-icons/io5";
+import { FaBriefcase } from "react-icons/fa6";
+import { CiClock2 } from "react-icons/ci";
+import Link from "next/link";
+
+const JobCard = () => {
+  return (
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <div>
+          <CardTitle className="text-lg text-primary">Create project</CardTitle>
+          <CardDescription className="font-semibold">
+            Deploy your new project in one-click.
+          </CardDescription>
+        </div>
+
+        <SavedJobButton />
+      </CardHeader>
+      <CardContent>
+        <div className="mt-4 space-y-4">
+          <div className=" flex items-center justify-between">
+            <div className="flex items-center  justify-between gap-2">
+              <div className="p-2 bg-bgColour rounded-full text-primary">
+                <TbMoneybag />
+              </div>
+              <p className="text-sm font-semibold">
+                Salary: 100000 Taka/Monthly
+              </p>
+            </div>
+            <Image src={img} alt="company image" width={60} height={60} />
+          </div>
+          {/* benefits */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1 px-2 py-1 text-sm text-[#15A449] bg-[#EEFAF7] rounded-full">
+              <FaBriefcase />
+              <p>Full time</p>
+            </div>
+            <div className="flex items-center gap-1  px-2 py-1 text-sm text-[#8743DF] bg-[#F2E9FF] rounded-full">
+              <FaGraduationCap />
+              <p>Full time</p>
+            </div>
+            <div className="flex items-center gap-1  px-2 py-1 text-sm text-[#ED7200] bg-[#FFF5E2] rounded-full">
+              <IoLocationSharp />
+              <p>Full time</p>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter className="flex justify-between border-t p-4">
+        <div className="flex items-center  justify-between gap-2">
+          <div className="p-2 bg-bgColour rounded-full text-primary">
+            <CiClock2 />
+          </div>
+          <p className="text-sm font-semibold">Deadline: 100000 Taka/Monthly</p>
+        </div>
+        <div className="flex items-center gap-4">
+          <Link href="/" className="text-primary font-semibold border border-primary hover:bg-primary hover:text-white text-sm transition-all duration-300 rounded px-2 py-1">
+            View Details
+          </Link>
+          <Link href="/"  className="bg-green-500 text-white text-sm font-semibold rounded px-2 py-1">Apply Now</Link>
+        </div>
+      </CardFooter>
+    </Card>
+  );
+};
+
+export default JobCard;

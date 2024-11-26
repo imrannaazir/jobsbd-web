@@ -1,3 +1,4 @@
+"use client"
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { FiEdit3 } from "react-icons/fi";
