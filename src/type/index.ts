@@ -20,3 +20,17 @@ export type ToggleMenuFunction = () => void;
 export interface MenuManager {
   toggleMenu: ToggleMenuFunction;
 }
+
+export type TAuthInfo = {
+  fullName?: string;
+  companyName?: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+};
+
+export type TLoginInfo = {
+  email?: string;
+  phoneNumber?: string;
+  password: string;
+};

@@ -15,8 +15,12 @@ import { useRouter } from "next/navigation";
 import { useLoginMutation } from "@/redux/api/auth/authApi";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { useAppDispatch } from "@/redux/hooks";
+import { setUser, TUser } from "@/redux/features/auth/authSlice";
+import { verifyToken } from "@/utils/verifyToken";
 
 const LoginPage = () => {
+  const dispatch = useAppDispatch();
   const [loginMethod, setLoginMethod] = useState("email");
   const [phone, setPhone] = useState("");
   const router = useRouter();
@@ -27,24 +31,51 @@ const LoginPage = () => {
 
   // on submit handle
   const onSubmit = async (data: FieldValues) => {
-    const response = await login(data);
-    if (response.data) {
-      Swal.fire({
-        title: "Success",
-        text: "You have been logged in successfully",
-        icon: "success",
-      });
-      router.push("/candidate-dashboard");
-      methods.reset();
+    if (!phone) {
+      const response = await login(data);
+
+      if (response.data) {
+        console.log(response.data.data.accessToken);
+        const user = verifyToken(response.data.data.accessToken) as TUser;
+        dispatch(
+          setUser({ user: user, token: response.data.data.accessToken })
+        );
+        Swal.fire({
+          title: "Success",
+          text: "You have been logged in successfully",
+          icon: "success",
+        });
+        router.push("/candidate-dashboard");
+        methods.reset();
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: "Login failed",
+          icon: "error",
+        });
+        console.log(response.error);
+      }
     } else {
-      Swal.fire({
-        title: "Error",
-        text: "Login failed",
-        icon: "error",
-      });
-      console.log(response.error);
+      const response = await login({ phone: phone, password: data.password });
+      if (response.data) {
+        const user = verifyToken(response.data.accessToken) as TUser;
+        dispatch(setUser({ user: user, token: response.data.accessToken }));
+        Swal.fire({
+          title: "Success",
+          text: "You have been logged in successfully",
+          icon: "success",
+        });
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: "Login failed",
+          icon: "error",
+        });
+        console.log(response.error);
+      }
     }
   };
+
   return (
     // main section container
     <CandidateAuthContainer>
@@ -63,21 +94,21 @@ const LoginPage = () => {
             </p>
           </div>
           <div className="flex items-center justify-center py-5">
-      <RadioGroup
-        defaultValue="email"
-        onValueChange={(value) => setLoginMethod(value)}
-        className="flex flex-row space-x-4"
-      >
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="email" id="email" />
-          <Label htmlFor="email">Email Address</Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="phone" id="phone" />
-          <Label htmlFor="phone">Mobile Number</Label>
-        </div>
-      </RadioGroup>
-    </div>
+            <RadioGroup
+              defaultValue="email"
+              onValueChange={(value) => setLoginMethod(value)}
+              className="flex flex-row space-x-4"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="email" id="email" />
+                <Label htmlFor="email">Email Address</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="phone" id="phone" />
+                <Label htmlFor="phone">Mobile Number</Label>
+              </div>
+            </RadioGroup>
+          </div>
 
           {loginMethod === "email" ? (
             <FloatingLabelInput
