@@ -3,7 +3,7 @@ import sendMsgImg from "@/assets/sendMessageImg.jpg";
 const SendUsMessage = () => {
   return (
     <div
-      className=" rounded-large p-12 h-full"
+      className="rounded-[20px] p-12 h-full"
       style={{
         backgroundImage: `url(${sendMsgImg.src})`,
         backgroundSize: "cover",

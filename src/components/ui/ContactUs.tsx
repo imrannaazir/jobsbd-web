@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const ContactUs = () => {
   return (
-    <div className="bg-bgColour border-1 border-blue-200 rounded-large p-12">
+    <div className="bg-bgColour border border-1 border-gray-300 rounded-[20px] p-12">
       <div className="grid lg:grid-cols-2 grid-cols-1 gap-12">
         {/* Contact Information */}
         <div className="lg:col-span-1 ">
