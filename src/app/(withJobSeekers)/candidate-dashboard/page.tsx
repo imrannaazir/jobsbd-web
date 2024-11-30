@@ -13,7 +13,7 @@ const CandidateDashboard = () => {
       href: "/applied-jobs",
     },
     {
-      label: "Saved Jobs",
+      label: "Applied Candidate",
       icon: <FaRegHeart size={25} />,
       href: "/saved-jobs",
     },

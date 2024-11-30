@@ -63,7 +63,7 @@ const MobileNavbar = ({ toggleMenu }: MenuManager) => {
 
             {/* Employer Section */}
             <Link href="/employee-login">
-              <button className="py-2 px-4 font-semibold text-sm bg-gray-200 rounded-md hover:bg-gray-300">
+              <button className="w-full py-2 px-4 font-semibold text-sm bg-gray-200 rounded-md hover:bg-gray-300">
                 FOR EMPLOYERS
               </button>
             </Link>

@@ -12,8 +12,10 @@ import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineDashboard, MdOutlineWorkHistory } from "react-icons/md";
 import { RiListSettingsLine } from "react-icons/ri";
 import Divider from "../ui/Divider";
+import { usePathname } from "next/navigation";
 
 const CandidateDashboardNavbar: React.FC = () => {
+  const currentPath = usePathname();
   const navLinks = [
     {
       label: "Dashboard",
@@ -70,18 +72,20 @@ const CandidateDashboardNavbar: React.FC = () => {
           <h3 className="text-xl font-bold text-center py-5">User Name</h3>
         </div>
         <Divider/>
-        <ul className="mt-2 grid grid-cols-2 lg:grid-cols-1 gap-2">
+        <ul className="mt-2 md:mt-0 grid grid-cols-2 lg:grid-cols-1 gap-2 md:gap-0">
           {navLinks.map((link, index) => (
             <li key={index} className="border lg:border-none p-2 lg:p-0">
               <Link
-                href={link.href}
-                className="flex items-center text-sm lg:text-base gap-3  p-2"
-              >
-                <p className="bg-white p-2 rounded-full shadow-xl">
-                  {link.icon}
-                </p>
-                {link.label}
-              </Link>
+              href={link.href}
+              className={ 
+                currentPath === link.href
+                  ? "flex items-center text-sm lg:text-base gap-3 py-2 px-3 bg-[#EFF7FF] transition text-primary font-semibold border-l-4 border-primary"
+                  : "flex items-center text-sm lg:text-base gap-3 py-2 px-3 hover:bg-[#EFF7FF] text-gray-800 transition font-semibold"
+              }
+            >
+              <span className="p-2 rounded-full shadow">{link.icon}</span>
+              {link.label}
+            </Link>
             </li>
           ))}
         </ul>

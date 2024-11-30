@@ -1,8 +1,12 @@
 import CandidateDashboardTopNav from "@/components/candidate-dashboard/candidate-dashboard-top-nav";
 import BasicDetails from "@/components/candidate-dashboard/profile/basic-details";
+import CertificateSection from "@/components/candidate-dashboard/profile/certificate-section";
 import EducationSection from "@/components/candidate-dashboard/profile/education-section";
+import LanguageSection from "@/components/candidate-dashboard/profile/language-section";
+import ProjectSection from "@/components/candidate-dashboard/profile/project-section";
 import SkillSection from "@/components/candidate-dashboard/profile/skill-section";
 import Summary from "@/components/candidate-dashboard/profile/summary";
+import WorkExperienceSection from "@/components/candidate-dashboard/profile/work-experience-section";
 
 import React from "react";
 
@@ -23,6 +27,10 @@ const page = () => {
 
         <EducationSection />
         <SkillSection/>
+        <WorkExperienceSection/>
+        <ProjectSection/>
+        <CertificateSection/>
+        <LanguageSection/>
       </div>
     </>
   );

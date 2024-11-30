@@ -10,6 +10,9 @@ import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import SocialLogin from "@/components/ui/SocialLogin";
 import { useLoginMutation } from "@/redux/api/auth/authApi";
+import { setUser, TUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import { verifyToken } from "@/utils/verifyToken";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -17,6 +20,7 @@ import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
 const LoginPage = () => {
+  const dispatch = useAppDispatch();
   const [loginMethod, setLoginMethod] = useState("email");
   const [phone, setPhone] = useState("");
   const router = useRouter();
@@ -27,28 +31,51 @@ const LoginPage = () => {
 
   // on submit handle
   const onSubmit = async (data: FieldValues) => {
-    const response = await login(data);
+    if (!phone) {
+      const response = await login(data);
 
-    console.log(response.data.data.accessToken);
-    if (response?.data?.data?.accessToken) {
-      localStorage.setItem("token", response.data.data.accessToken);
-      console.log("Login successful, token saved!");
-      Swal.fire({
-        title: "Success",
-        text: "You have been logged in successfully",
-        icon: "success",
-      });
-      router.push("/admin-dashboard");
-      methods.reset();
+      if (response.data) {
+        console.log(response.data.data.accessToken);
+        const user = verifyToken(response.data.data.accessToken) as TUser;
+        dispatch(
+          setUser({ user: user, token: response.data.data.accessToken })
+        );
+        Swal.fire({
+          title: "Success",
+          text: "You have been logged in successfully",
+          icon: "success",
+        });
+        router.push("/candidate-dashboard");
+        methods.reset();
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: "Login failed",
+          icon: "error",
+        });
+        console.log(response.error);
+      }
     } else {
-      Swal.fire({
-        title: "Error",
-        text: "Login failed",
-        icon: "error",
-      });
-      console.log(response.error);
+      const response = await login({ phone: phone, password: data.password });
+      if (response.data) {
+        const user = verifyToken(response.data.accessToken) as TUser;
+        dispatch(setUser({ user: user, token: response.data.accessToken }));
+        Swal.fire({
+          title: "Success",
+          text: "You have been logged in successfully",
+          icon: "success",
+        });
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: "Login failed",
+          icon: "error",
+        });
+        console.log(response.error);
+      }
     }
   };
+
   return (
     // main section container
     <CandidateAuthContainer>

@@ -3,6 +3,7 @@ import SectionTitle from "../section-title";
 import SkillModal from "./skill-modal";
 
 const SkillSection = () => {
+    
   return (
     <div className="section-design">
       <SectionTitle label="Key Skills" component={<SkillModal />} />

@@ -2,15 +2,8 @@
 
 import RichTextEditor from "@/components/rich-text-editor/rich-text-editor";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import EditButton from "@/components/ui/edit-button-with-icon";
+import CustomModal from "@/components/ui/custom-modal";
+
 import {
   Form,
   FormControl,
@@ -33,41 +26,34 @@ const SummaryModal = () => {
   };
 
   return (
-    <Dialog>
-      <DialogTrigger>
-        <EditButton asChild/>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Profile Summary</DialogTitle>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              name="summary"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <RichTextEditor
-                      initialContent={field.value}
-                      onChange={field.onChange}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+    <CustomModal buttonType="edit" title="Summary">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            name="summary"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <RichTextEditor
+                    initialContent={field.value}
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <DialogFooter>
-              <Button type="submit">Save changes</Button>
-            </DialogFooter>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+          <div className="flex items-center justify-end">
+            <Button type="submit" className="uppercase">
+              submit
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </CustomModal>
   );
 };
 
 export default SummaryModal;
-
