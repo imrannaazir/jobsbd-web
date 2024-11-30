@@ -1,20 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
+import { Button } from "@/components/ui/button";
 import CandidateAuthContainer from "@/components/ui/CandidateAuthContainer";
 import FloatingLabelInput from "@/components/ui/CustomInput";
+import { Label } from "@/components/ui/label";
 import ORDivider from "@/components/ui/ORDivider";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
-import SocialLogin from "@/components/ui/SocialLogin";
-import Link from "next/link";
-import React, { useState } from "react";
-import Swal from "sweetalert2";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useForm, FormProvider, FieldValues } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import SocialLogin from "@/components/ui/SocialLogin";
 import { useLoginMutation } from "@/redux/api/auth/authApi";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
   const [loginMethod, setLoginMethod] = useState("email");
@@ -34,7 +34,7 @@ const LoginPage = () => {
         text: "You have been logged in successfully",
         icon: "success",
       });
-      router.push("/candidate-dashboard");
+      router.push("/admin-dashboard");
       methods.reset();
     } else {
       Swal.fire({
@@ -63,21 +63,21 @@ const LoginPage = () => {
             </p>
           </div>
           <div className="flex items-center justify-center py-5">
-      <RadioGroup
-        defaultValue="email"
-        onValueChange={(value) => setLoginMethod(value)}
-        className="flex flex-row space-x-4"
-      >
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="email" id="email" />
-          <Label htmlFor="email">Email Address</Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="phone" id="phone" />
-          <Label htmlFor="phone">Mobile Number</Label>
-        </div>
-      </RadioGroup>
-    </div>
+            <RadioGroup
+              defaultValue="email"
+              onValueChange={(value) => setLoginMethod(value)}
+              className="flex flex-row space-x-4"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="email" id="email" />
+                <Label htmlFor="email">Email Address</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="phone" id="phone" />
+                <Label htmlFor="phone">Mobile Number</Label>
+              </div>
+            </RadioGroup>
+          </div>
 
           {loginMethod === "email" ? (
             <FloatingLabelInput

@@ -1,18 +1,21 @@
 import { baseApi } from "../api";
 
-const authApi = baseApi.injectEndpoints({
+const industryApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createIndustry: builder.mutation({
       query: (data) => {
-        console.log(data);
+        const token = localStorage.getItem("token");
         return {
           url: "/industry/create-industry",
           method: "POST",
           body: data,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         };
       },
     }),
   }),
 });
 
-export const { useCreateIndustryMutation } = authApi;
+export const { useCreateIndustryMutation } = industryApi;

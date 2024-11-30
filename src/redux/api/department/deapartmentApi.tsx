@@ -1,18 +1,22 @@
 import { baseApi } from "../api";
 
-const authApi = baseApi.injectEndpoints({
+const departmentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createDepartment: builder.mutation({
       query: (data) => {
+        const token = localStorage.getItem("token");
         console.log(data);
         return {
-          url: "/department",
+          url: "/department/create-department",
           method: "POST",
           body: data,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         };
       },
     }),
   }),
 });
 
-export const { useCreateDepartmentMutation } = authApi;
+export const { useCreateDepartmentMutation } = departmentApi;
