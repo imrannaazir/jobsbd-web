@@ -28,7 +28,11 @@ const LoginPage = () => {
   // on submit handle
   const onSubmit = async (data: FieldValues) => {
     const response = await login(data);
-    if (response.data) {
+
+    console.log(response.data.data.accessToken);
+    if (response?.data?.data?.accessToken) {
+      localStorage.setItem("token", response.data.data.accessToken);
+      console.log("Login successful, token saved!");
       Swal.fire({
         title: "Success",
         text: "You have been logged in successfully",
