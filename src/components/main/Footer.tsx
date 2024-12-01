@@ -69,7 +69,7 @@ const Footer = () => {
                 <Link href="/candidate-faq" className="footer-link">
                   FAQs For Candidate
                 </Link>
-                <Link href="#" className="footer-link">
+                <Link href="/employer-faq" className="footer-link">
                   FAQs For Company
                 </Link>
               </div>
