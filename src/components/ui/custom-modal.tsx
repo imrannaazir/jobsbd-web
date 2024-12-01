@@ -1,5 +1,4 @@
 "use client";
-import React, { ReactNode, } from "react";
 import AddIconButton from "@/components/ui/add-icon-button";
 import {
   Dialog,
@@ -8,7 +7,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ReactNode } from "react";
 import EditButton from "./edit-button-with-icon";
+
 const CustomModal = ({
   children,
   buttonType,
@@ -17,20 +18,22 @@ const CustomModal = ({
   setOpen,
 }: {
   children: ReactNode;
-  buttonType: "add" | "edit";
+  buttonType: "add" | "edit" | null;
   title: string;
   open: boolean;
   setOpen: (open: boolean) => void;
 }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
-        {buttonType === "add" ? (
-          <AddIconButton asChild />
-        ) : (
-          <EditButton asChild />
-        )}
-      </DialogTrigger>
+      {buttonType && (
+        <DialogTrigger>
+          {buttonType === "add" ? (
+            <AddIconButton asChild />
+          ) : (
+            <EditButton asChild />
+          )}
+        </DialogTrigger>
+      )}
       <DialogContent>
         <DialogHeader className="border-b pb-4">
           <DialogTitle>New {title}</DialogTitle>

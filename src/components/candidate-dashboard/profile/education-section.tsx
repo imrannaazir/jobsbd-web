@@ -1,20 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
+
 import {
   useDeleteEducationMutation,
   useGetAllEducationQuery,
 } from "@/redux/api/candidate/candidateApi";
 import { convertIntoDateString } from "@/utils/convert-into-date-string";
+import { useState } from "react";
 import { FiDelete, FiEdit } from "react-icons/fi";
 import Swal from "sweetalert2";
 import SectionTitle from "../section-title";
 import EducationAddModal from "./education-add-modal";
+import EducationUpdateModal from "./education-update-modal"; // Import the update modal
 
 type TEducation = {
   id: string;
   degree: string;
   instituteName: string;
-  currentlyStudying?: boolean;
+  currentlyStudying?: boolean | null | undefined;
+  fieldOfStudy: string;
+  description?: string;
   grade: number;
   startDate: Date;
   endDate?: Date;
@@ -23,9 +29,14 @@ type TEducation = {
 const EducationSection = () => {
   const { data, isLoading } = useGetAllEducationQuery("");
   const [deleteEducation] = useDeleteEducationMutation();
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const [selectedEducation, setSelectedEducation] = useState<TEducation | null>(
+    null
+  );
 
-  const handleUpdate = (id: string) => {
-    console.log(`Update education with ID: ${id}`);
+  const handleUpdate = (edu: any) => {
+    setSelectedEducation(edu);
+    setOpenUpdateModal(true);
   };
 
   const handleDelete = async (id: string) => {
@@ -91,7 +102,7 @@ const EducationSection = () => {
 
               <div className="flex space-x-3">
                 <button
-                  onClick={() => handleUpdate(edu.id)}
+                  onClick={() => handleUpdate(edu)}
                   className="px-4 py-2 text-sm font-medium  bg-[#E5F4FF] rounded text-blue-500"
                 >
                   <FiEdit />
@@ -106,6 +117,13 @@ const EducationSection = () => {
             </div>
           ))}
       </div>
+      {selectedEducation && (
+        <EducationUpdateModal
+          educationData={selectedEducation}
+          open={openUpdateModal}
+          setOpen={setOpenUpdateModal}
+        />
+      )}
     </div>
   );
 };
