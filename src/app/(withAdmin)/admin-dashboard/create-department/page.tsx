@@ -1,101 +1,71 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useCreateDepartmentMutation } from "@/redux/api/department/deapartmentApi";
+import DepartmentModal from "@/components/admin-dashboard/departments/DepartmentModal";
+import IndustryModal from "@/components/admin-dashboard/industries/IndustryModal";
+import SectionTitle from "@/components/candidate-dashboard/section-title";
+import { useGetDepartmentsQuery } from "@/redux/api/candidate/candidateApi";
+import { useDeleteDepartmentMutation } from "@/redux/api/department/deapartmentApi";
+import { useDeleteIndustryMutation } from "@/redux/api/industry/industryApi";
+import { IoTrashBinSharp } from "react-icons/io5";
 
-import {
-  FieldValues,
-  FormProvider,
-  useForm,
-  useFormContext,
-} from "react-hook-form";
 import Swal from "sweetalert2";
 
-const DepartmentNameInput = ({
-  label,
-  name,
-  rules,
-}: {
-  label: string;
-  name: string;
-  rules?: any;
-}) => {
-  const { register } = useFormContext();
+type TDepartment = { id: string; name: string };
 
-  return (
-    <div className="relative space-y-1">
-      <label htmlFor={name} className="block text-gray-700 font-medium">
-        {label}
-      </label>
-      <input
-        id={name}
-        type="text"
-        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-        {...register(name, rules)}
-        placeholder={label}
-      />
-    </div>
-  );
-};
 const CreateDepartment = () => {
-  const methods = useForm();
-  const [createDepartment] = useCreateDepartmentMutation();
+  const { data: departments, isLoading } = useGetDepartmentsQuery("");
+  const [deleteDepartment] = useDeleteDepartmentMutation();
 
-  const onSubmit = async (data: FieldValues) => {
-    const formData = {
-      ...data,
-    };
-
+  const handleDeleteIndustry = async (departmentId: string) => {
     try {
-      const response: any = await createDepartment(formData);
-
-      console.log("API Response:", response);
+      const response: any = await deleteDepartment(departmentId);
+      console.log(response);
 
       if (response?.data) {
         Swal.fire({
           title: "Success",
-          text: "Department created successfully!",
+          text: "Department deleted successfully!",
           icon: "success",
         });
-        await methods.reset();
       } else {
         throw new Error(response?.error?.data?.message || "Creation failed");
       }
     } catch (error) {
-      console.error("API Error:", error);
+      console.error("API Error:", error); // Logs detailed error
       Swal.fire({
         title: "Error",
-        text: "Department creation failed",
+        text: "Department deletion failed",
         icon: "error",
       });
     }
   };
 
   return (
-    <div className="w-full mt-5 bg-white rounded-lg">
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)} // Handle form submission
-          className="max-w-md space-y-5 p-4 bg-white shadow-md rounded-lg"
-        >
-          <h2 className="text-2xl font-semibold text-gray-800">
-            Create Department
-          </h2>
-
-          <DepartmentNameInput
-            label="Department Name"
-            name="name"
-            rules={{ required: "Department Name is required" }}
-          />
-
-          <button
-            type="submit"
-            className="nav-link bg-[#1876D1] uppercase text-white hover:bg-primary py-3 px-6 cursor-pointer text-sm"
-          >
-            SUBMIT
-          </button>
-        </form>
-      </FormProvider>
+    <div className="section-design mt-10">
+      <SectionTitle label="Departments" component={<DepartmentModal />} />
+      {/* details Section */}
+      <div className="p-4 flex flex-col gap-2">
+        {!isLoading &&
+          departments?.data?.map((department: TDepartment, index: number) => (
+            <div
+              className="py-2 px-4 border rounded-md text-primary flex items-center gap-2"
+              key={department.id}
+            >
+              <p className="flex-1">
+                <span className="w-5 inline-block">{index + 1}.</span>
+                <span>{department?.name}</span>
+              </p>
+              <button
+                onClick={() => handleDeleteIndustry(department.id)}
+                className="flex items-center gap-1 hover:text-red-500 transition-colors duration-300 ease-in-out"
+              >
+                <IoTrashBinSharp />
+                <span>Delete</span>
+              </button>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };

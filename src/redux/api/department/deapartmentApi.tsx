@@ -4,19 +4,23 @@ const departmentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createDepartment: builder.mutation({
       query: (data) => {
-        const token = localStorage.getItem("token");
-        console.log(data);
         return {
           url: "/department/create-department",
           method: "POST",
           body: data,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
         };
       },
+      invalidatesTags: ["department"],
+    }),
+    deleteDepartment: builder.mutation({
+      query: (departmentId) => ({
+        url: `/department/${departmentId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["department"],
     }),
   }),
 });
 
-export const { useCreateDepartmentMutation } = departmentApi;
+export const { useCreateDepartmentMutation, useDeleteDepartmentMutation } =
+  departmentApi;
