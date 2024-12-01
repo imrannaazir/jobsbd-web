@@ -17,7 +17,7 @@ const baseQuery = fetchBaseQuery({
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
-
+    console.log({ token }, "line 20 from redux api");
     if (token) {
       headers.set("authorization", `${token}`);
     }
@@ -62,7 +62,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     const data = await res.json();
 
     if (data?.data?.accessToken) {
-      const user = (api.getState() as RootState).auth.user;// @ts-ignore
+      const user = (api.getState() as RootState).auth.user; // @ts-ignore
 
       api.dispatch(
         setUser({
@@ -84,4 +84,14 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
   endpoints: () => ({}),
+  tagTypes: [
+    "candidate",
+    "education",
+    "skill",
+    "experience",
+    "project",
+    "certificate",
+    "department",
+    "industry",
+  ],
 });

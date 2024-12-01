@@ -5,19 +5,13 @@ import CircularProgressBar from "@/components/candidate-dashboard/circular-progr
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { BsBuildings } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
-import { FaRegHeart } from "react-icons/fa";
-import { MdOutlineDashboard, MdOutlineWorkHistory } from "react-icons/md";
+import { MdOutlineCreateNewFolder, MdOutlineDashboard } from "react-icons/md";
 import { RiListSettingsLine } from "react-icons/ri";
 import Divider from "../ui/Divider";
-import { usePathname } from "next/navigation";
-import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
 
-const CandidateDashboardNavbar: React.FC = () => {
-  const {data} = useGetCandidateInfoQuery('')
-  const currentPath = usePathname();
+const AdminDashboardNavbar: React.FC = () => {
   const navLinks = [
     {
       label: "Dashboard",
@@ -27,27 +21,23 @@ const CandidateDashboardNavbar: React.FC = () => {
     {
       label: "Profile",
       icon: <CgProfile size={25} />,
-      href: "/candidate-dashboard/profile",
+      href: "/candidate-profile",
     },
     {
-      label: "Applied Jobs",
-      icon: <MdOutlineWorkHistory size={25} />,
-      href: "/candidate-dashboard/applied-jobs",
+      label: "Create Industry",
+      icon: <MdOutlineCreateNewFolder size={25} />,
+      href: "/admin-dashboard/create-industry",
     },
     {
-      label: "Saved Jobs",
-      icon: <FaRegHeart size={25} />,
-      href: "/candidate-dashboard/saved-jobs",
+      label: "Create Department",
+      icon: <MdOutlineCreateNewFolder size={25} />,
+      href: "/admin-dashboard/create-department",
     },
-    {
-      label: "Followed Company",
-      icon: <BsBuildings size={25} />,
-      href: "/candidate-dashboard/followed-companies",
-    },
+
     {
       label: "Setting",
       icon: <RiListSettingsLine size={25} />,
-      href: "/candidate-dashboard/candidate-change-password",
+      href: "/admin-dashboard/admin-change-password",
     },
     {
       label: "Logout",
@@ -71,25 +61,21 @@ const CandidateDashboardNavbar: React.FC = () => {
             />
           </div>
           {/* user Name */}
-          <h3 className="text-xl font-bold text-center py-5">
-          {data?.data?.fullName}
-          </h3>
+          <h3 className="text-xl font-bold text-center py-5">User Name</h3>
         </div>
-        <Divider/>
-        <ul className="mt-2 md:mt-0 grid grid-cols-2 lg:grid-cols-1 gap-2 md:gap-0">
+        <Divider />
+        <ul className="mt-2 grid grid-cols-2 lg:grid-cols-1 gap-2">
           {navLinks.map((link, index) => (
             <li key={index} className="border lg:border-none p-2 lg:p-0">
               <Link
-              href={link.href}
-              className={ 
-                currentPath === link.href
-                  ? "flex items-center text-sm lg:text-base gap-3 py-2 px-3 bg-[#EFF7FF] transition text-primary font-semibold border-l-4 border-primary"
-                  : "flex items-center text-sm lg:text-base gap-3 py-2 px-3 hover:bg-[#EFF7FF] text-gray-800 transition font-semibold"
-              }
-            >
-              <span className="p-2 rounded-full shadow">{link.icon}</span>
-              {link.label}
-            </Link>
+                href={link.href}
+                className="flex items-center text-sm lg:text-base gap-3  p-2"
+              >
+                <p className="bg-white p-2 rounded-full shadow-xl">
+                  {link.icon}
+                </p>
+                {link.label}
+              </Link>
             </li>
           ))}
         </ul>
@@ -98,4 +84,4 @@ const CandidateDashboardNavbar: React.FC = () => {
   );
 };
 
-export default CandidateDashboardNavbar;
+export default AdminDashboardNavbar;

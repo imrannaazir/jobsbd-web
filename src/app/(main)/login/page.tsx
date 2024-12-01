@@ -1,23 +1,23 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
+import { Button } from "@/components/ui/button";
 import CandidateAuthContainer from "@/components/ui/CandidateAuthContainer";
 import FloatingLabelInput from "@/components/ui/CustomInput";
+import { Label } from "@/components/ui/label";
 import ORDivider from "@/components/ui/ORDivider";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
-import SocialLogin from "@/components/ui/SocialLogin";
-import Link from "next/link";
-import React, { useState } from "react";
-import Swal from "sweetalert2";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useForm, FormProvider, FieldValues } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import SocialLogin from "@/components/ui/SocialLogin";
 import { useLoginMutation } from "@/redux/api/auth/authApi";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { useAppDispatch } from "@/redux/hooks";
 import { setUser, TUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { verifyToken } from "@/utils/verifyToken";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();

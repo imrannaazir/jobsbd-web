@@ -11,26 +11,54 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import React from "react";
+import {
+  useGetCandidateInfoQuery,
+  useUpdateCandidateInfoMutation,
+} from "@/redux/api/candidate/candidateApi";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const SummaryModal = () => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [updateBio] = useUpdateCandidateInfoMutation();
+  const { data , refetch, isLoading} = useGetCandidateInfoQuery("");
   const form = useForm({
     defaultValues: {
-      summary: "",
+      bio: !isLoading &&data?.data?.bio,
     },
   });
 
-  const onSubmit = (data: { summary: string }) => {
-    console.log("Form Data:", data);
+  const onSubmit = async (data: { bio: string }) => {
+    const res = await updateBio(data);
+    console.log(res.data);
+    if (res.data) {
+      Swal.fire({
+        title: "Success",
+        text: "Bio updated successfully",
+        icon: "success",
+      });
+      setOpen(false);
+      refetch()
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: "Failed to update Bio",
+        icon: "error",
+      });
+    }
   };
-
   return (
-    <CustomModal buttonType="edit" title="Summary">
+    <CustomModal
+      buttonType="edit"
+      title="Summary"
+      open={open}
+      setOpen={setOpen}
+    >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
-            name="summary"
+            name="bio"
             control={form.control}
             render={({ field }) => (
               <FormItem>

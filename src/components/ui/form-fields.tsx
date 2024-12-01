@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { TInput } from "@/type";
+
 import React from "react";
 
 type TInputField = {
@@ -69,8 +69,8 @@ export const SelectField = ({
           </FormControl>
           <SelectContent>
             {options.map((option: any) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
+              <SelectItem key={option.id} value={option.id}>
+                {option.name}
               </SelectItem>
             ))}
           </SelectContent>
@@ -81,7 +81,7 @@ export const SelectField = ({
   />
 );
 
-export const DateField = ({ name, label }: TInputField) => (
+export const DateField = ({ name, label, disabled=false }: TInputField) => (
   <FormField
     name={name}
     render={({ field }) => (
@@ -111,7 +111,7 @@ export const DateField = ({ name, label }: TInputField) => (
               mode="single"
               selected={field.value}
               onSelect={field.onChange}
-              disabled={(date) => date < new Date()}
+              disabled={disabled}
               initialFocus
             />
           </PopoverContent>
