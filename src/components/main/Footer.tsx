@@ -51,7 +51,7 @@ const Footer = () => {
               <p className="footer-title">Quick Link</p>
 
               <div className="flex flex-col items-start mt-5 space-y-2 text-white">
-                <Link href="#" className="footer-link">
+                <Link href="/our-story" className="footer-link">
                   About JobsBD
                 </Link>
                 <Link href="/contact-us" className="footer-link">
