@@ -85,7 +85,7 @@ export const DateField = ({ name, label }: TInputField) => (
   <FormField
     name={name}
     render={({ field }) => (
-      <FormItem className="flex flex-col">
+      <FormItem>
         <FormLabel>{label}</FormLabel>
         <Popover>
           <PopoverTrigger asChild>
@@ -93,7 +93,7 @@ export const DateField = ({ name, label }: TInputField) => (
               <Button
                 variant={"outline"}
                 className={cn(
-                  "w-full pl-3 text-left font-normal",
+                  "w-full pl-3 text-left font-normal border-slate-200 hover:border-primary hover:bg-white hover:text-black",
                   !field.value && "text-muted-foreground"
                 )}
               >
