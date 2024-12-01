@@ -1,34 +1,57 @@
-import { MdOutlineWorkHistory } from "react-icons/md";
+"use client";
+import { MdOutlineEmail, MdOutlineWorkHistory } from "react-icons/md";
 import SectionTitle from "../section-title";
 import ProfileEditModal from "./profile-edit-modal";
 import ProfileIconInfo from "./profile-icon-info";
-import { LiaBinocularsSolid } from "react-icons/lia";
 import { FaBriefcase } from "react-icons/fa6";
 import { TbMoneybag } from "react-icons/tb";
+import { SlLocationPin } from "react-icons/sl";
+
+import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
+import { FiPhone } from "react-icons/fi";
+
 
 const BasicDetails = () => {
+  const { data: candidateInfo, isLoading } = useGetCandidateInfoQuery("");
+  console.log(candidateInfo);
   const data = [
     {
       icon: <MdOutlineWorkHistory />,
       label: "Work Experience",
+      data: `${candidateInfo?.data?.totalExperience} years`,
     },
     {
       icon: <TbMoneybag />,
       label: "Present Salary",
+      data: candidateInfo?.data?.currentSalary,
     },
     {
       icon: <TbMoneybag />,
       label: "Expected Salary",
+      data: candidateInfo?.data?.expectedSalary,
     },
     {
       icon: <FaBriefcase />,
       label: "Employment Type",
+      data: candidateInfo?.data?.employmentType,
     },
     {
-      icon: <LiaBinocularsSolid />,
-      label: "Looking For",
+      icon: <FiPhone />,
+      label: "Contact Number",
+      data: candidateInfo?.data?.phoneNumber,
+    },
+    {
+      icon: <MdOutlineEmail />,
+      label: "Email Address",
+      data: candidateInfo?.data?.email,
+    },
+    {
+      icon: <SlLocationPin />,
+      label: "Current Location",
+      data: candidateInfo?.data?.addressLine,
     },
   ];
+
   return (
     <>
       <div id="details" className="section-design">
@@ -36,8 +59,14 @@ const BasicDetails = () => {
         <SectionTitle label="Basic Details" component={<ProfileEditModal />} />
         {/* details info */}
         <div className="grid grid-cols-4 items-center justify- gap-5 p-4">
-          {data.map((item, index) => (
-            <ProfileIconInfo key={index} icon={item.icon} label={item.label} />
+          {data?.map((item, index) => (
+            <ProfileIconInfo
+              key={index}
+              icon={item.icon}
+              label={item.label}
+              data={item.data}
+              isLoading={isLoading}
+            />
           ))}
         </div>
       </div>

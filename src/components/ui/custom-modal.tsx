@@ -1,10 +1,9 @@
-"use client"
-import React, { ReactNode, useState } from "react";
+"use client";
+import React, { ReactNode, } from "react";
 import AddIconButton from "@/components/ui/add-icon-button";
 import {
   Dialog,
   DialogContent,
-  
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -14,12 +13,15 @@ const CustomModal = ({
   children,
   buttonType,
   title,
+  open,
+  setOpen,
 }: {
   children: ReactNode;
   buttonType: "add" | "edit";
   title: string;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 }) => {
-  const [open, setOpen] = useState<boolean>(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>

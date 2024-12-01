@@ -15,30 +15,48 @@ import EditButton from "@/components/ui/edit-button-with-icon";
 import { Form } from "@/components/ui/form";
 import { InputField, SelectField } from "@/components/ui/form-fields";
 import {
-  formSchema,
-  FormValues,
-  defaultValues,
-} from "@/schemas/profile-form-schema";
+  bangladeshDistricts,
+  EmploymentType,
+  jobLevel,
+} from "@/constant/constant-variable";
+import { useUpdateCandidateInfoMutation } from "@/redux/api/candidate/candidateApi";
+
+import { formSchema, FormValues } from "@/schemas/profile-form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-
+import Swal from "sweetalert2";
 
 const ProfileEditModal = () => {
+  const [updateUserInfo] = useUpdateCandidateInfoMutation();
   const [open, setOpen] = useState<boolean>(false);
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues,
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data: FormValues) => {
+    const res = await updateUserInfo(data);
+
+    if (res.data) {
+      Swal.fire({
+        title: "Success",
+        text: "Profile updated successfully",
+        icon: "success",
+      });
+      setOpen(false);
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: "Failed to update profile",
+        icon: "error",
+      });
+    }
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <EditButton asChild/>
+        <EditButton asChild />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -52,17 +70,8 @@ const ProfileEditModal = () => {
                 label="Total Year Of Experience"
                 type="number"
                 min={1}
-                required
               />
-              <SelectField
-                name="currency"
-                label="Currency"
-                options={[
-                  { value: "usd", label: "USD" },
-                  { value: "bdt", label: "BDT" },
-                  { value: "eur", label: "EUR" },
-                ]}
-              />
+
               <InputField
                 name="currentSalary"
                 label="Current Salary"
@@ -76,42 +85,22 @@ const ProfileEditModal = () => {
               <SelectField
                 name="employmentType"
                 label="Employment Type"
-                options={[
-                  { value: "full-time", label: "Full Time" },
-                  { value: "part-time", label: "Part Time" },
-                  { value: "contract", label: "Contract" },
-                ]}
-              />
-              <SelectField
-                name="salaryType"
-                label="Salary Type"
-                options={[
-                  { value: "monthly", label: "Monthly" },
-                  { value: "yearly", label: "Yearly" },
-                ]}
+                options={EmploymentType}
               />
               <SelectField
                 name="jobLevel"
                 label="Job Level"
-                options={[
-                  { value: "entry", label: "Entry Level" },
-                  { value: "mid", label: "Mid Level" },
-                  { value: "senior", label: "Senior Level" },
-                ]}
+                options={jobLevel}
               />
 
               <SelectField
-                name="currentLocation"
-                label="Current Location"
-                options={[
-                  { value: "dhaka", label: "Dhaka" },
-                  { value: "chittagong", label: "Chittagong" },
-                  { value: "sylhet", label: "Sylhet" },
-                ]}
+                name="district"
+                label="District"
+                options={bangladeshDistricts}
               />
 
               <InputField
-                name="address"
+                name="addressLine"
                 label="Address Line"
                 placeholder="Your Address Line"
               />

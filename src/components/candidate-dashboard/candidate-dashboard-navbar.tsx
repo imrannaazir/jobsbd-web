@@ -13,8 +13,10 @@ import { MdOutlineDashboard, MdOutlineWorkHistory } from "react-icons/md";
 import { RiListSettingsLine } from "react-icons/ri";
 import Divider from "../ui/Divider";
 import { usePathname } from "next/navigation";
+import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
 
 const CandidateDashboardNavbar: React.FC = () => {
+  const {data} = useGetCandidateInfoQuery('')
   const currentPath = usePathname();
   const navLinks = [
     {
@@ -25,7 +27,7 @@ const CandidateDashboardNavbar: React.FC = () => {
     {
       label: "Profile",
       icon: <CgProfile size={25} />,
-      href: "/candidate-profile",
+      href: "/candidate-dashboard/profile",
     },
     {
       label: "Applied Jobs",
@@ -35,12 +37,12 @@ const CandidateDashboardNavbar: React.FC = () => {
     {
       label: "Saved Jobs",
       icon: <FaRegHeart size={25} />,
-      href: "/saved-jobs",
+      href: "/candidate-dashboard/saved-jobs",
     },
     {
       label: "Followed Company",
       icon: <BsBuildings size={25} />,
-      href: "/followed-company",
+      href: "/candidate-dashboard/followed-companies",
     },
     {
       label: "Setting",
@@ -69,7 +71,9 @@ const CandidateDashboardNavbar: React.FC = () => {
             />
           </div>
           {/* user Name */}
-          <h3 className="text-xl font-bold text-center py-5">User Name</h3>
+          <h3 className="text-xl font-bold text-center py-5">
+          {data?.data?.fullName}
+          </h3>
         </div>
         <Divider/>
         <ul className="mt-2 md:mt-0 grid grid-cols-2 lg:grid-cols-1 gap-2 md:gap-0">
