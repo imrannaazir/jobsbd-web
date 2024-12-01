@@ -31,6 +31,23 @@ const candidateApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["education"],
     }),
+    deleteEducation: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/education/delete-education/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["education"],
+    }),
+    updateEducation: builder.mutation({
+      query: ({ id, updatedData }) => ({
+        url: `/education/update-education/${id}`,
+        method: "PUT",
+        body: updatedData,
+      }),
+      invalidatesTags: ["education"],
+    }),
 
     getAllEducation: builder.query({
       query: () => {
@@ -154,4 +171,6 @@ export const {
   useGetAllCertificatesQuery,
   useGetDepartmentsQuery,
   useGetIndustriesQuery,
+  useDeleteEducationMutation,
+  useUpdateEducationMutation,
 } = candidateApi;

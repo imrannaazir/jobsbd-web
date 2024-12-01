@@ -1,63 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useCreateIndustryMutation } from "@/redux/api/industry/industryApi";
+import IndustryModal from "@/components/admin-dashboard/industries/IndustryModal";
+import SectionTitle from "@/components/candidate-dashboard/section-title";
+import { useGetIndustriesQuery } from "@/redux/api/candidate/candidateApi";
+import { useDeleteIndustryMutation } from "@/redux/api/industry/industryApi";
+import { IoTrashBinSharp } from "react-icons/io5";
 
-import {
-  FieldValues,
-  FormProvider,
-  useForm,
-  useFormContext,
-} from "react-hook-form";
 import Swal from "sweetalert2";
 
-const IndustryNameInput = ({
-  label,
-  name,
-  rules,
-}: {
-  label: string;
-  name: string;
-  rules?: any;
-}) => {
-  const { register } = useFormContext();
+type TIndustry = { id: string; name: string };
 
-  return (
-    <div className="relative space-y-1">
-      <label htmlFor={name} className="block text-gray-700 font-medium">
-        {label}
-      </label>
-      <input
-        id={name}
-        type="text"
-        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-        {...register(name, rules)}
-        placeholder={label}
-      />
-    </div>
-  );
-};
 const CreateIndustry = () => {
-  const methods = useForm();
-  const [createIndustry] = useCreateIndustryMutation();
+  const { data: industries, isLoading } = useGetIndustriesQuery("");
+  const [deleteIndustry] = useDeleteIndustryMutation();
 
-  const onSubmit = async (data: FieldValues) => {
-    const formData = {
-      ...data,
-    };
-
+  const handleDeleteIndustry = async (industryId: string) => {
     try {
-      const response: any = await createIndustry(formData);
-
-      console.log("API Response:", response); // Debug response
-
+      const response: any = await deleteIndustry(industryId);
       if (response?.data) {
         Swal.fire({
           title: "Success",
-          text: "Industry created successfully!",
+          text: "Industry deleted successfully!",
           icon: "success",
         });
-        await methods.reset(); // Ensures form resets correctly
       } else {
         throw new Error(response?.error?.data?.message || "Creation failed");
       }
@@ -65,37 +31,37 @@ const CreateIndustry = () => {
       console.error("API Error:", error); // Logs detailed error
       Swal.fire({
         title: "Error",
-        text: "Industry creation failed",
+        text: "Industry deletion failed",
         icon: "error",
       });
     }
   };
 
   return (
-    <div className="w-full mt-5 bg-white rounded-lg">
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)} // Handle form submission
-          className="max-w-md space-y-5 p-4 bg-white shadow-md rounded-lg"
-        >
-          <h2 className="text-2xl font-semibold text-gray-800">
-            Create Industry
-          </h2>
-
-          <IndustryNameInput
-            label="Industry Name"
-            name="name"
-            rules={{ required: "Industry Name is required" }}
-          />
-
-          <button
-            type="submit"
-            className="nav-link bg-[#1876D1] uppercase text-white hover:bg-primary py-3 px-6 cursor-pointer text-sm"
-          >
-            SUBMIT
-          </button>
-        </form>
-      </FormProvider>
+    <div className="section-design mt-10">
+      <SectionTitle label="Industries" component={<IndustryModal />} />
+      {/* details Section */}
+      <div className="p-4 flex flex-col gap-2">
+        {!isLoading &&
+          industries?.data?.map((industry: TIndustry, index: number) => (
+            <div
+              className="py-2 px-4 border rounded-md text-primary flex items-center gap-2"
+              key={industry.id}
+            >
+              <p className="flex-1">
+                <span className="w-5 inline-block">{index + 1}.</span>
+                <span>{industry?.name}</span>
+              </p>
+              <button
+                onClick={() => handleDeleteIndustry(industry.id)}
+                className="flex items-center gap-1 hover:text-red-500 transition-colors duration-300 ease-in-out"
+              >
+                <IoTrashBinSharp />
+                <span>Delete</span>
+              </button>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
