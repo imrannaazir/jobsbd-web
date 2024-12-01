@@ -1,11 +1,11 @@
-import Link from "next/link";
-import Container from "./Container";
-import Image from "next/image";
 import facebook from "@/assets/main/facebook.png";
 import instagram from "@/assets/main/instagram.png";
 import linkedin from "@/assets/main/linkedin.png";
-import { FaPhone, FaLocationDot } from "react-icons/fa6";
+import Image from "next/image";
+import Link from "next/link";
+import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { IoMdMail } from "react-icons/io";
+import Container from "./Container";
 
 const Footer = () => {
   const d = new Date();
@@ -66,7 +66,7 @@ const Footer = () => {
                 <Link href="/refund-policy" className="footer-link">
                   Refund Policy
                 </Link>
-                <Link href="#" className="footer-link">
+                <Link href="/candidate-faq" className="footer-link">
                   FAQs For Candidate
                 </Link>
                 <Link href="#" className="footer-link">
