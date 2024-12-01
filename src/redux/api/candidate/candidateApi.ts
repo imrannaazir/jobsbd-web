@@ -75,7 +75,7 @@ const candidateApi = baseApi.injectEndpoints({
     getAllExperience: builder.query({
       query: () => {
         return {
-          url: "experience/create-experience",
+          url: "experience/",
         };
       },
       providesTags: ["experience"],
@@ -100,6 +100,42 @@ const candidateApi = baseApi.injectEndpoints({
       },
       providesTags: ["project"],
     }),
+
+    addCertificate: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/trainings",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["certificate"],
+    }),
+
+    getAllCertificates: builder.query({
+      query: () => {
+        return {
+          url: "/trainings/all",
+        };
+      },
+      providesTags: ["certificate"],
+    }),
+    getDepartments: builder.query({
+      query: () => {
+        return {
+          url: "department/",
+        };
+      },
+      providesTags: ["department"],
+    }),
+    getIndustries: builder.query({
+      query: () => {
+        return {
+          url: "/industry",
+        };
+      },
+      providesTags: ["industry"],
+    }),
   }),
 });
 
@@ -114,4 +150,8 @@ export const {
   useGetAllExperienceQuery,
   useAddProjectMutation,
   useGetAllProjectsQuery,
+  useAddCertificateMutation,
+  useGetAllCertificatesQuery,
+  useGetDepartmentsQuery,
+  useGetIndustriesQuery,
 } = candidateApi;

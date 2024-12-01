@@ -69,8 +69,8 @@ export const SelectField = ({
           </FormControl>
           <SelectContent>
             {options.map((option: any) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
+              <SelectItem key={option.id} value={option.id}>
+                {option.name}
               </SelectItem>
             ))}
           </SelectContent>

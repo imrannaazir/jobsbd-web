@@ -1,10 +1,8 @@
 "use client";
-
 import RichTextEditor from "@/components/rich-text-editor/rich-text-editor";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import CustomModal from "@/components/ui/custom-modal";
-
 import {
   Form,
   FormControl,
@@ -19,10 +17,8 @@ import {
   projectFormSchema,
   ProjectFormValues,
 } from "@/schemas/profile-form-schema";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
@@ -53,6 +49,7 @@ const ProjectModal = () => {
         })
     }
   };
+  
   return (
     <CustomModal buttonType="add" title="Project" open={open} setOpen={setOpen}>
       <Form {...form}>

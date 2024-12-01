@@ -17,7 +17,15 @@ import {
   SelectField,
 } from "@/components/ui/form-fields";
 import { Label } from "@/components/ui/label";
-import { bangladeshDistricts } from "@/constant/constant-variable";
+import {
+  bangladeshDistricts,
+  EmploymentType,
+} from "@/constant/constant-variable";
+import {
+  useAddExperienceMutation,
+  useGetDepartmentsQuery,
+  useGetIndustriesQuery,
+} from "@/redux/api/candidate/candidateApi";
 import {
   workExperienceFormSchema,
   WorkExperienceFormValues,
@@ -27,16 +35,37 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const WorkExperienceModel = () => {
+  // get departments from database
+  const { data: departments } = useGetDepartmentsQuery("");
+  const { data: industries } = useGetIndustriesQuery("");
+  const [addExperience] = useAddExperienceMutation();
   const [isWorking, setIsWorking] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const form = useForm<WorkExperienceFormValues>({
     resolver: zodResolver(workExperienceFormSchema),
   });
 
-  const onSubmit = (data: WorkExperienceFormValues) => {
-    console.log(data);
+  const onSubmit = async (data: WorkExperienceFormValues) => {
+    const response = await addExperience(data);
+    if (response.data) {
+      Swal.fire({
+        title: "Experience Added",
+        text: "Experience has been added successfully",
+        icon: "success",
+      });
+      setOpen(false);
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: "Failed to add Experience",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
   return (
     <CustomModal
@@ -58,11 +87,7 @@ const WorkExperienceModel = () => {
             <SelectField
               name="employmentType"
               label="Employment Type"
-              options={[
-                { value: "usd", label: "USD" },
-                { value: "bdt", label: "BDT" },
-                { value: "eur", label: "EUR" },
-              ]}
+              options={EmploymentType}
             />
             <InputField
               name="companyName"
@@ -74,57 +99,44 @@ const WorkExperienceModel = () => {
             <SelectField
               name="departmentId"
               label="Department"
-              options={[
-                { value: "usd", label: "USD" },
-                { value: "bdt", label: "BDT" },
-                { value: "eur", label: "EUR" },
-              ]}
+              options={departments?.data}
             />
             <SelectField
               name="industryId"
               label="Industry"
-              options={[
-                { value: "usd", label: "USD" },
-                { value: "bdt", label: "BDT" },
-                { value: "eur", label: "EUR" },
-              ]}
+              options={industries?.data}
             />
-            <div className="flex items-center gap-6 w-full">
-              <DateField name="startDate" label="Start Date" />
-              <div>
-                <DateField
-                  name="endDate"
-                  label="End Date"
-                  disabled={isWorking}
-                />
-                <div className="flex items-center space-x-2 mt-2">
-                  <FormField
-                    name="isWorking"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <Checkbox
-                            id="isWorking"
-                            checked={isWorking}
-                            onCheckedChange={(checked) => {
-                              setIsWorking(checked as boolean);
-                              field.onChange(checked);
-                            }}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
 
-                  <label
-                    htmlFor="currentlyStudying"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Currently Studying
-                  </label>
-                </div>
+            <DateField name="startDate" label="Start Date" />
+            <div>
+              <DateField name="endDate" label="End Date" disabled={isWorking} />
+              <div className="flex items-center space-x-2 mt-2">
+                <FormField
+                  name="isWorking"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Checkbox
+                          id="isWorking"
+                          checked={isWorking}
+                          onCheckedChange={(checked) => {
+                            setIsWorking(checked as boolean);
+                            field.onChange(checked);
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <label
+                  htmlFor="isWorking"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Currently working
+                </label>
               </div>
             </div>
 
@@ -138,7 +150,6 @@ const WorkExperienceModel = () => {
               name="addressLine"
               label="Address Line"
               type="text"
-              readOnly
               placeholder="Type Location"
             />
           </div>

@@ -68,8 +68,8 @@ export const projectFormSchema = z.object({
 
 // project schema
 export const certificateFormSchema = z.object({
-  name: z.string().min(1, "name is required"),
-  instituteName: z.string().min(1, "Institute is required"),
+  certificateName: z.string().min(1, "name is required"),
+  institution: z.string().min(1, "Institute is required"),
   startDate: z.date({
     required_error: "Please select a date",
   }),
