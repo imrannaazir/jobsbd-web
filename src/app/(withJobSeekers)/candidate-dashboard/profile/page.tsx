@@ -22,9 +22,7 @@ const page = () => {
       <CandidateDashboardTopNav  navItems={navItems}/>
       <div className="relative top-14 py-5 space-y-8">
         <BasicDetails />
-
         <Summary />
-
         <EducationSection />
         <SkillSection/>
         <WorkExperienceSection/>

@@ -17,8 +17,19 @@ const industryApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["industry"],
     }),
+    getIndustry: builder.query({
+      query: () => {
+        return {
+          url: "/industry",
+        };
+      },
+      providesTags: ["industry"],
+    }),
   }),
 });
 
-export const { useCreateIndustryMutation, useDeleteIndustryMutation } =
-  industryApi;
+export const {
+  useCreateIndustryMutation,
+  useDeleteIndustryMutation,
+  useGetIndustryQuery,
+} = industryApi;

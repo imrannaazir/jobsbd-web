@@ -8,30 +8,27 @@ import { useState } from "react";
 import logo from "@/assets/main/logo-transparent.png";
 import { usePathname } from "next/navigation";
 import MobileNavbar from "./MobileNavbar";
+import { FaChevronDown } from "react-icons/fa";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/redux/features/auth/authSlice";
-import userIcon from '../../assets/candidate-dashboard/candidate-default.png';
+import userIcon from "../../assets/candidate-dashboard/candidate-default.png";
 import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const currentPath = usePathname();
   const dispatch = useAppDispatch();
-  const userInfo = useAppSelector((state) => state.auth.user);
+  // const userInfo = useAppSelector((state) => state.auth.user);
   const token = useAppSelector((state) => state.auth.token);
-  const {data, isLoading} = useGetCandidateInfoQuery("");
-
-  console.log(data?.data, userInfo);
+  const { data, isLoading } = useGetCandidateInfoQuery("");
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -96,58 +93,75 @@ const Navbar = () => {
                   Get Support
                 </Link>
               </li>
-              {
-                token ? <li>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <div className="flex items-center justify-center gap-3 cursor-pointer">
-                      <Image
-                        src={userIcon}
-                        width={32}
-                        height={32}
-                        className="size-7 rounded-full"
-                        alt="user"
-                      />
-                    <div>
-                      <h2>{!isLoading && data?.data?.fullName}</h2>
-                      <p>Candidate</p>
-                    </div>
-                    </div>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56 mt-3">
-                    <DropdownMenuLabel className="text-center">
-                      name
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuGroup className="cursor-pointer">
-                      <Link href="/admin/profile">
-                        <DropdownMenuItem className="cursor-pointer">
-                          Profile
-                        </DropdownMenuItem>
-                      </Link>
-                      <Link href="/admin/profile">
-                        <DropdownMenuItem className="cursor-pointer">
-                          Profile
-                        </DropdownMenuItem>
-                      </Link>
-                      <DropdownMenuItem className="cursor-pointer">
-                        Settings
-                      </DropdownMenuItem>
-                    </DropdownMenuGroup>
+              {token ? (
+                <li>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <div className="flex items-center justify-center gap-3 cursor-pointer">
+                        <Image
+                          src={userIcon}
+                          width={40}
+                          height={40}
+                          className="size-10 rounded-full"
+                          alt="user"
+                        />
+                        <div>
+                          <h2 className="text-sm font-semibold">
+                            {!isLoading && data?.data?.fullName}
+                          </h2>
+                          <p className="text-sm">Candidate</p>
+                        </div>
+                        <div>
+                          <FaChevronDown className="size-4" />
+                        </div>
+                      </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56 mt-3">
+                      <DropdownMenuGroup className="cursor-pointer">
+                        <Link href="/candidate-dashboard">
+                          <DropdownMenuItem className="cursor-pointer">
+                            <div className="flex items-center justify-center gap-3 cursor-pointer">
+                              <Image
+                                src={userIcon}
+                                width={40}
+                                height={40}
+                                className="size-10 rounded-full"
+                                alt="user"
+                              />
+                              <div>
+                                <h2 className="text-sm font-semibold">
+                                  {!isLoading && data?.data?.fullName}
+                                </h2>
+                                <p className="text-sm">Go To Dashboard</p>
+                              </div>
+                            </div>
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link href="/candidate-dashboard/profile">
+                          <DropdownMenuItem className="cursor-pointer">
+                            View Profile
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link href="/candidate-dashboard/candidate-change-password">
+                          <DropdownMenuItem className="cursor-pointer">
+                          Settings
+                          </DropdownMenuItem>
+                        </Link>
+                      </DropdownMenuGroup>
 
-                    <div className="p-2">
-                      <Button
-                        onClick={handleLogOut}
-                        className="bg-[#265450] w-full hover:bg-[#265450]/90 text-white cursor-pointer"
-                      >
-                        Logout
-                      </Button>
-                    </div>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </li> 
-              :
-<>
+                      <div className="p-2">
+                        <Button
+                          onClick={handleLogOut}
+                          className="bg-white w-full border-2 border-primary text-primary cursor-pointer hover:bg-[#ECF0F3]"
+                        >
+                          Logout
+                        </Button>
+                      </div>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </li>
+              ) : (
+                <>
                   <li>
                     <Link
                       href="/login"
@@ -173,11 +187,7 @@ const Navbar = () => {
                     </Link>
                   </li>
                 </>
-              }
-                
-             
-                
-              
+              )}
             </ul>
           </div>
 

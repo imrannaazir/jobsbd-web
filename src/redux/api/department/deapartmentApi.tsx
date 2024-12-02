@@ -19,8 +19,19 @@ const departmentApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["department"],
     }),
+    getDepartment: builder.query({
+      query: () => {
+        return {
+          url: "/department",
+        };
+      },
+      providesTags: ["department"],
+    }),
   }),
 });
 
-export const { useCreateDepartmentMutation, useDeleteDepartmentMutation } =
-  departmentApi;
+export const {
+  useCreateDepartmentMutation,
+  useDeleteDepartmentMutation,
+  useGetDepartmentQuery,
+} = departmentApi;
