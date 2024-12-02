@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardContent,
@@ -68,10 +67,18 @@ const JobCard = () => {
           <p className="text-sm font-semibold">Deadline: 100000 Taka/Monthly</p>
         </div>
         <div className="flex items-center gap-4">
-          <Link href="/" className="text-primary font-semibold border border-primary hover:bg-primary hover:text-white text-sm transition-all duration-300 rounded px-2 py-1">
+          <Link
+            href="/"
+            className="text-primary font-semibold border border-primary hover:bg-primary hover:text-white text-sm transition-all duration-300 rounded px-2 py-1"
+          >
             View Details
           </Link>
-          <Link href="/"  className="bg-green-500 text-white text-sm font-semibold rounded px-2 py-1">Apply Now</Link>
+          <Link
+            href="/"
+            className="bg-green-500 text-white text-sm font-semibold rounded px-2 py-1"
+          >
+            Apply Now
+          </Link>
         </div>
       </CardFooter>
     </Card>

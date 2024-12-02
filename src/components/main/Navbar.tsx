@@ -8,14 +8,39 @@ import { useState } from "react";
 import logo from "@/assets/main/logo-transparent.png";
 import { usePathname } from "next/navigation";
 import MobileNavbar from "./MobileNavbar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "../ui/button";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { logout } from "@/redux/features/auth/authSlice";
+import userIcon from '../../assets/candidate-dashboard/candidate-default.png';
+import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const currentPath = usePathname();
+  const dispatch = useAppDispatch();
+  const userInfo = useAppSelector((state) => state.auth.user);
+  const token = useAppSelector((state) => state.auth.token);
+  const {data, isLoading} = useGetCandidateInfoQuery("");
+
+  console.log(data?.data, userInfo);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const handleLogOut = () => {
+    dispatch(logout());
+  };
+
   return (
     <header className="fixed top-0 w-full border-b-2 h-20 lg:h-28 flex justify-center items-center z-50 bg-white">
       <Container>
@@ -49,9 +74,9 @@ const Navbar = () => {
 
               <li>
                 <Link
-                  href="/job"
+                  href="/jobs"
                   className={
-                    currentPath === "/job"
+                    currentPath === "/jobs"
                       ? "nav-link bg-[#DCEFFF]"
                       : "nav-link nav-not-active"
                   }
@@ -71,30 +96,88 @@ const Navbar = () => {
                   Get Support
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/login"
-                  className="nav-link border-2 border-[#155EAD] hover:bg-[#DCEFFF]"
-                >
-                  Login
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/candidate-register"
-                  className="nav-link bg-[#155EAD] text-white hover:bg-primary"
-                >
-                  Register
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/employee-login"
-                  className="nav-link text-[#424447] bg-[#93949572] hover:bg-[#DCEFFF]"
-                >
-                  For Employers
-                </Link>
-              </li>
+              {
+                token ? <li>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <div className="flex items-center justify-center gap-3 cursor-pointer">
+                      <Image
+                        src={userIcon}
+                        width={32}
+                        height={32}
+                        className="size-7 rounded-full"
+                        alt="user"
+                      />
+                    <div>
+                      <h2>{!isLoading && data?.data?.fullName}</h2>
+                      <p>Candidate</p>
+                    </div>
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56 mt-3">
+                    <DropdownMenuLabel className="text-center">
+                      name
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup className="cursor-pointer">
+                      <Link href="/admin/profile">
+                        <DropdownMenuItem className="cursor-pointer">
+                          Profile
+                        </DropdownMenuItem>
+                      </Link>
+                      <Link href="/admin/profile">
+                        <DropdownMenuItem className="cursor-pointer">
+                          Profile
+                        </DropdownMenuItem>
+                      </Link>
+                      <DropdownMenuItem className="cursor-pointer">
+                        Settings
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+
+                    <div className="p-2">
+                      <Button
+                        onClick={handleLogOut}
+                        className="bg-[#265450] w-full hover:bg-[#265450]/90 text-white cursor-pointer"
+                      >
+                        Logout
+                      </Button>
+                    </div>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </li> 
+              :
+<>
+                  <li>
+                    <Link
+                      href="/login"
+                      className="nav-link border-2 border-[#155EAD] hover:bg-[#DCEFFF]"
+                    >
+                      Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/candidate-register"
+                      className="nav-link bg-[#155EAD] text-white hover:bg-primary"
+                    >
+                      Register
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/employee-login"
+                      className="nav-link text-[#424447] bg-[#93949572] hover:bg-[#DCEFFF]"
+                    >
+                      For Employers
+                    </Link>
+                  </li>
+                </>
+              }
+                
+             
+                
+              
             </ul>
           </div>
 

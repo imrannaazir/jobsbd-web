@@ -18,6 +18,13 @@ import {
   JobPostFormValues,
   jobPostSchema,
 } from "@/schemas/recruiter-job-details-schema";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 interface Skill {
   skill: string;
@@ -138,32 +145,37 @@ const BasicsJobDetails = () => {
               />
               <div className="space-y-8">
                 <div className="grid grid-cols-1 gap-4">
-                  <div>
-                    <label
-                      htmlFor="jobDescription"
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-5"
-                    >
-                      Job Descriptions
-                    </label>
-                    <RichTextEditor
-                      id="jobDescription"
-                      // initialContent={field.value}
-                      // onChange={field.onChange}
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="jobRequirements"
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-5"
-                    >
-                      Job Requirements
-                    </label>
-                    <RichTextEditor
-                      id="jobRequirements"
-                      // initialContent={field.value}
-                      // onChange={field.onChange}
-                    />
-                  </div>
+                  <FormField
+                    name="jobDescription"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Job Description</FormLabel>
+                        <FormControl>
+                          <RichTextEditor
+                            initialContent={field.value}
+                            onChange={field.onChange}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    name="jobRequirements"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Job Requirements</FormLabel>
+                        <FormControl>
+                          <RichTextEditor
+                            initialContent={field.value}
+                            onChange={field.onChange}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
               </div>
             </div>

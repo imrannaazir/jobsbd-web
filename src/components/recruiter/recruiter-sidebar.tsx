@@ -67,7 +67,9 @@ const RecruiterSidebar: React.FC = () => {
           />
         </div>
         {/* User Name */}
-        <h3 className="text-xl font-bold text-primary text-center">User Name</h3>
+        <h3 className="text-xl font-bold text-primary text-center">
+          User Name
+        </h3>
       </div>
 
       <ul className="mt-2 md:mt-0 grid grid-cols-2 md:grid-cols-1 gap-2 md:gap-0">
