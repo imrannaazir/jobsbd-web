@@ -1,24 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { InputField } from "@/components/ui/form-fields";
 import { Button } from "@/components/ui/button";
 
 interface Skill {
   skill: string;
-  duration: number;
+  duration: string;
 }
 
 interface SkillsProps {
   onSkillsChange: (skills: Skill[]) => void;
-  initialSkills?: Skill[];
 }
 
-const SkillsComponent: React.FC<SkillsProps> = ({ onSkillsChange, initialSkills = [{ skill: "", duration: 0 }] }) => {
-  const [skills, setSkills] = useState<Skill[]>(initialSkills);
-
-  useEffect(() => {
-    onSkillsChange(skills);
-  }, [skills, onSkillsChange]);
+const SkillsComponent: React.FC<SkillsProps> = ({ onSkillsChange }) => {
+  const [skills, setSkills] = useState<Skill[]>([{ skill: "", duration: "" }]);
 
   const handleInputChange = (
     index: number,
@@ -29,12 +24,13 @@ const SkillsComponent: React.FC<SkillsProps> = ({ onSkillsChange, initialSkills 
       i === index ? { ...skill, [name]: value } : skill
     );
     setSkills(updatedSkills);
+    onSkillsChange(updatedSkills);
   };
 
   const handleAddSection = () => {
     if (
       skills.some(
-        (skill) => skill.skill.trim() === "" || skill.duration === 0
+        (skill) => skill.skill.trim() === "" || skill.duration.trim() === ""
       )
     ) {
       Swal.fire({
@@ -44,12 +40,15 @@ const SkillsComponent: React.FC<SkillsProps> = ({ onSkillsChange, initialSkills 
       });
       return;
     }
-    setSkills([...skills, { skill: "", duration: 0 }]);
+    const updatedSkills = [...skills, { skill: "", duration: "" }];
+    setSkills(updatedSkills);
+    onSkillsChange(updatedSkills);
   };
 
   const handleRemoveSection = (index: number) => {
     const updatedSkills = skills.filter((_, i) => i !== index);
     setSkills(updatedSkills);
+    onSkillsChange(updatedSkills);
   };
 
   return (
@@ -65,7 +64,7 @@ const SkillsComponent: React.FC<SkillsProps> = ({ onSkillsChange, initialSkills 
               label="Job Skill"
               type="text"
               placeholder="Enter Job Skill"
-              value={skill.skill}
+              value={skill?.skill}
               onChange={(e) => handleInputChange(index, e)}
             />
 
@@ -74,7 +73,7 @@ const SkillsComponent: React.FC<SkillsProps> = ({ onSkillsChange, initialSkills 
               label="Job Duration"
               type="text"
               placeholder="Enter Job Duration"
-              value={skill.duration}
+              value={skill?.duration}
               onChange={(e) => handleInputChange(index, e)}
             />
             {skills.length > 1 && (

@@ -3,6 +3,7 @@
 import Loading from "@/components/main/Loading";
 import RichTextEditor from "@/components/rich-text-editor/rich-text-editor";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -22,22 +23,21 @@ import {
 } from "@/constant/constant-variable";
 import { useGetDepartmentQuery } from "@/redux/api/department/deapartmentApi";
 import { useGetIndustryQuery } from "@/redux/api/industry/industryApi";
+import { useCreateJobPostMutation } from "@/redux/api/recruiter/recruiterApi";
 import {
   JobPostFormValues,
   jobPostSchema,
 } from "@/schemas/recruiter-job-details-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import JobTitle from "./job-title";
 import SkillsComponent from "./SkillsComponent";
-// import { useCreateJobPostMutation } from "@/redux/api/recruiter/recruiterApi";
-import { Checkbox } from "@/components/ui/checkbox";
 
 interface Skill {
   skill: string;
-  duration: string;
+  duration: number;
 }
 
 type TItem = {
@@ -51,7 +51,7 @@ const BasicsJobDetails = () => {
   const { data: industryOption, isLoading: isLoading2 } =
     useGetIndustryQuery("");
   const [isNegotiable, setIsNegotiable] = useState<boolean>(false);
-  // const [createJobPost] = useCreateJobPostMutation();
+  const [createJobPost] = useCreateJobPostMutation();
 
   const departmentSelectOption = departmentOption?.data?.map((item: TItem) => {
     return {
@@ -67,20 +67,6 @@ const BasicsJobDetails = () => {
     };
   });
 
-  // Handle input changes in the skill form
-  // const handleInputChange = (
-  //   index: number,
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   const { name, value } = event.target;
-  //   setSkills((prevSkills) =>
-  //     prevSkills.map((skill, i) =>
-  //       i === index ? { ...skill, [name]: value } : skill
-  //     )
-  //   );
-  // };
-
-  console.log(skills);
   const handleSkillsChange = (updatedSkills: Skill[]) => {
     setSkills(updatedSkills);
   };
@@ -106,15 +92,18 @@ const BasicsJobDetails = () => {
       addressLine: "",
       industryId: "",
       departmentId: "",
-      skills: skills || undefined,
+      skills: [],
     },
   });
 
+  useEffect(() => {
+    form.setValue("skills", skills);
+  }, [form, skills]);
+
   const onSubmit = async (data: JobPostFormValues) => {
-    console.log("On submit", skills);
     if (
       skills?.some(
-        (skill) => skill?.skill?.trim() === "" || skill?.duration?.trim() === ""
+        (skill) => skill?.skill?.trim() === "" || skill?.duration === 0
       )
     ) {
       Swal.fire({
@@ -147,16 +136,17 @@ const BasicsJobDetails = () => {
         departmentId: data.departmentId,
         skills: skills,
       };
-
-      // const response = await createJobPost(data).unwrap();
       console.log("On submit", info);
-      // if (response) {
-      //   Swal.fire({
-      //     title: "Success",
-      //     text: "Job Post has been added successfully",
-      //     icon: "success",
-      //   });
-      // }
+
+      const response = await createJobPost(info);
+      console.log("On submit res", info);
+      if (response) {
+        Swal.fire({
+          title: "Success",
+          text: "Job Post has been added successfully",
+          icon: "success",
+        });
+      }
     } catch (error) {
       console.error("Submission error:", error);
       Swal.fire({
@@ -378,7 +368,10 @@ const BasicsJobDetails = () => {
                 description="Choose skills to find the right candidate."
               />
               <div className="space-y-8">
-                <SkillsComponent onSkillsChange={handleSkillsChange} />
+                <SkillsComponent
+                  onSkillsChange={handleSkillsChange}
+                  initialSkills={skills}
+                />
               </div>
             </div>
 
