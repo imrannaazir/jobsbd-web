@@ -17,6 +17,7 @@ import {
   JobPostFormValues,
   jobPostSchema,
 } from "@/schemas/recruiter-job-details-schema";
+import SkillsComponent from "./SkillsComponent";
 import {
   FormControl,
   FormField,
@@ -31,7 +32,8 @@ import {
 import { useGetDepartmentQuery } from "@/redux/api/department/deapartmentApi";
 import { useGetIndustryQuery } from "@/redux/api/industry/industryApi";
 import Loading from "@/components/main/Loading";
-import { useCreateJobPostMutation } from "@/redux/api/recruiter/recruiterApi";
+// import { useCreateJobPostMutation } from "@/redux/api/recruiter/recruiterApi";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface Skill {
   skill: string;
@@ -44,12 +46,12 @@ type TItem = {
 };
 
 const BasicsJobDetails = () => {
-  const [skills, setSkills] = useState<Skill[]>([{ skill: "", duration: "" }]);
+  const [skills, setSkills] = useState<Skill[]>([]);
   const { data: departmentOption, isLoading } = useGetDepartmentQuery("");
   const { data: industryOption, isLoading: isLoading2 } =
     useGetIndustryQuery("");
-  // const [isNegotiable, setIsNegotiable] = useState(false);
-  const [createJobPost] = useCreateJobPostMutation();
+  const [isNegotiable, setIsNegotiable] = useState<boolean>(false);
+  // const [createJobPost] = useCreateJobPostMutation();
 
   const departmentSelectOption = departmentOption?.data?.map((item: TItem) => {
     return {
@@ -65,53 +67,89 @@ const BasicsJobDetails = () => {
     };
   });
 
-  // const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setIsNegotiable(event.target.checked);
+  // Handle input changes in the skill form
+  // const handleInputChange = (
+  //   index: number,
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   const { name, value } = event.target;
+  //   setSkills((prevSkills) =>
+  //     prevSkills.map((skill, i) =>
+  //       i === index ? { ...skill, [name]: value } : skill
+  //     )
+  //   );
   // };
 
-  // Handle input changes in the skill form
-  const handleInputChange = (
-    index: number,
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value } = event.target;
-    const updatedSkills = [...skills];
-    updatedSkills[index][name as keyof Skill] = value;
-    setSkills(updatedSkills);
-  };
-
-  // Add a new skill input section
-  const handleAddSection = () => {
-    const hasEmptyFields = skills.some(
-      (skill) => skill.skill.trim() === "" || skill.duration.trim() === ""
-    );
-
-    if (hasEmptyFields) {
-      Swal.fire({
-        title: "Error",
-        text: "Please enter Job Skill and Job Duration adding a new section.",
-        icon: "error",
-      });
-      return;
-    }
-
-    setSkills([...skills, { skill: "", duration: "" }]);
-  };
-
-  // Remove a specific skill input section
-  const handleRemoveSection = (index: number) => {
-    const updatedSkills = skills.filter((_, i) => i !== index);
+  console.log(skills);
+  const handleSkillsChange = (updatedSkills: Skill[]) => {
     setSkills(updatedSkills);
   };
 
   const form = useForm<JobPostFormValues>({
     resolver: zodResolver(jobPostSchema),
+    defaultValues: {
+      title: "",
+      vacancy: 1,
+      deadline: "",
+      minSalary: 1,
+      maxSalary: 2,
+      experienceInMonths: 0,
+      jobType: "",
+      minAge: 0,
+      jobDescription: "",
+      jobRequirements: "",
+      degreeName: "",
+      degreeTitle: "",
+      compensationBenefits: "",
+      negotiable: false,
+      district: "",
+      addressLine: "",
+      industryId: "",
+      departmentId: "",
+      skills: skills || undefined,
+    },
   });
 
   const onSubmit = async (data: JobPostFormValues) => {
+    console.log("On submit", skills);
+    if (
+      skills?.some(
+        (skill) => skill?.skill?.trim() === "" || skill?.duration?.trim() === ""
+      )
+    ) {
+      Swal.fire({
+        title: "Error",
+        text: "Please complete all skill entries before submitting.",
+        icon: "error",
+      });
+      return;
+    }
+
     try {
+      const info = {
+        title: data.title,
+        vacancy: data.vacancy,
+        deadline: data.deadline,
+        minSalary: data.minSalary,
+        maxSalary: data.maxSalary,
+        experienceInMonths: data.experienceInMonths,
+        jobType: data.jobType,
+        minAge: data.minAge,
+        jobDescription: data.jobDescription,
+        jobRequirements: data.jobRequirements,
+        degreeName: data.degreeName,
+        degreeTitle: data.degreeTitle,
+        compensationBenefits: data.compensationBenefits,
+        negotiable: isNegotiable,
+        district: data.district,
+        addressLine: data.addressLine,
+        industryId: data.industryId,
+        departmentId: data.departmentId,
+        skills: skills,
+      };
+
       // const response = await createJobPost(data).unwrap();
-      console.log(data);
+      console.log("On submit", info);
       // if (response) {
       //   Swal.fire({
       //     title: "Success",
@@ -132,6 +170,11 @@ const BasicsJobDetails = () => {
   if (isLoading || isLoading2) {
     return <Loading />;
   }
+
+  const handleNegotiableChange = (value: boolean) => {
+    setIsNegotiable(value);
+  };
+
   return (
     <section>
       <div>
@@ -264,13 +307,12 @@ const BasicsJobDetails = () => {
                     placeholder="Enter Number"
                   />
                 </div>
-                {/* <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="negotiable"
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
                     checked={isNegotiable}
-                    onChange={handleCheckboxChange}
-                    className="size-5 text-primary rounded-full transition duration-150 ease-in-out"
+                    onCheckedChange={handleNegotiableChange}
+                    id="negotiable"
                   />
                   <label
                     htmlFor="negotiable"
@@ -278,7 +320,7 @@ const BasicsJobDetails = () => {
                   >
                     Negotiable
                   </label>
-                </div> */}
+                </div>
               </div>
             </div>
 
@@ -329,56 +371,14 @@ const BasicsJobDetails = () => {
                 </div>
               </div>
             </div>
+
             <div className="border rounded shadow-lg mt-8 px-4 py-5 bg-white">
               <JobTitle
                 title="Skills"
                 description="Choose skills to find the right candidate."
               />
               <div className="space-y-8">
-                <div className="grid grid-cols-1 gap-4">
-                  {skills.map((skill, index) => (
-                    <div
-                      key={index}
-                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-                    >
-                      <InputField
-                        name="skill"
-                        label="Job Skill"
-                        type="text"
-                        placeholder="Enter Job Skill"
-                        value={skill?.skill}
-                        onChange={(e) => handleInputChange(index, e)}
-                      />
-
-                      <InputField
-                        name="duration"
-                        label="Job Duration"
-                        type="text"
-                        placeholder="Enter Job Duration"
-                        value={skill?.duration}
-                        onChange={(e) => handleInputChange(index, e)}
-                      />
-                      {skills.length > 1 && (
-                        <div>
-                          <Button
-                            type="button"
-                            onClick={() => handleRemoveSection(index)}
-                            className="bg-red-500 hover:bg-red-800 text-white px-4 py-2 rounded mt-8"
-                          >
-                            Remove
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <Button
-                  type="button"
-                  onClick={handleAddSection}
-                  className="bg-green-500 hover:bg-green-800 text-white px-4 py-2 rounded"
-                >
-                  Add New
-                </Button>
+                <SkillsComponent onSkillsChange={handleSkillsChange} />
               </div>
             </div>
 
@@ -404,15 +404,6 @@ const BasicsJobDetails = () => {
                       </FormItem>
                     )}
                   />
-                </div>
-              </div>
-            </div>
-            <div className="border rounded shadow-lg mt-8 px-4 py-5 bg-white">
-              <div className="flex items-center justify-end">
-                <div className="flex gap-3">
-                  <Button className="bg-orange-500" type="submit">
-                    PUBLISH
-                  </Button>
                 </div>
               </div>
             </div>

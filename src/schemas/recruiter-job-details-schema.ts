@@ -29,26 +29,27 @@ export const jobPostSchema = z
     degreeName: z.string().min(1, "Degree name is required"),
     degreeTitle: z.string().min(1, "Degree title is required"),
     compensationBenefits: z.string().min(1, "Job Benefits is required"),
-    // negotiable: z.boolean(),
+    negotiable: z.boolean(),
     district: z.string().min(1, "District is required"),
     addressLine: z.string().min(1, "Address line is required"),
-    industryId: z.string().min(1,"Industry ID must be a valid UUID"),
-    departmentId: z.string().min(1,"Department ID must be a valid UUID"),
-  //   skills: z
-  //     .array(
-  //       z.object({
-  //         skill: z.string().min(1, "Skill is required"),
-  //         duration: z.coerce
-  //           .number()
-  //           .positive("Duration must be a positive number")
-  //           .int("Duration must be an integer"),
-  //       })
-  //     )
-  //     .nonempty("At least one skill is required"),
+    industryId: z.string().min(1, "Industry ID must be a valid UUID"),
+    departmentId: z.string().min(1, "Department ID must be a valid UUID"),
+    skills: z
+      .array(
+        z.object({
+          skill: z.string().min(1, "Skill is required"),
+          duration: z.coerce
+            .number()
+            .positive("Duration must be a positive number")
+            .int("Duration must be an integer"),
+        })
+      )
+      .nonempty("At least one skill is required")
+      .optional(),
   })
   .refine((data) => data.maxSalary >= data.minSalary, {
     message: "Max salary must be greater than or equal to min salary",
-    path: ["maxSalary"], 
+    path: ["maxSalary"],
   });
 
 // Inferred Type for the Schema
