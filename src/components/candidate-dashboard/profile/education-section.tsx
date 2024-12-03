@@ -52,7 +52,7 @@ const EducationSection = () => {
 
       if (result.isConfirmed) {
         const data = await deleteEducation(id).unwrap();
-        console.log(data);
+        
         if (data?.data?.id) {
           Swal.fire({
             title: "Success",

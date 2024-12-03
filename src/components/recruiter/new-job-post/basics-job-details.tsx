@@ -1,24 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import Swal from "sweetalert2";
-import {
-  InputField,
-  SelectField,
-  DateField,
-} from "@/components/ui/form-fields";
-import { Form } from "@/components/ui/form";
-import JobTitle from "./job-title";
+import Loading from "@/components/main/Loading";
 import RichTextEditor from "@/components/rich-text-editor/rich-text-editor";
 import { Button } from "@/components/ui/button";
 import {
-  JobPostFormValues,
-  jobPostSchema,
-} from "@/schemas/recruiter-job-details-schema";
-import SkillsComponent from "./SkillsComponent";
-import {
+  Form,
   FormControl,
   FormField,
   FormItem,
@@ -26,12 +12,26 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import {
+  DateField,
+  InputField,
+  SelectField,
+} from "@/components/ui/form-fields";
+import {
   bangladeshDistricts,
   EmploymentType,
 } from "@/constant/constant-variable";
 import { useGetDepartmentQuery } from "@/redux/api/department/deapartmentApi";
 import { useGetIndustryQuery } from "@/redux/api/industry/industryApi";
-import Loading from "@/components/main/Loading";
+import {
+  JobPostFormValues,
+  jobPostSchema,
+} from "@/schemas/recruiter-job-details-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import JobTitle from "./job-title";
+import SkillsComponent from "./SkillsComponent";
 // import { useCreateJobPostMutation } from "@/redux/api/recruiter/recruiterApi";
 import { Checkbox } from "@/components/ui/checkbox";
 

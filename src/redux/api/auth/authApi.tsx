@@ -4,7 +4,6 @@ const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     signUp: builder.mutation({
       query: (data) => {
-        console.log(data);
         return {
           url: "/auth/register",
           method: "POST",
@@ -14,7 +13,6 @@ const authApi = baseApi.injectEndpoints({
     }),
     googleAuth: builder.mutation({
       query: (data) => {
-        console.log(data);
         return {
           url: "/auth/google",
           method: "POST",
@@ -24,7 +22,6 @@ const authApi = baseApi.injectEndpoints({
     }),
     login: builder.mutation({
       query: (data) => {
-        console.log(data);
         return {
           url: "/auth/login",
           method: "POST",

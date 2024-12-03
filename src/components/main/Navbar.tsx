@@ -6,7 +6,7 @@ import Container from "./Container";
 import { BiMenu } from "react-icons/bi";
 import { useState } from "react";
 import logo from "@/assets/main/logo-transparent.png";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import MobileNavbar from "./MobileNavbar";
 import { FaChevronDown } from "react-icons/fa";
 import {
@@ -21,8 +21,10 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/redux/features/auth/authSlice";
 import userIcon from "../../assets/candidate-dashboard/candidate-default.png";
 import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
+import { removeRefreshToken } from "@/action/auth-action";
 
 const Navbar = () => {
+  const router = useRouter()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const currentPath = usePathname();
   const dispatch = useAppDispatch();
@@ -34,8 +36,10 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleLogOut = () => {
+  const handleLogOut = async() => {
     dispatch(logout());
+    await removeRefreshToken()
+    router.push('/')
   };
 
   return (

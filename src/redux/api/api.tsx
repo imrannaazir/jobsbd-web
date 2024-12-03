@@ -17,7 +17,7 @@ const baseQuery = fetchBaseQuery({
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
-    console.log({ token }, "line 20 from redux api");
+    
     if (token) {
       headers.set("authorization", `${token}`);
     }
@@ -49,7 +49,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   }
   if (result?.error?.status === 401) {
     //* Send Refresh
-    console.log("Sending refresh token");
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/auth/refresh-token`,

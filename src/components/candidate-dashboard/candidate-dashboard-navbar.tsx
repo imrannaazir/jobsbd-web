@@ -14,10 +14,15 @@ import { RiListSettingsLine } from "react-icons/ri";
 import Divider from "../ui/Divider";
 import { usePathname } from "next/navigation";
 import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
-
+import { useAppDispatch } from "@/redux/hooks";
+import { removeRefreshToken } from "@/action/auth-action";
+import { logout } from "@/redux/features/auth/authSlice";
+import { useRouter } from "next/navigation";
 const CandidateDashboardNavbar: React.FC = () => {
-  const {data} = useGetCandidateInfoQuery('')
+  const { data } = useGetCandidateInfoQuery("");
+  const router = useRouter();
   const currentPath = usePathname();
+  const dispatch = useAppDispatch();
   const navLinks = [
     {
       label: "Dashboard",
@@ -49,12 +54,12 @@ const CandidateDashboardNavbar: React.FC = () => {
       icon: <RiListSettingsLine size={25} />,
       href: "/candidate-dashboard/candidate-change-password",
     },
-    {
-      label: "Logout",
-      icon: <CiLogout size={25} />,
-      href: "/candidate-dashboard",
-    },
   ];
+  const handleLogOut = async () => {
+    dispatch(logout());
+    await removeRefreshToken();
+    router.push('/')
+  };
   return (
     <>
       <div className="bg-white lg:w-[316px] shadow-md lg:min-h-screen rounded z-10">
@@ -72,26 +77,35 @@ const CandidateDashboardNavbar: React.FC = () => {
           </div>
           {/* user Name */}
           <h3 className="text-xl font-bold text-center py-5">
-          {data?.data?.fullName}
+            {data?.data?.fullName}
           </h3>
         </div>
-        <Divider/>
+        <Divider />
         <ul className="mt-2 md:mt-0 grid grid-cols-2 lg:grid-cols-1 gap-2 md:gap-0">
           {navLinks.map((link, index) => (
             <li key={index} className="border lg:border-none p-2 lg:p-0">
               <Link
-              href={link.href}
-              className={ 
-                currentPath === link.href
-                  ? "flex items-center text-sm lg:text-base gap-3 py-2 px-3 bg-[#EFF7FF] transition text-primary font-semibold border-l-4 border-primary"
-                  : "flex items-center text-sm lg:text-base gap-3 py-2 px-3 hover:bg-[#EFF7FF] text-gray-800 transition font-semibold"
-              }
-            >
-              <span className="p-2 rounded-full shadow">{link.icon}</span>
-              {link.label}
-            </Link>
+                href={link.href}
+                className={
+                  currentPath === link.href
+                    ? "flex items-center text-sm lg:text-base gap-3 py-2 px-3 bg-[#EFF7FF] transition text-primary font-semibold border-l-4 border-primary"
+                    : "flex items-center text-sm lg:text-base gap-3 py-2 px-3 hover:bg-[#EFF7FF] text-gray-800 transition font-semibold"
+                }
+              >
+                <span className="p-2 rounded-full shadow">{link.icon}</span>
+                {link.label}
+              </Link>
             </li>
           ))}
+          <li
+            onClick={handleLogOut}
+            className="flex items-center text-sm lg:text-base gap-3 py-2 px-3 font-semibold  cursor-pointer"
+          >
+            <span className="p-2 rounded-full shadow">
+              <CiLogout size={25} />
+            </span>
+            Logout
+          </li>
         </ul>
       </div>
     </>

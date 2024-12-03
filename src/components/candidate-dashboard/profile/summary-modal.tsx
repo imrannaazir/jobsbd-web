@@ -31,7 +31,7 @@ const SummaryModal = () => {
 
   const onSubmit = async (data: { bio: string }) => {
     const res = await updateBio(data);
-    console.log(res.data);
+    
     if (res.data) {
       Swal.fire({
         title: "Success",

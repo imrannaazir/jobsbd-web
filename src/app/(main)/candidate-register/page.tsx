@@ -46,7 +46,7 @@ const CandidateRegisterPage = () => {
         text: "Registration failed",
         icon: "error",
       });
-      console.log(response.error);
+
     }
   };
 
