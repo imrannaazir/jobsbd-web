@@ -58,9 +58,11 @@ export const projectFormSchema = z.object({
   startDate: z.date({
     required_error: "Please select a date",
   }),
-  endDate: z.date({
-    required_error: "Please select a date",
-  }).optional(),
+  endDate: z
+    .date({
+      required_error: "Please select a date",
+    })
+    .optional(),
 
   description: z.string().min(1, "Description is required"),
   isWorking: z.boolean().optional().default(false),
@@ -68,6 +70,7 @@ export const projectFormSchema = z.object({
 
 // project schema
 export const certificateFormSchema = z.object({
+  id: z.string().optional(),
   certificateName: z.string().min(1, "name is required"),
   institution: z.string().min(1, "Institute is required"),
   startDate: z.date({
@@ -77,6 +80,27 @@ export const certificateFormSchema = z.object({
     required_error: "Please select a date",
   }),
   duration: z.string().min(1, "duration is required"),
+  certificateUrl: z.string().min(1, "Certificate URL is required"),
+  description: z.string().min(1, "Description is required"),
+});
+
+export const updateCertificateFormSchema = z.object({
+  id: z.string().optional(),
+  certificateName: z.string().min(1, "Name is required"),
+  institution: z.string().min(1, "Institute is required"),
+  startDate: z
+    .date({
+      required_error: "Please select a start date",
+    })
+    .nullable() // This will allow `null` as well
+    .optional(), // Also allow `undefined`
+  endDate: z
+    .date({
+      required_error: "Please select an end date",
+    })
+    .nullable() // This will allow `null` as well
+    .optional(), // Also allow `undefined`
+  duration: z.string().min(1, "Duration is required"),
   certificateUrl: z.string().min(1, "Certificate URL is required"),
   description: z.string().min(1, "Description is required"),
 });

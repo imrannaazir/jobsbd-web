@@ -137,6 +137,23 @@ const candidateApi = baseApi.injectEndpoints({
       },
       providesTags: ["certificate"],
     }),
+    deleteCertificate: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/trainings/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["certificate"],
+    }),
+    updateCertificate: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/trainings/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["certificate"],
+    }),
     getDepartments: builder.query({
       query: () => {
         return {
@@ -173,4 +190,6 @@ export const {
   useGetIndustriesQuery,
   useDeleteEducationMutation,
   useUpdateEducationMutation,
+  useDeleteCertificateMutation,
+  useUpdateCertificateMutation,
 } = candidateApi;
