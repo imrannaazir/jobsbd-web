@@ -97,7 +97,7 @@ const BasicsJobDetails = () => {
   });
 
   useEffect(() => {
-    form.setValue("skills", skills);
+    form.setValue("skills", skills as [Skill, ...Skill[]]);
   }, [form, skills]);
 
   const onSubmit = async (data: JobPostFormValues) => {
