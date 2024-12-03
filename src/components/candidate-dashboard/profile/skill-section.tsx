@@ -11,7 +11,7 @@ type TSkill = {
 };
 const SkillSection = () => {
   const { data: skills, isLoading } = useGetAllSkillQuery("");
-  console.log(skills);
+  
   return (
     <div className="section-design">
       <SectionTitle label="Key Skills" component={<SkillModal />} />

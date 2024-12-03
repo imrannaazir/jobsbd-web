@@ -73,3 +73,10 @@ export const jobLevel = [
   { id: "MID_LEVEL", name: "Mid-Level" },
   { id: "SENIOR", name: "Senior" },
 ];
+
+export const userRole = {
+  CANDIDATE: "CANDIDATE",
+  EMPLOYER: "EMPLOYER",
+  ADMIN: "ADMIN",
+  SUPER_ADMIN: "SUPER_ADMIN",
+} as const;

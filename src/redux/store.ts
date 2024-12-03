@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
-
+import jobReducer from "./features/jobSlice";
 import {
   FLUSH,
   PAUSE,
@@ -25,6 +25,7 @@ export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
+    job: jobReducer,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({

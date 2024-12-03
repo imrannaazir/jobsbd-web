@@ -46,7 +46,7 @@ const EmployeeRegister = () => {
         text: "Registration failed",
         icon: "error",
       });
-      console.log(response.error);
+      
     }
   };
 

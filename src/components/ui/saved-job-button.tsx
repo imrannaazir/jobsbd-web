@@ -1,13 +1,14 @@
 import React from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
+import { Button } from "./button";
 
 const SavedJobButton = () => {
   return (
-    <div className="flex items-center justify-center border border-primary py-1 px-5 rounded">
-      <FaRegHeart className="text-primary text-2xl " />
-      {/* <FaHeart className="text-red-500 text-2xl" /> */}
-    </div>
+    <Button size="icon" variant="outline" className="hover:bg-transparent">
+      <FaRegHeart className="text-primary" size={20}/>
+      {/* <FaHeart className="text-red-500" size={20}/> */}
+    </Button>
   );
 };
 

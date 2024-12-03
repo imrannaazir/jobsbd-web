@@ -25,7 +25,7 @@ const LanguageModal = () => {
   });
 
   const onSubmit = (data: LanguageFormValues) => {
-    console.log(data);
+    
   };
   return (
     <CustomModal buttonType="add" title="Language">

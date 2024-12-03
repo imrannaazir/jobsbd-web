@@ -28,7 +28,7 @@ const SkillModal = () => {
       duration: Number(data.duration),
     };
     const res = await addSkill(skillData);
-    console.log(res);
+    
     if (res.data) {
       Swal.fire({
         title: "Success",

@@ -13,7 +13,7 @@ import { FiPhone } from "react-icons/fi";
 
 const BasicDetails = () => {
   const { data: candidateInfo, isLoading } = useGetCandidateInfoQuery("");
-  console.log(candidateInfo);
+  
   const data = [
     {
       icon: <MdOutlineWorkHistory />,

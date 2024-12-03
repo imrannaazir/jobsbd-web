@@ -36,14 +36,14 @@ const EmployeeLoginPage = () => {
       });
       router.push("/candidate-dashboard");
       methods.reset();
-      console.log(response.data);
+      
     } else {
       Swal.fire({
         title: "Error",
         text: "Login failed",
         icon: "error",
       });
-      console.log(response.error);
+      
     }
   };
 

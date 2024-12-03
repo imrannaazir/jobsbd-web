@@ -33,9 +33,9 @@ const EducationAddModal = () => {
   });
 
   const onSubmit = async (data: EducationFormValues) => {
-    console.log(data, 'on submit data');
+    
     const res = await addEducation(data);
-    console.log(res, 'response');
+    
     if (res.data) {
       Swal.fire({
         title: "Success",

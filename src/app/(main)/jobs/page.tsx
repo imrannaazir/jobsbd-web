@@ -2,6 +2,7 @@ import JobSection from "@/components/job-page/job-section";
 import JobSidebar from "@/components/job-page/job-sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+
 const JobsPage = () => {
   return (
     <section className="relative flex bg-gray-50 flex-col lg:flex-row">

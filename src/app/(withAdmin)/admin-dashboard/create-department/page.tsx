@@ -2,11 +2,10 @@
 "use client";
 
 import DepartmentModal from "@/components/admin-dashboard/departments/DepartmentModal";
-import IndustryModal from "@/components/admin-dashboard/industries/IndustryModal";
 import SectionTitle from "@/components/candidate-dashboard/section-title";
 import { useGetDepartmentsQuery } from "@/redux/api/candidate/candidateApi";
 import { useDeleteDepartmentMutation } from "@/redux/api/department/deapartmentApi";
-import { useDeleteIndustryMutation } from "@/redux/api/industry/industryApi";
+
 import { IoTrashBinSharp } from "react-icons/io5";
 
 import Swal from "sweetalert2";
@@ -20,7 +19,7 @@ const CreateDepartment = () => {
   const handleDeleteIndustry = async (departmentId: string) => {
     try {
       const response: any = await deleteDepartment(departmentId);
-      console.log(response);
+      
 
       if (response?.data) {
         Swal.fire({

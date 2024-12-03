@@ -11,11 +11,14 @@ export type TUser = {
 type TAuthState = {
   user: null | TUser;
   token: null | string;
+  phoneNumber: null | string;
+
 };
 
 const initialState: TAuthState = {
   user: null,
   token: null,
+  phoneNumber: null
 };
 
 const authSlice = createSlice({

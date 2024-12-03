@@ -111,7 +111,7 @@ const BasicsJobDetails = () => {
   const onSubmit = async (data: JobPostFormValues) => {
     try {
       // const response = await createJobPost(data).unwrap();
-      console.log(data);
+      
       // if (response) {
       //   Swal.fire({
       //     title: "Success",

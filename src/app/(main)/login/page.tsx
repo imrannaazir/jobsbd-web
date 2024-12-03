@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
+import { saveTokenInCookies } from "@/action/auth-action";
 import { Button } from "@/components/ui/button";
 import CandidateAuthContainer from "@/components/ui/CandidateAuthContainer";
 import FloatingLabelInput from "@/components/ui/CustomInput";
@@ -35,11 +36,12 @@ const LoginPage = () => {
       const response = await login(data);
 
       if (response.data) {
-        console.log(response.data.data.accessToken);
+        
         const user = verifyToken(response.data.data.accessToken) as TUser;
         dispatch(
-          setUser({ user: user, token: response.data.data.accessToken })
+          setUser({ user: user, token: response.data.data.accessToken, phoneNumber: response.data.data.phoneNumber })
         );
+        saveTokenInCookies(response.data.data.accessToken)
         Swal.fire({
           title: "Success",
           text: "You have been logged in successfully",
@@ -53,7 +55,7 @@ const LoginPage = () => {
           text: "Login failed",
           icon: "error",
         });
-        console.log(response.error);
+        
       }
     } else {
       const response = await login({ phone: phone, password: data.password });
@@ -71,7 +73,7 @@ const LoginPage = () => {
           text: "Login failed",
           icon: "error",
         });
-        console.log(response.error);
+        
       }
     }
   };

@@ -5,8 +5,14 @@ import { Button } from "../ui/button";
 import FloatingLabelInput from "../ui/CustomInput";
 import { MdTune } from "react-icons/md";
 import { IoSearchSharp } from "react-icons/io5";
+import { useAppDispatch } from "@/redux/hooks";
+import { clearFilter, setFilter } from "@/redux/features/jobSlice";
+
 
 const JobSidebar = () => {
+  
+  
+  const dispatch = useAppDispatch();
   // Initialize the React Hook Form methods
   const methods = useForm({
     defaultValues: {},
@@ -14,7 +20,13 @@ const JobSidebar = () => {
 
   // Define the form submission handler
   const onSubmit = (data: any) => {
-    console.log("Form submitted with data:", data);
+    console.log(data, "from 20 line sidebar");
+    dispatch(setFilter(data))
+  };
+
+  const handleClearFilter = () => {
+    dispatch(clearFilter());
+    methods.reset();
   };
 
   return (
@@ -28,19 +40,22 @@ const JobSidebar = () => {
             <div className="flex flex-wrap justify-between items-center mb-5">
               <h2 className="font-bold">Quick Search</h2>
               <div>
-                <Button className="flex items-center justify-between gap-3 bg-white hover:bg-[#E6F3FF] text-primary">
+                <Button
+                  onClick={handleClearFilter}
+                  className="flex items-center justify-between gap-3 bg-white hover:bg-[#E6F3FF] text-primary"
+                >
                   Clear Filter <MdTune className="size-5" />
                 </Button>
               </div>
             </div>
 
             <FloatingLabelInput
-              name="keyword"
+              name="query"
               label="Keyword, Job Title, Company Name"
               type="text"
             />
 
-            <FloatingLabelInput name="title" label="Job Title" type="text" />
+            <FloatingLabelInput name="industry" label="Job Title" type="text" />
 
             <FloatingLabelInput
               name="location"
