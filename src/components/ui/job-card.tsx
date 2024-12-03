@@ -1,3 +1,4 @@
+import img from "@/assets/location.png";
 import {
   Card,
   CardContent,
@@ -6,28 +7,32 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import SavedJobButton from "./saved-job-button";
+import { TJob } from "@/type/job.types";
 import Image from "next/image";
-import img from "@/assets/location.png";
-import { TbMoneybag } from "react-icons/tb";
-import { FaGraduationCap } from "react-icons/fa";
-import { IoLocationSharp } from "react-icons/io5";
-import { FaBriefcase } from "react-icons/fa6";
-import { CiClock2 } from "react-icons/ci";
 import Link from "next/link";
+import { FC } from "react";
+import { CiClock2 } from "react-icons/ci";
+import { FaGraduationCap } from "react-icons/fa";
+import { FaBriefcase } from "react-icons/fa6";
+import { IoLocationSharp } from "react-icons/io5";
+import { TbMoneybag } from "react-icons/tb";
+import SavedJobButton from "./saved-job-button";
 
-const JobCard = () => {
+type TJobCardProps = {
+  job: TJob;
+};
+const JobCard: FC<TJobCardProps> = ({ job }) => {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
-          <CardTitle className="text-lg text-primary">Create project</CardTitle>
+          <CardTitle className="text-lg text-primary">{job?.title}</CardTitle>
           <CardDescription className="font-semibold">
             Deploy your new project in one-click.
           </CardDescription>
         </div>
 
-        <SavedJobButton />
+        <SavedJobButton id={job?.id} />
       </CardHeader>
       <CardContent>
         <div className="mt-4 space-y-4">

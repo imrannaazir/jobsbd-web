@@ -7,6 +7,9 @@ const jobApi = baseApi.injectEndpoints({
         const params = new URLSearchParams();
         if (Object.keys(filters).length) {
           Object.entries(filters).forEach(([key, value]) => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+
             if (value) params.append(key, value);
           });
         }
@@ -15,7 +18,27 @@ const jobApi = baseApi.injectEndpoints({
         };
       },
     }),
+
+    toggleInSavedJob: builder.mutation({
+      query: (jobId: string) => ({
+        url: "/saved-jobs/toggle",
+        method: "POST",
+        body: { jobId },
+      }),
+      invalidatesTags: ["savedJobs"],
+    }),
+
+    getAllMySavedJobs: builder.query({
+      query: () => ({
+        url: "/saved-jobs/me/all",
+      }),
+      providesTags: ["savedJobs"],
+    }),
   }),
 });
 
-export const { useGetAllJobsQuery } = jobApi;
+export const {
+  useGetAllJobsQuery,
+  useToggleInSavedJobMutation,
+  useGetAllMySavedJobsQuery,
+} = jobApi;

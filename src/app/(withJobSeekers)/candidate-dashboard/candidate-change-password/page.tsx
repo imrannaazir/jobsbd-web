@@ -47,7 +47,7 @@ const CandidateChangePassword = () => {
   const methods = useForm();
 
   const onSubmit = async (data: FieldValues) => {
-    
+    console.log(data);
   };
 
   return (
