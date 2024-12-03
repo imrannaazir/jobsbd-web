@@ -77,6 +77,23 @@ const candidateApi = baseApi.injectEndpoints({
       },
       providesTags: ["skill"],
     }),
+    deleteSkill: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/skills/delete/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["skill"],
+    }),
+    updateSkill: builder.mutation({
+      query: ({ id, updatedData }) => ({
+        url: `/skills/update/${id}`,
+        method: "PATCH",
+        body: updatedData,
+      }),
+      invalidatesTags: ["skill"],
+    }),
 
     addExperience: builder.mutation({
       query: (data) => {
@@ -117,6 +134,23 @@ const candidateApi = baseApi.injectEndpoints({
       },
       providesTags: ["project"],
     }),
+    deleteProject: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/project/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["project"],
+    }),
+    updateProject: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/project/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["project"],
+    }),
 
     addCertificate: builder.mutation({
       query: (data) => {
@@ -136,6 +170,23 @@ const candidateApi = baseApi.injectEndpoints({
         };
       },
       providesTags: ["certificate"],
+    }),
+    deleteCertificate: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/trainings/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["certificate"],
+    }),
+    updateCertificate: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/trainings/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["certificate"],
     }),
     getDepartments: builder.query({
       query: () => {
@@ -173,4 +224,10 @@ export const {
   useGetIndustriesQuery,
   useDeleteEducationMutation,
   useUpdateEducationMutation,
+  useDeleteCertificateMutation,
+  useUpdateCertificateMutation,
+  useDeleteProjectMutation,
+  useUpdateProjectMutation,
+  useDeleteSkillMutation,
+  useUpdateSkillMutation,
 } = candidateApi;
