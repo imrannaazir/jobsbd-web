@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { Button } from "@/components/ui/button";
 import CustomModal from "@/components/ui/custom-modal";
@@ -6,6 +7,7 @@ import { Form } from "@/components/ui/form";
 import { InputField, SelectField } from "@/components/ui/form-fields";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -20,15 +22,19 @@ const languageFormSchema = z.object({
 type LanguageFormValues = z.infer<typeof languageFormSchema>;
 
 const LanguageModal = () => {
+  const [open, setOpen] = useState<boolean>(false);
   const form = useForm<LanguageFormValues>({
     resolver: zodResolver(languageFormSchema),
   });
 
-  const onSubmit = (data: LanguageFormValues) => {
-    
-  };
+  const onSubmit = (data: LanguageFormValues) => {};
   return (
-    <CustomModal buttonType="add" title="Language">
+    <CustomModal
+      buttonType="add"
+      title="Language"
+      open={open}
+      setOpen={setOpen}
+    >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <div className=" grid grid-cols-2 items-center gap-5">
