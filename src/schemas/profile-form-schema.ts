@@ -67,6 +67,26 @@ export const projectFormSchema = z.object({
   description: z.string().min(1, "Description is required"),
   isWorking: z.boolean().optional().default(false),
 });
+export const updateProjectFormSchema = z.object({
+  id: z.string().optional(),
+  title: z.string().min(1, "Project Title is required").optional(),
+  companyName: z.string().min(1, "Project Name is required").optional(),
+  projectLink: z.string().min(1, "Project Name is required").optional(),
+  startDate: z
+    .date({
+      required_error: "Please select a date",
+    })
+    .optional(),
+  endDate: z
+    .date({
+      required_error: "Please select a date",
+    })
+    .optional()
+    .optional(),
+
+  description: z.string().min(1, "Description is required").optional(),
+  isWorking: z.boolean().default(false),
+});
 
 // project schema
 export const certificateFormSchema = z.object({
@@ -114,6 +134,7 @@ export type WorkExperienceFormValues = z.infer<typeof workExperienceFormSchema>;
 
 // work experience type
 export type ProjectFormValues = z.infer<typeof projectFormSchema>;
+export type UpdateProjectFormValues = z.infer<typeof updateProjectFormSchema>;
 
 // work experience type
 export type CertificateFormValues = z.infer<typeof certificateFormSchema>;

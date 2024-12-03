@@ -117,6 +117,23 @@ const candidateApi = baseApi.injectEndpoints({
       },
       providesTags: ["project"],
     }),
+    deleteProject: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/project/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["project"],
+    }),
+    updateProject: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/project/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["project"],
+    }),
 
     addCertificate: builder.mutation({
       query: (data) => {
@@ -192,4 +209,6 @@ export const {
   useUpdateEducationMutation,
   useDeleteCertificateMutation,
   useUpdateCertificateMutation,
+  useDeleteProjectMutation,
+  useUpdateProjectMutation
 } = candidateApi;
