@@ -29,7 +29,7 @@ const ProjectModal = () => {
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(projectFormSchema),
   });
-
+  
   const onSubmit = async(data: ProjectFormValues) => {
     const response = await addProject(data)
     if(response.data){

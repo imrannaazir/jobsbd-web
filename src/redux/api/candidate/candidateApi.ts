@@ -77,6 +77,23 @@ const candidateApi = baseApi.injectEndpoints({
       },
       providesTags: ["skill"],
     }),
+    deleteSkill: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/skills/delete/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["skill"],
+    }),
+    updateSkill: builder.mutation({
+      query: ({ id, updatedData }) => ({
+        url: `/skills/update/${id}`,
+        method: "PATCH",
+        body: updatedData,
+      }),
+      invalidatesTags: ["skill"],
+    }),
 
     addExperience: builder.mutation({
       query: (data) => {
@@ -210,5 +227,7 @@ export const {
   useDeleteCertificateMutation,
   useUpdateCertificateMutation,
   useDeleteProjectMutation,
-  useUpdateProjectMutation
+  useUpdateProjectMutation,
+  useDeleteSkillMutation,
+  useUpdateSkillMutation,
 } = candidateApi;
