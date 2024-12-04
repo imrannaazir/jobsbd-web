@@ -3,15 +3,14 @@ import { TSavedJob } from "@/type/job.types";
 import { useMemo } from "react";
 
 const useSaveJob = (jobId: string) => {
-  const { data, isFetching } = useGetAllMySavedJobsQuery(undefined, {
+  const { data } = useGetAllMySavedJobsQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
 
   const isInSavedJobs = useMemo(() => {
-    if (isFetching || !data) return false;
     const savedJobs = data.data as TSavedJob[];
     return savedJobs.some((job) => job.jobId === jobId);
-  }, [data, isFetching, jobId]);
+  }, [data, jobId]);
 
   return { isInSavedJobs };
 };

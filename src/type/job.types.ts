@@ -28,6 +28,7 @@ export type TJob = {
 
 export type TSavedJob = {
   id: string;
+  job?: TJob;
   jobId: string;
   candidateId: string;
   createdAt: string;

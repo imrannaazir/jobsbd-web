@@ -1,3 +1,4 @@
+"use client";
 import img from "@/assets/location.png";
 import {
   Card,
