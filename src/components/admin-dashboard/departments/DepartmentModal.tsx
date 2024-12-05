@@ -5,10 +5,8 @@ import CustomModal from "@/components/ui/custom-modal";
 
 import { Form } from "@/components/ui/form";
 import { InputField } from "@/components/ui/form-fields";
-import { useAddSkillMutation } from "@/redux/api/candidate/candidateApi";
 import { useCreateDepartmentMutation } from "@/redux/api/department/deapartmentApi";
-import { useCreateIndustryMutation } from "@/redux/api/industry/industryApi";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 

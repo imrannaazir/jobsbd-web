@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 type TNavItem = {
   name: string;
@@ -35,7 +35,7 @@ const CandidateDashboardTopNav = ({ navItems }: { navItems: TNavItem[] }) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [navItems]);
 
   const handleClick = (
     e: React.MouseEvent<HTMLAnchorElement>,

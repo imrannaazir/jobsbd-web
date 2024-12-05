@@ -1,17 +1,14 @@
 "use client";
 
-import { useForm, FormProvider } from "react-hook-form";
+import { clearFilter, setFilter } from "@/redux/features/jobSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import { FormProvider, useForm } from "react-hook-form";
+import { IoSearchSharp } from "react-icons/io5";
+import { MdTune } from "react-icons/md";
 import { Button } from "../ui/button";
 import FloatingLabelInput from "../ui/CustomInput";
-import { MdTune } from "react-icons/md";
-import { IoSearchSharp } from "react-icons/io5";
-import { useAppDispatch } from "@/redux/hooks";
-import { clearFilter, setFilter } from "@/redux/features/jobSlice";
-
 
 const JobSidebar = () => {
-  
-  
   const dispatch = useAppDispatch();
   // Initialize the React Hook Form methods
   const methods = useForm({
@@ -19,9 +16,10 @@ const JobSidebar = () => {
   });
 
   // Define the form submission handler
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
     console.log(data, "from 20 line sidebar");
-    dispatch(setFilter(data))
+    dispatch(setFilter(data));
   };
 
   const handleClearFilter = () => {
