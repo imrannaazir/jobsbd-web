@@ -35,7 +35,7 @@ const JobSection = async ({
       <div className="border rounded shadow-lg mt-5 px-5 py-5 bg-white">
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
           <h2 className="text-lg md:text-xl font-semibold w-full text-center md:text-left">
-            {/* We found <span className="text-primary">{jobs?.data?.length}</span> */}
+            We found <span className="text-primary mr-1">{jobs?.data?.length}</span>
             jobs
           </h2>
           <div className="flex gap-3 items-center justify-center md:justify-end  w-full">
