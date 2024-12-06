@@ -34,3 +34,22 @@ export type TLoginInfo = {
   phoneNumber?: string;
   password: string;
 };
+
+export type TResume = {
+  id: string;
+  file_name: string;
+  url: string;
+  isDefault: boolean;
+  createdAt: Date;
+};
+
+export type TSearchParams = {
+  query?: string;
+  location?: string;
+  industry?: string;
+  department?: string;
+  minExperience?: string;
+  minSalary?: string;
+  maxSalary?: string;
+  negotiable?: string;
+};

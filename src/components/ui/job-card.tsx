@@ -15,8 +15,9 @@ import { IoLocationSharp } from "react-icons/io5";
 import { FaBriefcase } from "react-icons/fa6";
 import { CiClock2 } from "react-icons/ci";
 import Link from "next/link";
+import ApplyJobModal from "./apply-job-modal";
 
-const JobCard = () => {
+const JobCard = ({ data }) => {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -73,12 +74,7 @@ const JobCard = () => {
           >
             View Details
           </Link>
-          <Link
-            href="/"
-            className="bg-green-500 text-white text-sm font-semibold rounded px-2 py-1"
-          >
-            Apply Now
-          </Link>
+          <ApplyJobModal jobId={data?.id}/>
         </div>
       </CardFooter>
     </Card>

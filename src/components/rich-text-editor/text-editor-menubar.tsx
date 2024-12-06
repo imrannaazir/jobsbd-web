@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   RiBold,
   RiItalic,
@@ -16,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Level } from "@tiptap/extension-heading";
 
 const Button = ({
   onClick,
@@ -106,7 +108,7 @@ export default function TextEditorMenuBar({
       editor
         .chain()
         .focus()
-        .toggleHeading({ level: parseInt(value) })
+        .toggleHeading({ level: parseInt(value) as Level })
         .run();
     }
   };

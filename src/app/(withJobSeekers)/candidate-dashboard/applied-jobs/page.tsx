@@ -2,8 +2,11 @@
 import Image from "next/image";
 import { useState } from "react";
 import noJobsFound from "../../../../assets/candidate-dashboard/no-results-found.png";
+import { useGetAllAppliedJobsQuery } from "@/redux/api/job/jobApi";
 
 const AppliedJobs = () => {
+  const {data: appliedJobs} = useGetAllAppliedJobsQuery('')
+  console.log(appliedJobs?.data);
   const statuses = [
     { label: "ALL", count: null },
     { label: "APPLIED", count: 0 },

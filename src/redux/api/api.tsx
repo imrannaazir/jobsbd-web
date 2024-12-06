@@ -92,6 +92,7 @@ export const baseApi = createApi({
     "certificate",
     "department",
     "industry",
-    "recruiter"
+    "recruiter",
+    "resume"
   ],
 });
