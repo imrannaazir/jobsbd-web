@@ -29,7 +29,7 @@ const CompanyProfilePage = () => {
     const updateMaxVisible = () => {
       if (containerRef.current) {
         const containerWidth = containerRef.current.offsetWidth;
-        const buttonWidth = 160; // Updated approx. button width (including margin)
+        const buttonWidth = 160; // Adjust this based on button width
         setMaxVisible(Math.floor(containerWidth / buttonWidth));
       }
     };
@@ -63,7 +63,7 @@ const CompanyProfilePage = () => {
   return (
     <section className="relative z-20">
       {/* Navigation Bar */}
-      <section className="border rounded shadow-lg mt-14 px-3 py-2 flex items-center bg-white sticky w-full transition-shadow duration-300 ease-in-out">
+      <section className="border rounded shadow-lg mt-14 px-3 py-2 flex items-center sticky top-0 bg-white w-full transition-shadow duration-300 ease-in-out">
         {/* Left Navigation Button */}
         {startIndex > 0 && (
           <button
@@ -111,6 +111,40 @@ const CompanyProfilePage = () => {
           </button>
         )}
       </section>
+
+      {/* Section Content */}
+      {/* <section className="relative z-20">
+        <section
+          id="company-information"
+          className="mt-4 rounded-md shadow-sm border-b-1 border-gray-900 shadow-gray-400"
+        >
+          <div>
+            <h1 className="text-center text-5xl font-bold px-20 py-20">
+              company-information
+            </h1>
+          </div>
+        </section>
+        <section
+          id="company-overview"
+          className="mt-4 rounded-md shadow-sm border-b-1 border-gray-900 shadow-gray-400"
+        >
+          <div>
+            <h1 className="text-center text-5xl font-bold px-20 py-20">
+              company-overview
+            </h1>
+          </div>
+        </section>
+        <section
+          id="organizational-structure"
+          className="mt-4 rounded-md shadow-sm border-b-1 border-gray-900 shadow-gray-400"
+        >
+          <div>
+            <h1 className="text-center text-5xl font-bold px-20 py-20">
+              organizational-structure
+            </h1>
+          </div>
+        </section>
+      </section> */}
     </section>
   );
 };
