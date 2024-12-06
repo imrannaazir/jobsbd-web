@@ -1,8 +1,5 @@
-
-
 import CandidateDashboardNavbar from "@/components/candidate-dashboard/candidate-dashboard-navbar";
 import Navbar from "@/components/main/Navbar";
-
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -25,7 +22,9 @@ export default function RootLayout({
           {/* side nav */}
           <CandidateDashboardNavbar />
           {/* children */}
-          <div className="relative top-9 p-5 flex-1  bg-[#F9F9F9]">{children}</div>
+          <div className="relative top-9 p-5 flex-1  bg-[#F9F9F9]">
+            {children}
+          </div>
           {/* right box */}
         </div>
       </div>

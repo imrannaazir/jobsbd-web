@@ -1,19 +1,18 @@
 "use client";
+import { FaBriefcase } from "react-icons/fa6";
 import { MdOutlineEmail, MdOutlineWorkHistory } from "react-icons/md";
+import { SlLocationPin } from "react-icons/sl";
+import { TbMoneybag } from "react-icons/tb";
 import SectionTitle from "../section-title";
 import ProfileEditModal from "./profile-edit-modal";
 import ProfileIconInfo from "./profile-icon-info";
-import { FaBriefcase } from "react-icons/fa6";
-import { TbMoneybag } from "react-icons/tb";
-import { SlLocationPin } from "react-icons/sl";
 
 import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
 import { FiPhone } from "react-icons/fi";
 
-
 const BasicDetails = () => {
   const { data: candidateInfo, isLoading } = useGetCandidateInfoQuery("");
-  
+
   const data = [
     {
       icon: <MdOutlineWorkHistory />,
@@ -48,7 +47,7 @@ const BasicDetails = () => {
     {
       icon: <SlLocationPin />,
       label: "Current Location",
-      data: candidateInfo?.data?.addressLine,
+      data: candidateInfo?.data?.address?.district,
     },
   ];
 

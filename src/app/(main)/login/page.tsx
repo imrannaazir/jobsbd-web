@@ -19,6 +19,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
+import { LuLoader } from "react-icons/lu";
 import Swal from "sweetalert2";
 
 const LoginPage = () => {
@@ -28,7 +29,7 @@ const LoginPage = () => {
   const router = useRouter();
 
   // candidate register
-  const [login] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
   const methods = useForm<FormData>();
 
   // on submit handle
@@ -141,10 +142,18 @@ const LoginPage = () => {
           />
           <p className="text-end text-gray-500 text-sm">Forgot Password?</p>
           <Button
+            disabled={isLoading}
             type="submit"
             className="uppercase w-full bg-primary text-white shadow rounded-md"
           >
-            Sign in
+            {isLoading ? (
+              <span className="flex items-center gap-1">
+                Signing in{" "}
+                <LuLoader className="animate-spin h-4 w-4 mt-[2px]" />
+              </span>
+            ) : (
+              <span>Sign in</span>
+            )}
           </Button>
           <ORDivider />
           <div className="lg:w-[400px] lg:mx-auto">

@@ -1,14 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import Container from "./Container";
-import { BiMenu } from "react-icons/bi";
-import { useState } from "react";
+import { removeRefreshToken } from "@/action/auth-action";
 import logo from "@/assets/main/logo-transparent.png";
-import { usePathname, useRouter } from "next/navigation";
-import MobileNavbar from "./MobileNavbar";
-import { FaChevronDown } from "react-icons/fa";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,30 +9,141 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "../ui/button";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { logout } from "@/redux/features/auth/authSlice";
-import userIcon from "../../assets/candidate-dashboard/candidate-default.png";
 import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
-import { removeRefreshToken } from "@/action/auth-action";
+import { logout } from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { BiMenu } from "react-icons/bi";
+import { FaChevronDown } from "react-icons/fa";
+import userIcon from "../../assets/candidate-dashboard/candidate-default.png";
+import { Button } from "../ui/button";
+import Container from "./Container";
+import MobileNavbar from "./MobileNavbar";
 
 const Navbar = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const currentPath = usePathname();
   const dispatch = useAppDispatch();
-  // const userInfo = useAppSelector((state) => state.auth.user);
+  const [isClient, setIsClient] = useState(false);
   const token = useAppSelector((state) => state.auth.token);
   const { data, isLoading } = useGetCandidateInfoQuery("");
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleLogOut = async() => {
+  const handleLogOut = async () => {
     dispatch(logout());
-    await removeRefreshToken()
-    router.push('/')
+    await removeRefreshToken();
+    router.push("/");
+  };
+
+  const renderAuthButtons = () => {
+    if (!isClient) return null; // Return null on the server-side
+
+    return token ? (
+      <li>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <div className="flex items-center justify-center gap-3 cursor-pointer">
+              <Image
+                src={userIcon}
+                width={40}
+                height={40}
+                className="size-10 rounded-full"
+                alt="user"
+              />
+              <div>
+                <h2 className="text-sm font-semibold">
+                  {!isLoading && data?.data?.fullName}
+                </h2>
+                <p className="text-sm">Candidate</p>
+              </div>
+              <div>
+                <FaChevronDown className="size-4" />
+              </div>
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56 mt-3">
+            <DropdownMenuGroup className="cursor-pointer">
+              <Link href="/candidate-dashboard">
+                <DropdownMenuItem className="cursor-pointer">
+                  <div className="flex items-center justify-center gap-3 cursor-pointer">
+                    <Image
+                      src={userIcon}
+                      width={40}
+                      height={40}
+                      className="size-10 rounded-full"
+                      alt="user"
+                    />
+                    <div>
+                      <h2 className="text-sm font-semibold">
+                        {!isLoading && data?.data?.fullName}
+                      </h2>
+                      <p className="text-sm">Go To Dashboard</p>
+                    </div>
+                  </div>
+                </DropdownMenuItem>
+              </Link>
+              <Link href="/candidate-dashboard/profile">
+                <DropdownMenuItem className="cursor-pointer">
+                  View Profile
+                </DropdownMenuItem>
+              </Link>
+              <Link href="/candidate-dashboard/candidate-change-password">
+                <DropdownMenuItem className="cursor-pointer">
+                  Settings
+                </DropdownMenuItem>
+              </Link>
+            </DropdownMenuGroup>
+
+            <div className="p-2">
+              <Button
+                onClick={handleLogOut}
+                className="bg-white w-full border-2 border-primary text-primary cursor-pointer hover:bg-[#ECF0F3]"
+              >
+                Logout
+              </Button>
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </li>
+    ) : (
+      <>
+        <li>
+          <Link
+            href="/login"
+            className="nav-link border-2 border-[#155EAD] hover:bg-[#DCEFFF]"
+          >
+            Login
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/candidate-register"
+            className="nav-link bg-[#155EAD] text-white hover:bg-primary"
+          >
+            Register
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/employee-login"
+            className="nav-link text-[#424447] bg-[#93949572] hover:bg-[#DCEFFF]"
+          >
+            For Employers
+          </Link>
+        </li>
+      </>
+    );
   };
 
   return (
@@ -97,101 +201,7 @@ const Navbar = () => {
                   Get Support
                 </Link>
               </li>
-              {token ? (
-                <li>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <div className="flex items-center justify-center gap-3 cursor-pointer">
-                        <Image
-                          src={userIcon}
-                          width={40}
-                          height={40}
-                          className="size-10 rounded-full"
-                          alt="user"
-                        />
-                        <div>
-                          <h2 className="text-sm font-semibold">
-                            {!isLoading && data?.data?.fullName}
-                          </h2>
-                          <p className="text-sm">Candidate</p>
-                        </div>
-                        <div>
-                          <FaChevronDown className="size-4" />
-                        </div>
-                      </div>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56 mt-3">
-                      <DropdownMenuGroup className="cursor-pointer">
-                        <Link href="/candidate-dashboard">
-                          <DropdownMenuItem className="cursor-pointer">
-                            <div className="flex items-center justify-center gap-3 cursor-pointer">
-                              <Image
-                                src={userIcon}
-                                width={40}
-                                height={40}
-                                className="size-10 rounded-full"
-                                alt="user"
-                              />
-                              <div>
-                                <h2 className="text-sm font-semibold">
-                                  {!isLoading && data?.data?.fullName}
-                                </h2>
-                                <p className="text-sm">Go To Dashboard</p>
-                              </div>
-                            </div>
-                          </DropdownMenuItem>
-                        </Link>
-                        <Link href="/candidate-dashboard/profile">
-                          <DropdownMenuItem className="cursor-pointer">
-                            View Profile
-                          </DropdownMenuItem>
-                        </Link>
-                        <Link href="/candidate-dashboard/candidate-change-password">
-                          <DropdownMenuItem className="cursor-pointer">
-                          Settings
-                          </DropdownMenuItem>
-                        </Link>
-                      </DropdownMenuGroup>
-
-                      <div className="p-2">
-                        <Button
-                          onClick={handleLogOut}
-                          className="bg-white w-full border-2 border-primary text-primary cursor-pointer hover:bg-[#ECF0F3]"
-                        >
-                          Logout
-                        </Button>
-                      </div>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </li>
-              ) : (
-                <>
-                  <li>
-                    <Link
-                      href="/login"
-                      className="nav-link border-2 border-[#155EAD] hover:bg-[#DCEFFF]"
-                    >
-                      Login
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/candidate-register"
-                      className="nav-link bg-[#155EAD] text-white hover:bg-primary"
-                    >
-                      Register
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/employee-login"
-                      className="nav-link text-[#424447] bg-[#93949572] hover:bg-[#DCEFFF]"
-                    >
-                      For Employers
-                    </Link>
-                  </li>
-                </>
-              )}
+              {renderAuthButtons()}
             </ul>
           </div>
 

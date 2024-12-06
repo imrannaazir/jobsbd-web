@@ -1,23 +1,22 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
-  RiBold,
-  RiItalic,
-  RiStrikethrough,
-  RiCodeSSlashLine,
-  RiListOrdered2,
-} from "react-icons/ri";
-import { Editor } from "@tiptap/react";
-import { AiOutlineRedo, AiOutlineUndo } from "react-icons/ai";
-import { BsTypeUnderline } from "react-icons/bs";
-import { IoListOutline } from "react-icons/io5";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Level } from "@tiptap/extension-heading";
+import { Editor } from "@tiptap/react";
+import { AiOutlineRedo, AiOutlineUndo } from "react-icons/ai";
+import { BsTypeUnderline } from "react-icons/bs";
+import { IoListOutline } from "react-icons/io5";
+import {
+  RiBold,
+  RiCodeSSlashLine,
+  RiItalic,
+  RiListOrdered2,
+  RiStrikethrough,
+} from "react-icons/ri";
 
 const Button = ({
   onClick,
@@ -108,7 +107,10 @@ export default function TextEditorMenuBar({
       editor
         .chain()
         .focus()
-        .toggleHeading({ level: parseInt(value) as Level })
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+
+        .toggleHeading({ level: parseInt(value) })
         .run();
     }
   };

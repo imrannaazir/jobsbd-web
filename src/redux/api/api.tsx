@@ -8,16 +8,16 @@ import {
   createApi,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
-import { RootState } from "../store";
 import Swal from "sweetalert2";
 import { logout, setUser } from "../features/auth/authSlice";
+import { RootState } from "../store";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_API,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
-    
+
     if (token) {
       headers.set("authorization", `${token}`);
     }
@@ -93,6 +93,7 @@ export const baseApi = createApi({
     "department",
     "industry",
     "recruiter",
-    "resume"
+    "savedJobs",
+    "resume",
   ],
 });

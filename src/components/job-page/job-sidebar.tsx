@@ -1,12 +1,12 @@
 "use client";
 
-import { useForm, FormProvider } from "react-hook-form";
+import { TSearchParams } from "@/type";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FormProvider, useForm } from "react-hook-form";
+import { IoSearchSharp } from "react-icons/io5";
+import { MdTune } from "react-icons/md";
 import { Button } from "../ui/button";
 import FloatingLabelInput from "../ui/CustomInput";
-import { MdTune } from "react-icons/md";
-import { IoSearchSharp } from "react-icons/io5";
-import { useRouter, useSearchParams } from "next/navigation";
-import { TSearchParams } from "@/type";
 
 const JobSidebar = () => {
   const router = useRouter();

@@ -33,7 +33,28 @@ const jobApi = baseApi.injectEndpoints({
         };
       },
     }),
+    toggleInSavedJob: builder.mutation({
+      query: (jobId: string) => ({
+        url: "/saved-jobs/toggle",
+        method: "POST",
+        body: { jobId },
+      }),
+      invalidatesTags: ["savedJobs"],
+    }),
+
+    getAllMySavedJobs: builder.query({
+      query: () => ({
+        url: "/saved-jobs/me/all",
+      }),
+      providesTags: ["savedJobs"],
+    }),
   }),
 });
 
-export const { useGetAllJobsQuery, useApplyJobMutation, useGetAllAppliedJobsQuery } = jobApi;
+export const {
+  useGetAllJobsQuery,
+  useApplyJobMutation,
+  useGetAllAppliedJobsQuery,
+  useGetAllMySavedJobsQuery,
+  useToggleInSavedJobMutation,
+} = jobApi;
