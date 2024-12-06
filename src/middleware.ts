@@ -14,6 +14,7 @@ const protectedRoutes = [...candidateRoutes, ...recruiterRoutes];
 
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
+  console.log(token, 'token from req');
   const { pathname } = req.nextUrl;
 
   const isProtectedRoute = protectedRoutes.some((route) =>
@@ -32,7 +33,7 @@ export async function middleware(req: NextRequest) {
   if (token) {
     try {
       const decodedData = jwtDecode(token) as any;
-
+      console.log(decodedData, 'decoded token from mid');
       if (
         decodedData.role !== userRole.EMPLOYER &&
         pathname.startsWith("/recruiter")
@@ -44,6 +45,7 @@ export async function middleware(req: NextRequest) {
         decodedData.role !== userRole.CANDIDATE &&
         pathname.startsWith("/candidate-")
       ) {
+        
         return NextResponse.redirect(new URL("/", req.url));
       }
     } catch (error) {

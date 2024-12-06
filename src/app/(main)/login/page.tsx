@@ -10,6 +10,7 @@ import ORDivider from "@/components/ui/ORDivider";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import SocialLogin from "@/components/ui/SocialLogin";
+import { userRole } from "@/constant/constant-variable";
 import { useLoginMutation } from "@/redux/api/auth/authApi";
 import { setUser, TUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
@@ -36,18 +37,29 @@ const LoginPage = () => {
       const response = await login(data);
 
       if (response.data) {
-        
         const user = verifyToken(response.data.data.accessToken) as TUser;
+        console.log(user?.role , "from line 41");
         dispatch(
-          setUser({ user: user, token: response.data.data.accessToken, phoneNumber: response.data.data.phoneNumber })
+          setUser({
+            user: user,
+            token: response.data.data.accessToken,
+            phoneNumber: response.data.data.phoneNumber,
+          })
         );
-        saveTokenInCookies(response.data.data.accessToken)
+        saveTokenInCookies(response.data.data.accessToken);
         Swal.fire({
           title: "Success",
           text: "You have been logged in successfully",
           icon: "success",
         });
-        router.push("/candidate-dashboard");
+        if (user?.role === userRole.CANDIDATE) {
+          router.push("/candidate-dashboard");
+        } else if (user?.role === userRole.EMPLOYER) {
+          router.push("/recruiter/dashboard");
+          
+        } else {
+          console.log('from else');
+        }
         methods.reset();
       } else {
         Swal.fire({
@@ -55,7 +67,6 @@ const LoginPage = () => {
           text: "Login failed",
           icon: "error",
         });
-        
       }
     } else {
       const response = await login({ phone: phone, password: data.password });
@@ -73,7 +84,6 @@ const LoginPage = () => {
           text: "Login failed",
           icon: "error",
         });
-        
       }
     }
   };
