@@ -1,17 +1,13 @@
-"use client"
+"use client";
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { FaPlus } from "react-icons/fa6";
-import { Button } from "./button";
 
-const AddIconButton = ({asChild}: {asChild: boolean}) => {
+const AddIconButton = ({ asChild }: { asChild: boolean }) => {
   return (
-    <Button
-      variant="outline"
-      className="bg-bgColour hover:bg-bgColour hover:text-primary font-semibold text-primary"
-    >
+    <div className="flex border-primary py-2 px-4 bg-bgColour hover:bg-bgColour hover:text-primary font-semibold text-primary text-sm items-center border rounded-md gap-2">
       Add
-      <FaPlus className="text-2xl" />
-    </Button>
+      <FaPlus size={16} />
+    </div>
   );
 };
 

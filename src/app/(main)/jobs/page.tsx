@@ -8,6 +8,18 @@ const JobsPage = async ({
 }: {
   searchParams: Promise<TSearchParams>;
 }) => {
+  const params = new URLSearchParams(await searchParams);
+  // const filterQuery = useAppSelector((state) => state.job.filter);
+  // const { data: jobs, isLoading, isFetching } = useGetAllJobsQuery(filterQuery);
+  const res = await fetch(`${process.env.BASE_API}/job/get-all?${params}`, {
+    method: "GET",
+    next: {
+      revalidate: 600,
+    },
+  });
+  const jobsData = await res.json();
+  const jobs = jobsData?.data || [];
+
   return (
     <section className="relative flex bg-gray-50 flex-col lg:flex-row">
       {/* Sidebar */}
@@ -19,7 +31,7 @@ const JobsPage = async ({
 
       {/* Main Content */}
       <div className="flex-1 p-5 overflow-y-auto">
-        <JobSection searchParams={searchParams as TSearchParams} />
+        <JobSection jobs={jobs} />
       </div>
     </section>
   );

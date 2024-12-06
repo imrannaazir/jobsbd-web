@@ -49,7 +49,12 @@ const CertificateModal = () => {
     }
   };
   return (
-    <CustomModal buttonType="add" title="Project" open={open} setOpen={setOpen}>
+    <CustomModal
+      buttonType="add"
+      title="Certificate  "
+      open={open}
+      setOpen={setOpen}
+    >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">

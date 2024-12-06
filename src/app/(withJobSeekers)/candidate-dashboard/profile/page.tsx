@@ -8,8 +8,6 @@ import SkillSection from "@/components/candidate-dashboard/profile/skill-section
 import Summary from "@/components/candidate-dashboard/profile/summary";
 import WorkExperienceSection from "@/components/candidate-dashboard/profile/work-experience-section";
 
-import React from "react";
-
 const page = () => {
   // Navigation items
   const navItems = [
@@ -19,16 +17,16 @@ const page = () => {
   ];
   return (
     <>
-      <CandidateDashboardTopNav  navItems={navItems}/>
+      <CandidateDashboardTopNav navItems={navItems} />
       <div className="relative top-14 py-5 space-y-8">
         <BasicDetails />
         <Summary />
         <EducationSection />
-        <SkillSection/>
-        <WorkExperienceSection/>
-        <ProjectSection/>
-        <CertificateSection/>
-        <LanguageSection/>
+        <SkillSection />
+        <WorkExperienceSection />
+        <ProjectSection />
+        <CertificateSection />
+        <LanguageSection />
       </div>
     </>
   );
