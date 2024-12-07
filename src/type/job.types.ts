@@ -34,3 +34,4 @@ export type TSavedJob = {
   createdAt: string;
   updatedAt: string;
 };
+

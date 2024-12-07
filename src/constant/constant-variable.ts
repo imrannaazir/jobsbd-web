@@ -80,3 +80,10 @@ export const userRole = {
   ADMIN: "ADMIN",
   SUPER_ADMIN: "SUPER_ADMIN",
 } as const;
+
+export const jobStatus = {
+  APPLIED: "APPLIED",
+  SHORTLISTED: "SHORTLISTED",
+  REJECTED: "REJECTED",
+  ACCEPTED: "ACCEPTED",
+} as const;

@@ -19,13 +19,15 @@ import { IoLocationSharp } from "react-icons/io5";
 import { TbMoneybag } from "react-icons/tb";
 import ApplyJobModal from "./apply-job-modal";
 import SavedJobButton from "./saved-job-button";
-
+import { removeUnderscore } from "@/utils/remove-underscore";
+import { formatDeadline } from "@/utils/format-deadline";
 
 type TJobCardProps = {
   job: TJob;
+  status: string | null;
 };
-const JobCard: FC<TJobCardProps> = ({ job }) => {
-  
+const JobCard: FC<TJobCardProps> = ({ job, status }) => {
+  console.log(job, "from job card");
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -46,7 +48,12 @@ const JobCard: FC<TJobCardProps> = ({ job }) => {
                 <TbMoneybag />
               </div>
               <p className="text-sm font-semibold">
-                Salary: 100000 Taka/Monthly
+                Salary:
+                <span className="ml-1">
+                  {job?.negotiable
+                    ? "Negotiable"
+                    : `${job?.minSalary} - ${job?.maxSalary} Taka/Monthly`}
+                </span>
               </p>
             </div>
             <Image src={img} alt="company image" width={60} height={60} />
@@ -55,11 +62,11 @@ const JobCard: FC<TJobCardProps> = ({ job }) => {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1 px-2 py-1 text-sm text-[#15A449] bg-[#EEFAF7] rounded-full">
               <FaBriefcase />
-              <p>Full time</p>
+              <p>{removeUnderscore(job?.jobType)}</p>
             </div>
             <div className="flex items-center gap-1  px-2 py-1 text-sm text-[#8743DF] bg-[#F2E9FF] rounded-full">
               <FaGraduationCap />
-              <p>Full time</p>
+              <p>{job?.degreeName}</p>
             </div>
             <div className="flex items-center gap-1  px-2 py-1 text-sm text-[#ED7200] bg-[#FFF5E2] rounded-full">
               <IoLocationSharp />
@@ -73,7 +80,9 @@ const JobCard: FC<TJobCardProps> = ({ job }) => {
           <div className="p-2 bg-bgColour rounded-full text-primary">
             <CiClock2 />
           </div>
-          <p className="text-sm font-semibold">Deadline: 100000 Taka/Monthly</p>
+          <p className="text-sm font-semibold">
+            {formatDeadline(job?.deadline)}
+          </p>
         </div>
         <div className="flex items-center gap-4">
           <Link
@@ -82,7 +91,7 @@ const JobCard: FC<TJobCardProps> = ({ job }) => {
           >
             View Details
           </Link>
-          <ApplyJobModal jobId={job?.id} />
+          <ApplyJobModal jobId={job?.id} status={status || null} />
         </div>
       </CardFooter>
     </Card>
