@@ -34,3 +34,9 @@ export type TLoginInfo = {
   phoneNumber?: string;
   password: string;
 };
+
+
+export type TItem = {
+  id: string;
+  name: string;
+};

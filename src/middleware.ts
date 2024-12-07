@@ -23,6 +23,7 @@ export async function middleware(req: NextRequest) {
   }
 
   const authPages = ["/login", "/register", "/employee-login", "/employee-register"];
+  // const authPages = ["/register"];
   if (token && authPages.includes(pathname)) {
     return NextResponse.redirect(new URL("/", req.url));
   }

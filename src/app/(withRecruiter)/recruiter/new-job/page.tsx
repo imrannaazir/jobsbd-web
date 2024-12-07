@@ -1,3 +1,5 @@
+"use client"
+
 import BasicsJobDetails from "@/components/recruiter/new-job-post/basics-job-details";
 
 const NewPostJobPage = () => {

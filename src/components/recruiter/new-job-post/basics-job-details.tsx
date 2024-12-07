@@ -34,16 +34,12 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import JobTitle from "./job-title";
 import SkillsComponent from "./SkillsComponent";
+import { TItem } from "@/type";
 
 interface Skill {
   skill: string;
   duration: number;
 }
-
-type TItem = {
-  id: string;
-  name: string;
-};
 
 const BasicsJobDetails = () => {
   const [skills, setSkills] = useState<Skill[]>([]);
