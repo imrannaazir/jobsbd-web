@@ -9,8 +9,7 @@ const JobsPage = async ({
   searchParams: Promise<TSearchParams>;
 }) => {
   const params = new URLSearchParams(await searchParams);
-  // const filterQuery = useAppSelector((state) => state.job.filter);
-  // const { data: jobs, isLoading, isFetching } = useGetAllJobsQuery(filterQuery);
+
   const res = await fetch(`${process.env.BASE_API}/job/get-all?${params}`, {
     method: "GET",
     next: {

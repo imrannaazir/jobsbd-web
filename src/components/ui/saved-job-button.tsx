@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import useSaveJob from "@/hooks/useSavedJob";
 import { cn } from "@/lib/utils";

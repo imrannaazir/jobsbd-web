@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// "use client";
 import {
   Select,
   SelectContent,
@@ -8,10 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TJob } from "@/type/job.types";
 import JobCard from "../ui/job-card";
-// import { useGetAllJobsQuery } from "@/redux/api/job/jobApi";
-// import { useAppSelector } from "@/redux/hooks";
+import { TJob } from "@/type/job.types";
 
 const JobSection = async ({ jobs }: { jobs: TJob[] }) => {
   return (

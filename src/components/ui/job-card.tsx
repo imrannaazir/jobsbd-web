@@ -20,10 +20,12 @@ import { TbMoneybag } from "react-icons/tb";
 import ApplyJobModal from "./apply-job-modal";
 import SavedJobButton from "./saved-job-button";
 
+
 type TJobCardProps = {
   job: TJob;
 };
 const JobCard: FC<TJobCardProps> = ({ job }) => {
+  
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
