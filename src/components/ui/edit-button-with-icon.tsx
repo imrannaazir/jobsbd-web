@@ -1,15 +1,13 @@
-"use client"
+"use client";
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
 import { FiEdit3 } from "react-icons/fi";
-import { Button } from "@/components/ui/button";
-const EditButton = ({asChild}: {asChild: boolean}) => {
-    return (
-        <Button variant="outline" className="bg-bgColour hover:bg-bgColour hover:text-primary font-semibold text-primary">
-        Edit
-        <FiEdit3 className='text-2xl'/>
-      </Button>
-    );
+const EditButton = ({ asChild }: { asChild: boolean }) => {
+  return (
+    <div className="flex border-primary py-2 px-4 bg-bgColour hover:bg-bgColour hover:text-primary font-semibold text-primary text-sm items-center border rounded-md gap-2">
+      Edit
+      <FiEdit3 size={16} />
+    </div>
+  );
 };
 
 export default EditButton;

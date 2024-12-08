@@ -17,12 +17,15 @@ import { FaGraduationCap } from "react-icons/fa";
 import { FaBriefcase } from "react-icons/fa6";
 import { IoLocationSharp } from "react-icons/io5";
 import { TbMoneybag } from "react-icons/tb";
+import ApplyJobModal from "./apply-job-modal";
 import SavedJobButton from "./saved-job-button";
+
 
 type TJobCardProps = {
   job: TJob;
 };
 const JobCard: FC<TJobCardProps> = ({ job }) => {
+  
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -79,12 +82,7 @@ const JobCard: FC<TJobCardProps> = ({ job }) => {
           >
             View Details
           </Link>
-          <Link
-            href="/"
-            className="bg-green-500 text-white text-sm font-semibold rounded px-2 py-1"
-          >
-            Apply Now
-          </Link>
+          <ApplyJobModal jobId={job?.id} />
         </div>
       </CardFooter>
     </Card>

@@ -94,5 +94,6 @@ export const baseApi = createApi({
     "industry",
     "recruiter",
     "savedJobs",
+    "resume",
   ],
 });

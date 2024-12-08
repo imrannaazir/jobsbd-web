@@ -10,6 +10,7 @@ import ORDivider from "@/components/ui/ORDivider";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import SocialLogin from "@/components/ui/SocialLogin";
+import { userRole } from "@/constant/constant-variable";
 import { useLoginMutation } from "@/redux/api/auth/authApi";
 import { setUser, TUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
@@ -38,6 +39,7 @@ const LoginPage = () => {
 
       if (response.data) {
         const user = verifyToken(response.data.data.accessToken) as TUser;
+        console.log(user?.role , "from line 41");
         dispatch(
           setUser({
             user: user,
@@ -51,7 +53,14 @@ const LoginPage = () => {
           text: "You have been logged in successfully",
           icon: "success",
         });
-        router.push("/candidate-dashboard");
+        if (user?.role === userRole.CANDIDATE) {
+          router.push("/candidate-dashboard");
+        } else if (user?.role === userRole.EMPLOYER) {
+          router.push("/recruiter/dashboard");
+          
+        } else {
+          console.log('from else');
+        }
         methods.reset();
       } else {
         Swal.fire({

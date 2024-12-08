@@ -13,14 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import EditButton from "@/components/ui/edit-button-with-icon";
 import { Form } from "@/components/ui/form";
-import {
-  DateField,
-  InputField,
-  SelectField,
-} from "@/components/ui/form-fields";
-import {
-  bangladeshDistricts,
-} from "@/constant/constant-variable";
+import { DateField, InputField } from "@/components/ui/form-fields";
 
 import { formSchema, FormValues } from "@/schemas/profile-form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -72,38 +65,32 @@ const BasicDetailsModal = () => {
                 placeholder="Enter Company Name"
               />
               <InputField
-                name="websiteURL"
+                name="websiteLink"
                 label="Website URL"
                 type="text"
                 placeholder="Enter Website URL"
               />
               <DateField name="foundedDate" label="Founded Date" />
               <InputField
-                name="businesstype"
+                name="businessType"
                 label="Business type"
                 type="text"
                 placeholder="Enter Business type"
               />
               <InputField
-                name="EmployeeNumber"
+                name="numberOfEmployees"
                 label="Number of Employees"
                 type="number"
                 placeholder="Enter Number of Employees"
               />
               <InputField
-                name="officeNumber"
+                name="numberOfOffices"
                 label="Number of Offices"
                 type="number"
                 placeholder="Enter Number of Offices"
               />
-              <SelectField
-                name="district"
-                label="District"
-                options={bangladeshDistricts}
-              />
-
               <InputField
-                name="addressLine"
+                name="address"
                 label="Address Line"
                 placeholder="Your Address Line"
               />

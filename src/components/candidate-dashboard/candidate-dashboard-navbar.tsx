@@ -9,7 +9,7 @@ import { BsBuildings } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
-import { MdOutlineDashboard, MdOutlineWorkHistory } from "react-icons/md";
+import { MdOutlineContactPage, MdOutlineDashboard, MdOutlineWorkHistory } from "react-icons/md";
 import { RiListSettingsLine } from "react-icons/ri";
 import Divider from "../ui/Divider";
 import { usePathname } from "next/navigation";
@@ -33,6 +33,11 @@ const CandidateDashboardNavbar: React.FC = () => {
       label: "Profile",
       icon: <CgProfile size={25} />,
       href: "/candidate-dashboard/profile",
+    },
+    {
+      label: "CV Manager",
+      icon: <MdOutlineContactPage size={25}/>,
+      href: "/candidate-dashboard/cv-manager",
     },
     {
       label: "Applied Jobs",

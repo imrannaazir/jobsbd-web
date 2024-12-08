@@ -47,7 +47,7 @@ const BasicDetails = () => {
     {
       icon: <SlLocationPin />,
       label: "Current Location",
-      data: candidateInfo?.data?.address.district,
+      data: candidateInfo?.data?.address?.district,
     },
   ];
 
