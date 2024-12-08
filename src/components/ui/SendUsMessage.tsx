@@ -15,23 +15,36 @@ const SendUsMessage = () => {
         {/* Form Section */}
         <div className="bg-white rounded-[20px] m-[10px] p-[30px]">
           <h1 className="text-center text-xl mb-[10px]">Send us a Message</h1>
-          <form className="flex flex-col gap-4">
+          {/* Formspree Form */}
+          <form
+            action="https://formspree.io/f/mjkvzkbe"
+            method="POST"
+            className="flex flex-col gap-4"
+          >
             {/* Name Input */}
             <input
               type="text"
+              name="name"
               placeholder="Enter your name"
+              required
               className="mb-5 border-2 border-gray-100 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
             />
 
             {/* Email Input */}
             <input
               type="email"
+              name="email"
               placeholder="Enter Email"
+              required
               className="mb-5 border-2 border-gray-100 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
             />
+
+            {/* Message Input */}
             <textarea
+              name="message"
               placeholder="Message"
               rows={4}
+              required
               className="mb-5 border-2 border-gray-100 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
             ></textarea>
 

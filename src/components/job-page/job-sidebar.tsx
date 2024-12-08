@@ -1,7 +1,7 @@
 "use client";
 
-import { clearFilter, setFilter } from "@/redux/features/jobSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { TSearchParams } from "@/type";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 import { IoSearchSharp } from "react-icons/io5";
 import { MdTune } from "react-icons/md";
@@ -9,22 +9,53 @@ import { Button } from "../ui/button";
 import FloatingLabelInput from "../ui/CustomInput";
 
 const JobSidebar = () => {
-  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   // Initialize the React Hook Form methods
   const methods = useForm({
-    defaultValues: {},
+    defaultValues: {
+      query: searchParams.get("query") || "",
+      location: searchParams.get("location") || "",
+      industry: searchParams.get("industry") || "",
+      department: searchParams.get("department") || "",
+      minExperience: searchParams.get("minExperience") || "",
+      minSalary: searchParams.get("minSalary") || "",
+      maxSalary: searchParams.get("maxSalary") || "",
+      negotiable: searchParams.get("negotiable") || "",
+    },
   });
 
   // Define the form submission handler
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onSubmit = (data: any) => {
-    console.log(data, "from 20 line sidebar");
-    dispatch(setFilter(data));
+  const onSubmit = (data: TSearchParams) => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    // Iterate over the data object and add each key-value pair to newParams
+    Object.entries(data).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        newParams.set(key, value.toString());
+      } else {
+        // Remove the parameter if the value is empty, null, or undefined
+        newParams.delete(key);
+      }
+    });
+
+    // Convert the URLSearchParams object to a string and update the URL
+    router.push(`/jobs?${newParams.toString()}`, { scroll: false });
   };
 
   const handleClearFilter = () => {
-    dispatch(clearFilter());
-    methods.reset();
+    router.replace(`/jobs`);
+
+    methods.reset({
+      query: "",
+      location: "",
+      industry: "",
+      department: "",
+      minExperience: "",
+      minSalary: "",
+      maxSalary: "",
+      negotiable: "",
+    });
   };
 
   return (

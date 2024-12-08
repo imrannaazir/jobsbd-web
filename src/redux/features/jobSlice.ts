@@ -1,18 +1,9 @@
+import { TSearchParams } from "@/type";
 import { createSlice } from "@reduxjs/toolkit";
 
-export type TFilter = {
-  query?: string;
-  location?: string;
-  industry?: string;
-  department?: string;
-  minExperience?: string;
-  minSalary?: string;
-  maxSalary?: string;
-  negotiable?: string;
-};
 
 type TInitialState = {
-  filter: TFilter | null;
+  filter: TSearchParams | null;
 };
 
 const initialState: TInitialState = {

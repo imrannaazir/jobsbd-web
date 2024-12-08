@@ -10,37 +10,49 @@ import {
 } from "./constant/auth-constant";
 import { userRole } from "./constant/constant-variable";
 
-
-
 const protectedRoutes = [...candidateRoutes, ...recruiterRoutes];
 
 export async function middleware(req: NextRequest) {
-  const token = req.cookies.get("token");
+  const token = req.cookies.get("token")?.value;
+  console.log(token, 'token from req');
   const { pathname } = req.nextUrl;
 
-  if (!token && protectedRoutes.some((route) => pathname.startsWith(route))) {
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+  const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
+
+  if (!token && isProtectedRoute) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  const authPages = ["/login", "/register", "/employee-login", "/employee-register"];
-  if (token && authPages.includes(pathname)) {
+  if (token && isAuthRoute) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
   if (token) {
     try {
-      const decodedData = jwtDecode(token.value) as any;
-
-      if (decodedData.role !== userRole.EMPLOYER && pathname.startsWith("/recruiter")) {
+      const decodedData = jwtDecode(token) as any;
+      console.log(decodedData, 'decoded token from mid');
+      if (
+        decodedData.role !== userRole.EMPLOYER &&
+        pathname.startsWith("/recruiter")
+      ) {
         return NextResponse.redirect(new URL("/", req.url));
       }
 
-      if (decodedData.role !== userRole.CANDIDATE && pathname.startsWith("/candidate-")) {
+      if (
+        decodedData.role !== userRole.CANDIDATE &&
+        pathname.startsWith("/candidate-")
+      ) {
+        
         return NextResponse.redirect(new URL("/", req.url));
       }
     } catch (error) {
       console.error("Error decoding token", error);
-      return NextResponse.redirect(new URL("/login", req.url));
+      const response = NextResponse.redirect(new URL("/login", req.url));
+      response.cookies.delete("token");
+      return response;
     }
   }
 
@@ -48,6 +60,12 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [...protectedRoutes, ...authRoutes],
+  matcher: [
+    "/login",
+    "/register",
+    "/employee-login",
+    "/employee-register",
+    "/recruiter/:path*",
+    "/candidate-:path*",
+  ],
 };
-

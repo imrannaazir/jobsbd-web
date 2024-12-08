@@ -4,7 +4,7 @@ import { useGetAllMySavedJobsQuery } from "@/redux/api/job/jobApi";
 import { TJob, TSavedJob } from "@/type/job.types";
 
 const SavedJobs = () => {
-  const { data, isFetching } = useGetAllMySavedJobsQuery("");
+  const { data } = useGetAllMySavedJobsQuery("");
   const jobs = data?.data?.map((savedJob: TSavedJob) => savedJob.job) as TJob[];
   console.log({ jobs, data });
 
