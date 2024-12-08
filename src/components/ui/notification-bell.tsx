@@ -3,6 +3,7 @@ import { baseApi } from "@/redux/api/api";
 import { useGetAllNotificationsQuery } from "@/redux/api/notification/notification-api";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import {
+  resetUnreadCount,
   selectNotificationState,
   setUnreadCount,
 } from "@/redux/features/notification/notification-slice";
@@ -39,9 +40,8 @@ export const NotificationBell: React.FC = () => {
     if (user!.id) {
       socket.emit("join", user?.id);
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       socket.on("newNotification", (data) => {
-        console.log(data);
-        console.log({ data });
         store.dispatch(baseApi.util.invalidateTags(["notification"]));
       });
     }
@@ -55,11 +55,13 @@ export const NotificationBell: React.FC = () => {
     dispatch(setUnreadCount(unreadNotifications?.length));
   }, [data?.data, dispatch]);
 
+  const handleOnClick = () => {
+    router.push(redirectPath);
+    dispatch(resetUnreadCount());
+  };
+
   return (
-    <div
-      onClick={() => router.push(redirectPath)}
-      className="relative cursor-pointer"
-    >
+    <div onClick={handleOnClick} className="relative cursor-pointer">
       <BellIcon className="h-6 w-6 text-gray-600" />
       {isFetching && (
         <span className="absolute -top-1 -right-1 ">

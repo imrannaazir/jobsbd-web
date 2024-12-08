@@ -9,7 +9,6 @@ import {
   useGetAllNotificationsQuery,
   useMarkNotificationsReadMutation,
 } from "@/redux/api/notification/notification-api";
-import { resetUnreadCount } from "@/redux/features/notification/notification-slice";
 import { useAppDispatch } from "@/redux/hooks";
 import { TNotification } from "@/type/notification.types";
 import { ReactNode, useEffect } from "react";
@@ -24,7 +23,6 @@ const NotificationPage = () => {
   useEffect(() => {
     const handleMarkAsRead = async () => {
       await markNotificationsRead("");
-      dispatch(resetUnreadCount());
     };
 
     handleMarkAsRead();
