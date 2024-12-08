@@ -5,6 +5,14 @@ import { saveTokenInCookies } from "@/action/auth-action";
 import { Button } from "@/components/ui/button";
 import CandidateAuthContainer from "@/components/ui/CandidateAuthContainer";
 import FloatingLabelInput from "@/components/ui/CustomInput";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import ORDivider from "@/components/ui/ORDivider";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
@@ -19,7 +27,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
-import { LuLoader } from "react-icons/lu";
+import { LuLoader, LuUserCircle } from "react-icons/lu";
 import Swal from "sweetalert2";
 
 const LoginPage = () => {
@@ -27,19 +35,28 @@ const LoginPage = () => {
   const [loginMethod, setLoginMethod] = useState("email");
   const [phone, setPhone] = useState("");
   const router = useRouter();
+  const [open, setOpen] = useState(false);
 
-  // candidate register
   const [login, { isLoading }] = useLoginMutation();
-  const methods = useForm<FormData>();
+  const methods = useForm<{
+    email: string;
+    password: string;
+  }>();
+  
+  const handleFillCredentials = (role: "Admin" | "Candidate") => {
+    const email = role === "Admin" ? "admin100@gmail.com" : "candidate100@gmail.com";
+    const password = "user12345";
+    
+    methods.setValue("email", email); 
+    methods.setValue("password", password); 
+    setOpen(false);
+  };
 
-  // on submit handle
   const onSubmit = async (data: FieldValues) => {
     if (!phone) {
       const response = await login(data);
-
       if (response.data) {
         const user = verifyToken(response.data.data.accessToken) as TUser;
-        console.log(user?.role , "from line 41");
         dispatch(
           setUser({
             user: user,
@@ -57,9 +74,6 @@ const LoginPage = () => {
           router.push("/candidate-dashboard");
         } else if (user?.role === userRole.EMPLOYER) {
           router.push("/recruiter/dashboard");
-          
-        } else {
-          console.log('from else');
         }
         methods.reset();
       } else {
@@ -90,9 +104,36 @@ const LoginPage = () => {
   };
 
   return (
-    // main section container
     <CandidateAuthContainer>
-      {/* login method selection */}
+      <div className="absolute top-5 right-5">
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <LuUserCircle className="cursor-pointer text-2xl text-primary" />
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Select Role</DialogTitle>
+              <DialogDescription>
+                Select a role to autofill credentials.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="flex flex-col gap-3 mt-4">
+              <Button
+                onClick={() => handleFillCredentials("Admin")}
+                className="w-full bg-primary text-white"
+              >
+                Admin
+              </Button>
+              <Button
+                onClick={() => handleFillCredentials("Candidate")}
+                className="w-full bg-secondary text-white"
+              >
+                Candidate
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </div>
 
       <FormProvider {...methods}>
         <form
@@ -138,7 +179,7 @@ const LoginPage = () => {
             name="password"
             label="Enter Your Password *"
             type="password"
-            rules={{ required: "Full name is required" }}
+            rules={{ required: "Password is required" }}
           />
           <p className="text-end text-gray-500 text-sm">Forgot Password?</p>
           <Button
