@@ -223,6 +223,23 @@ const candidateApi = baseApi.injectEndpoints({
       },
       providesTags: ["language"],
     }),
+    deleteLanguage: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/languages/delete-language/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["language"],
+    }),
+    updateLanguage: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/languages/update-language/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["language"],
+    }),
   }),
 });
 
@@ -251,4 +268,6 @@ export const {
   useUpdateSkillMutation,
   useAddLanguageMutation,
   useGetLanguagesQuery,
+  useDeleteLanguageMutation,
+  useUpdateLanguageMutation,
 } = candidateApi;
