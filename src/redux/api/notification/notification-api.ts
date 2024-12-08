@@ -9,7 +9,15 @@ const notificationApi = baseApi.injectEndpoints({
       }),
       providesTags: ["notification"],
     }),
+    markNotificationsRead: builder.mutation({
+      query: () => ({
+        url: `/notifications/mark-as-read`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["notification"],
+    }),
   }),
 });
 
-export const { useGetAllNotificationsQuery } = notificationApi;
+export const { useGetAllNotificationsQuery, useMarkNotificationsReadMutation } =
+  notificationApi;

@@ -1,109 +1,86 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { formatCreatedAt } from "@/lib/utils";
-import { baseApi } from "@/redux/api/api";
-import { useGetAllNotificationsQuery } from "@/redux/api/notification/notification-api";
-import { selectCurrentUser } from "@/redux/features/auth/authSlice";
-import { useAppSelector } from "@/redux/hooks";
-import { store } from "@/redux/store";
-import { TNotification } from "@/type/notification.types";
+import { Empty } from "@/components/ui/empty";
+import NotificationCard from "@/components/ui/notification-card.tsx";
+import NotificationLoader from "@/components/ui/notification-loader";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import {
-  Building2,
-  ChevronLeft,
-  ChevronRight,
-  Loader,
-  Trash2,
-} from "lucide-react";
-import { useEffect, useMemo } from "react";
-import { io } from "socket.io-client";
+  useGetAllNotificationsQuery,
+  useMarkNotificationsReadMutation,
+} from "@/redux/api/notification/notification-api";
+import { resetUnreadCount } from "@/redux/features/notification/notification-slice";
+import { useAppDispatch } from "@/redux/hooks";
+import { TNotification } from "@/type/notification.types";
+import { ReactNode, useEffect } from "react";
 
 const NotificationPage = () => {
-  const { data, isFetching } = useGetAllNotificationsQuery("");
+  const dispatch = useAppDispatch();
+  const { data, isFetching, isError } = useGetAllNotificationsQuery("");
+  const [markNotificationsRead, { isLoading }] =
+    useMarkNotificationsReadMutation();
   const notifications = (data?.data || []) as TNotification[];
-  const user = useAppSelector(selectCurrentUser);
-  const socket = useMemo(
-    () =>
-      io("http://localhost:5000", {
-        withCredentials: true,
-      }),
-    []
-  );
 
   useEffect(() => {
-    socket.on("connect", () => {
-      console.log("User connected: ", socket.id);
-    });
+    const handleMarkAsRead = async () => {
+      await markNotificationsRead("");
+      dispatch(resetUnreadCount());
+    };
 
-    if (user!.id) {
-      socket.emit("join", user?.id);
-      socket.on("newNotification", (data) => {
-        console.log({ data });
-        store.dispatch(baseApi.util.invalidateTags(["notification"]));
-      });
-    }
-  }, [socket, user]);
+    handleMarkAsRead();
+  }, [dispatch, markNotificationsRead]);
+
+  let content: ReactNode;
+  if (isFetching || isLoading) {
+    content = (
+      <div className="space-y-4">
+        {Array.from({
+          length: 10,
+        })?.map((_item, i) => (
+          <NotificationLoader key={i} />
+        ))}
+      </div>
+    );
+  } else if (isError) {
+    content = (
+      <div className="h-full flex items-center justify-center text-red-500">
+        <p>Something went wrong!</p>
+      </div>
+    );
+  } else if (!isFetching && notifications?.length < 1) {
+    content = (
+      <div className="h-full w-full flex items-center justify-center">
+        <Empty title="notification" />
+      </div>
+    );
+  } else {
+    content = (
+      <div className="space-y-4">
+        {notifications.map((notification) => (
+          <NotificationCard
+            key={notification?.id}
+            notification={notification}
+          />
+        ))}
+      </div>
+    );
+  }
   return (
     <main className="relative z-20">
-      <div className="w-full min-h-screen flex items-center justify-center">
-        {isFetching ? (
-          <Loader />
-        ) : (
-          <div className=" w-full bg-background rounded-md mx-auto p-4 space-y-6">
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-semibold">Notifications</h1>
-              <div className="flex gap-2">
-                <Button variant="outline">EARLIER</Button>
-                <Button variant="default">RECENT</Button>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              {notifications.map((notification) => (
-                <Card key={notification.id} className="bg-blue-50/50">
-                  <CardContent className="flex items-start gap-4 p-4">
-                    <div className="rounded-full bg-blue-100 p-2">
-                      <Building2 className="h-6 w-6 text-blue-500" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h2 className="font-semibold text-gray-900">
-                        {notification.title}
-                      </h2>
-                      <p className="text-gray-600 mt-1">
-                        {notification.message}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-4 shrink-0">
-                      <span className="text-gray-500 text-sm whitespace-nowrap">
-                        {formatCreatedAt(notification?.createdAt)}
-                      </span>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="text-gray-400 hover:text-gray-600"
-                      >
-                        <Trash2 className="h-5 w-5" />
-                        <span className="sr-only">Delete notification</span>
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            <div className="flex items-center justify-center gap-2">
-              <Button variant="outline" size="icon">
-                <ChevronLeft className="h-4 w-4" />
-                <span className="sr-only">Previous page</span>
-              </Button>
-              <Button variant="default">1</Button>
-              <Button variant="outline" size="icon">
-                <ChevronRight className="h-4 w-4" />
-                <span className="sr-only">Next page</span>
-              </Button>
+      <div className="w-full   flex items-center justify-center ">
+        <div className=" w-full  bg-background rounded-md mx-auto p-4 ">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-semibold">Notifications</h1>
+            <div className="flex gap-2">
+              <Button variant="outline">EARLIER</Button>
+              <Button variant="default">RECENT</Button>
             </div>
           </div>
-        )}{" "}
+          <Separator className="my-4" />
+          <ScrollArea className="h-[calc(100vh-225px)]">
+            <div className="">{content}</div>
+          </ScrollArea>
+        </div>
       </div>
     </main>
   );

@@ -1,9 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
 import logo from "@/assets/main/logo-transparent.png";
-import Container from "../main/Container";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,20 +8,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "../ui/button";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import Image from "next/image";
+import Link from "next/link";
 import userIcon from "../../assets/candidate-dashboard/candidate-default.png";
+import Container from "../main/Container";
+import { Button } from "../ui/button";
+import { NotificationBell } from "../ui/notification-bell";
 // import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
 
 const RecruiterNavbar = () => {
-  
   const dispatch = useAppDispatch();
   // const userInfo = useAppSelector((state) => state.auth.user);
   const token = useAppSelector((state) => state.auth.token);
   // const { data, isLoading } = useGetCandidateInfoQuery("");
 
-  
   const handleLogOut = () => {
     dispatch(logout());
   };
@@ -63,6 +62,9 @@ const RecruiterNavbar = () => {
                 >
                   Get Support
                 </Link>
+              </li>
+              <li className="hidden lg:block">
+                <NotificationBell />
               </li>
               {token && (
                 <li>

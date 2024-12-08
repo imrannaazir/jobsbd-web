@@ -1,18 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./features/auth/authSlice";
-import jobReducer from "./features/jobSlice";
 import {
   FLUSH,
   PAUSE,
+  PERSIST,
   persistReducer,
   persistStore,
-  REHYDRATE,
-  PERSIST,
   PURGE,
   REGISTER,
+  REHYDRATE,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { baseApi } from "./api/api";
+import authReducer from "./features/auth/authSlice";
+import jobReducer from "./features/jobSlice";
+import notificationSlice from "./features/notification/notification-slice";
 
 const persistConfig = {
   key: "auth",
@@ -26,6 +27,7 @@ export const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
     job: jobReducer,
+    notification: notificationSlice,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({
