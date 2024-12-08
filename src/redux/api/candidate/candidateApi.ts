@@ -204,6 +204,25 @@ const candidateApi = baseApi.injectEndpoints({
       },
       providesTags: ["industry"],
     }),
+
+    addLanguage: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/languages/create-language",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["language"],
+    }),
+    getLanguages: builder.query({
+      query: () => {
+        return {
+          url: "/languages/all",
+        };
+      },
+      providesTags: ["language"],
+    }),
   }),
 });
 
@@ -230,4 +249,6 @@ export const {
   useUpdateProjectMutation,
   useDeleteSkillMutation,
   useUpdateSkillMutation,
+  useAddLanguageMutation,
+  useGetLanguagesQuery,
 } = candidateApi;
