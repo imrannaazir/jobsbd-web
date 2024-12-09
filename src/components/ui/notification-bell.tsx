@@ -22,7 +22,9 @@ export const NotificationBell: React.FC = () => {
   const { unreadCount } = useAppSelector(selectNotificationState);
   const user = useAppSelector(selectCurrentUser);
   const redirectPath =
-    user?.role === userRole.CANDIDATE ? "" : "/recruiter/notifications";
+    user?.role === userRole.CANDIDATE
+      ? "/candidate-dashboard/notifications"
+      : "/recruiter/notifications";
 
   const socket = useMemo(
     () =>

@@ -11,7 +11,7 @@ export const Empty = ({
   return (
     <div
       className={cn(
-        "bg-white  w-full  flex flex-col items-center justify-center  rounded-md",
+        "bg-white h-full  w-full  flex flex-col items-center justify-center  rounded-md",
         className
       )}
     >

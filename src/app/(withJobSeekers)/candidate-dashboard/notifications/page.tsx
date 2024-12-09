@@ -1,9 +1,7 @@
-"use client";
-
 import NotificationPageContent from "@/components/ui/notification-page-content";
 
-const RecruiterNotificationPage = () => {
+const CandidateNotificationsPage = () => {
   return <NotificationPageContent />;
 };
 
-export default RecruiterNotificationPage;
+export default CandidateNotificationsPage;

@@ -20,6 +20,7 @@ import { BiMenu } from "react-icons/bi";
 import { FaChevronDown } from "react-icons/fa";
 import userIcon from "../../assets/candidate-dashboard/candidate-default.png";
 import { Button } from "../ui/button";
+import { NotificationBell } from "../ui/notification-bell";
 import Container from "./Container";
 import MobileNavbar from "./MobileNavbar";
 
@@ -200,6 +201,10 @@ const Navbar = () => {
                 >
                   Get Support
                 </Link>
+              </li>
+
+              <li className="hidden lg:block">
+                <NotificationBell />
               </li>
               {renderAuthButtons()}
             </ul>

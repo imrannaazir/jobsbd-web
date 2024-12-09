@@ -80,3 +80,13 @@ export const userRole = {
   ADMIN: "ADMIN",
   SUPER_ADMIN: "SUPER_ADMIN",
 } as const;
+
+export const NotificationType = {
+  APPLIED: "APPLIED",
+  FOLLOWED: "FOLLOWED",
+  SAVED_JOB: "SAVED_JOB",
+  SORT_LISTED: "SORT_LISTED",
+  ACCEPTED: "ACCEPTED",
+  REJECTED: "REJECTED",
+  SAVED_PROFILE: "SAVED_PROFILE",
+};
