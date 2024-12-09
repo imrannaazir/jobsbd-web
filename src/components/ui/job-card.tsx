@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import img from "@/assets/location.png";
 import {
   Card,
@@ -27,14 +27,14 @@ type TJobCardProps = {
   status: string | null;
 };
 const JobCard: FC<TJobCardProps> = ({ job, status }) => {
-  console.log(job, "from job card");
+  console.log(job, "from job card ");
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
           <CardTitle className="text-lg text-primary">{job?.title}</CardTitle>
           <CardDescription className="font-semibold">
-            Deploy your new project in one-click.
+            {job?.company?.companyName}
           </CardDescription>
         </div>
 
@@ -70,7 +70,7 @@ const JobCard: FC<TJobCardProps> = ({ job, status }) => {
             </div>
             <div className="flex items-center gap-1  px-2 py-1 text-sm text-[#ED7200] bg-[#FFF5E2] rounded-full">
               <IoLocationSharp />
-              <p>Full time</p>
+              <p>{job?.address?.district}</p>
             </div>
           </div>
         </div>

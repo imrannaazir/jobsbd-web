@@ -25,6 +25,15 @@ const resumeApi = baseApi.injectEndpoints({
       },
       providesTags: ["resume"],
     }),
+    removeResume: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/resumes/delete/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["resume"],
+    }),
   }),
 });
 
@@ -32,4 +41,5 @@ export const {
   useAddResumeMutation,
   useGetAllResumeQuery,
   useUpdateResumeStatusMutation,
+  useRemoveResumeMutation
 } = resumeApi;

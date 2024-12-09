@@ -12,9 +12,7 @@ const JobsPage = async ({
 
   const res = await fetch(`${process.env.BASE_API}/job/get-all?${params}`, {
     method: "GET",
-    next: {
-      revalidate: 600,
-    },
+    cache: "no-store",
   });
   const jobsData = await res.json();
   const jobs = jobsData?.data || [];

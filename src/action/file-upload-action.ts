@@ -38,3 +38,39 @@ export async function uploadPdf(formData: FormData) {
       .end(buffer);
   });
 }
+
+export async function uploadImage(formData: FormData) {
+  const file = formData.get("file") as File;
+  if (!file) {
+    throw new Error("No file provided");
+  }
+
+  const arrayBuffer = await file.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+
+  return new Promise<string>((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream(
+        {
+          resource_type: "image",
+          folder: "profile_images",
+          allowed_formats: ["jpg", "jpeg", "png", "gif"],
+          transformation: [
+            { width: 500, height: 500, crop: "limit" },
+            { quality: "auto:good" },
+          ],
+        },
+        (error, result) => {
+          if (error) {
+            console.error("Cloudinary upload error:", error);
+            reject(new Error("Image upload failed"));
+          } else {
+            // Resolve with the secure URL of the uploaded image
+            resolve(result!.secure_url);
+          }
+        }
+      )
+      .end(buffer);
+  });
+}
+

@@ -1,8 +1,9 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import useSaveJob from "@/hooks/useSavedJob";
 import { cn } from "@/lib/utils";
 import { useToggleInSavedJobMutation } from "@/redux/api/job/jobApi";
+import { useAppSelector } from "@/redux/hooks";
 import React from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { LuLoader } from "react-icons/lu";
@@ -12,6 +13,7 @@ interface SavedJobButtonProps {
 }
 
 const SavedJobButton: React.FC<SavedJobButtonProps> = ({ id }) => {
+  const { token } = useAppSelector((state) => state.auth);
   const [toggleInSaveJobs, { isLoading }] = useToggleInSavedJobMutation();
   const { isInSavedJobs } = useSaveJob(id);
 
@@ -27,6 +29,7 @@ const SavedJobButton: React.FC<SavedJobButtonProps> = ({ id }) => {
       variant="outline"
       onClick={handleToggle}
       className="hover:bg-transparent"
+      disabled={!token}
     >
       <SaveIcon
         className={cn("text-primary", isLoading && "animate-spin")}

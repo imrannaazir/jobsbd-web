@@ -24,6 +24,13 @@ export type TJob = {
   title: string;
   updatedAt: string;
   vacancy: number;
+  company: {
+    companyName: string;
+    id: string;
+  };
+  address: {
+    district: string;
+  };
 };
 
 export type TSavedJob = {
@@ -34,4 +41,3 @@ export type TSavedJob = {
   createdAt: string;
   updatedAt: string;
 };
-
