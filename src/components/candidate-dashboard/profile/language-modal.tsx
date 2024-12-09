@@ -1,69 +1,160 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
+
 import { Button } from "@/components/ui/button";
-import CustomModal from "@/components/ui/custom-modal";
-
-import { Form } from "@/components/ui/form";
-import { InputField, SelectField } from "@/components/ui/form-fields";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useAddLanguageMutation } from "@/redux/api/candidate/candidateApi";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus } from "lucide-react";
 import { useState } from "react";
-
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 import { z } from "zod";
 
-// Define the Zod schema
-const languageFormSchema = z.object({
-  name: z.string().min(1, "Institution is required"),
-  proficiency: z.string().min(1, "Degree is required"),
+const LanguageSchema = z.object({
+  language: z.string().min(1, "Language is required."),
+  proficiency: z.string().min(1, "Proficiency is required."),
 });
 
-// Infer the TypeScript type from the schema
-type LanguageFormValues = z.infer<typeof languageFormSchema>;
+type LanguageForm = z.infer<typeof LanguageSchema>;
 
 const LanguageModal = () => {
-  const [open, setOpen] = useState<boolean>(false);
-  const form = useForm<LanguageFormValues>({
-    resolver: zodResolver(languageFormSchema),
+  const [isOpen, setIsOpen] = useState(false);
+  const [addLanguage] = useAddLanguageMutation();
+
+  const {
+    handleSubmit,
+    setValue,
+
+    formState: { errors },
+  } = useForm<LanguageForm>({
+    resolver: zodResolver(LanguageSchema),
   });
 
-  const onSubmit = (data: LanguageFormValues) => {};
-  return (
-    <CustomModal
-      buttonType="add"
-      title="Language"
-      open={open}
-      setOpen={setOpen}
-    >
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-          <div className=" grid grid-cols-2 items-center gap-5">
-            <InputField
-              name="degree"
-              label="Degree"
-              type="text"
-              required
-              placeholder="Enter Your Degree"
-            />
-            <SelectField
-              name="proficiency"
-              label="Proficiency"
-              options={[
-                { value: "beginner", label: "beginner" },
-                { value: "intermediate", label: "intermediate" },
-                { value: "advanced", label: "advanced" },
-              ]}
-            />
-          </div>
+  const onSubmit = async (data: LanguageForm) => {
+    try {
+      const response = await addLanguage(data).unwrap();
+      if (response.success === false) {
+        Swal.fire({
+          title: "Error",
+          text: response?.errorDetails,
+          icon: "error",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else if (response?.data) {
+        Swal.fire({
+          title: "Language Added",
+          text: "Language has been added successfully",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        setIsOpen(false);
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        title: "Error",
+        text: "Failed to add Language",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  };
 
-          <div className="flex items-center justify-end">
-            <Button type="submit" className="uppercase">
-              submit
-            </Button>
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="flex items-center gap-2 bg-[#D0EFFF] hover:bg-[#D0EFFF] hover:text-[#027BC1]"
+        >
+          Add <Plus className="w-4 h-4" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>New Language</DialogTitle>
+        </DialogHeader>
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
+            <div className="flex-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Language
+              </label>
+              <Select
+                onValueChange={(value) =>
+                  setValue("language", value, { shouldValidate: true })
+                }
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select Language" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="BENGALI">BENGALI</SelectItem>
+                  <SelectItem value="ENGLISH">ENGLISH</SelectItem>
+                  <SelectItem value="FRENCH">FRENCH</SelectItem>
+                  <SelectItem value="SPANISH">SPANISH</SelectItem>
+                  <SelectItem value="GERMAN">GERMAN</SelectItem>
+                  <SelectItem value="ARABIC">ARABIC</SelectItem>
+                </SelectContent>
+              </Select>
+              {errors.language && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.language.message}
+                </p>
+              )}
+            </div>
+
+            {/* Proficiency Field */}
+            <div className="flex-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Proficiency
+              </label>
+              <Select
+                onValueChange={(value) =>
+                  setValue("proficiency", value, { shouldValidate: true })
+                }
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select Proficiency" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="BASIC">BASIC</SelectItem>
+                  <SelectItem value="FLUENT">FLUENT</SelectItem>
+                  <SelectItem value="NATIVE">NATIVE</SelectItem>
+                  <SelectItem value="CONVERSATIONAL">CONVERSATIONAL</SelectItem>
+                </SelectContent>
+              </Select>
+              {errors.proficiency && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.proficiency.message}
+                </p>
+              )}
+            </div>
           </div>
+          <DialogFooter className="flex justify-end gap-4">
+            <Button type="submit">Submit</Button>
+          </DialogFooter>
         </form>
-      </Form>
-    </CustomModal>
+      </DialogContent>
+    </Dialog>
   );
 };
 

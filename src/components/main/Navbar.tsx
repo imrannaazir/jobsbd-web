@@ -46,10 +46,13 @@ const Navbar = () => {
     router.push("/");
   };
 
+  const candidate = data?.data?.user?.role;
+  console.log(candidate);
+
   const renderAuthButtons = () => {
     if (!isClient) return null; // Return null on the server-side
 
-    return token ? (
+    return token && candidate === "CANDIDATE" ? (
       <li>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

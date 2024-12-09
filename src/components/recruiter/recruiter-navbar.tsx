@@ -18,13 +18,11 @@ import userIcon from "../../assets/candidate-dashboard/candidate-default.png";
 // import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
 
 const RecruiterNavbar = () => {
-  
   const dispatch = useAppDispatch();
   // const userInfo = useAppSelector((state) => state.auth.user);
   const token = useAppSelector((state) => state.auth.token);
   // const { data, isLoading } = useGetCandidateInfoQuery("");
 
-  
   const handleLogOut = () => {
     dispatch(logout());
   };
@@ -46,26 +44,26 @@ const RecruiterNavbar = () => {
           </div>
 
           <div>
-            <ul className="inline-flex justify-center items-center space-x-10">
-              <li className="hidden lg:block">
+            <div className="inline-flex justify-center items-center space-x-10">
+              <div className="hidden lg:block">
                 <Link
                   href="/"
                   className="font-semibold text-lg hover:text-primary"
                 >
                   Candidate
                 </Link>
-              </li>
+              </div>
 
-              <li className="hidden lg:block">
+              <div className="hidden lg:block">
                 <Link
                   href="/contact-us"
                   className="font-semibold text-lg hover:text-primary"
                 >
                   Get Support
                 </Link>
-              </li>
+              </div>
               {token && (
-                <li>
+                <div>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <div className="flex items-center justify-center gap-5 cursor-pointer">
@@ -117,9 +115,9 @@ const RecruiterNavbar = () => {
                       </div>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                </li>
+                </div>
               )}
-            </ul>
+            </div>
           </div>
         </div>
       </Container>

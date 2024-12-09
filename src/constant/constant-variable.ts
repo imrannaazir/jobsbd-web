@@ -74,6 +74,16 @@ export const jobLevel = [
   { id: "SENIOR", name: "Senior" },
 ];
 
+export const medicalAllowance = [
+  { id: "yes", label: "Yes" },
+  { id: "no", label: "No" },
+];
+
+export const subOffices = [
+  { id: "yes", label: "Yes" },
+  { id: "no", label: "No" },
+];
+
 export const userRole = {
   CANDIDATE: "CANDIDATE",
   EMPLOYER: "EMPLOYER",
