@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Container from "../Container";
 import jobSearch from "@/assets/main/job-search.png";
+import Link from "next/link";
 
 const PostJobSection = () => {
   return (
@@ -17,9 +18,9 @@ const PostJobSection = () => {
             <p className="text-xl font-semibold mb-7">
               Quick Results. Real People. Completely Free.
             </p>
-            <button className="nav-link bg-[#155EAD] hover:bg-primary text-lg text-white px-20">
+            <Link href="/recruiter/new-job"><button className="nav-link bg-[#155EAD] hover:bg-primary text-lg text-white px-20">
               Post Job For Free
-            </button>
+            </button></Link>
           </div>
           <div>
             <Image

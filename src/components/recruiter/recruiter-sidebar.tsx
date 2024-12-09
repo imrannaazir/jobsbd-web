@@ -1,8 +1,6 @@
 "use client";
 
 import img from "@/assets/candidate-dashboard/candidate-default.png";
-import CircularProgressBar from "@/components/candidate-dashboard/circular-progress-bar";
-
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -57,18 +55,18 @@ const RecruiterSidebar: React.FC = () => {
   return (
     <div className="bg-white shadow-md lg:min-h-screen rounded z-10">
       <div className="flex flex-col items-center gap-5 p-5 border-b shadow-md lg:shadow-none">
-        {/* Profile Picture and Progress */}
-        <div className="relative flex items-center justify-center">
-          <CircularProgressBar />
+        
+        <div className="flex items-center justify-center">
+          
           <Image
             alt="Profile Default"
             src={img}
-            className="w-[60px] h-[60px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            className="w-[100px] h-[100px] transform"
           />
         </div>
         {/* User Name */}
-        <h3 className="text-xl font-bold text-primary text-center">
-          User Name
+        <h3 className="text-lg font-bold text-primary text-center">
+        Employer Account
         </h3>
       </div>
 
