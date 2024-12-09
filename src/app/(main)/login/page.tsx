@@ -42,13 +42,14 @@ const LoginPage = () => {
     email: string;
     password: string;
   }>();
-  
+
   const handleFillCredentials = (role: "Admin" | "Candidate") => {
-    const email = role === "Admin" ? "admin100@gmail.com" : "candidate100@gmail.com";
+    const email =
+      role === "Admin" ? "admin100@gmail.com" : "candidate100@gmail.com";
     const password = "user12345";
-    
-    methods.setValue("email", email); 
-    methods.setValue("password", password); 
+
+    methods.setValue("email", email);
+    methods.setValue("password", password);
     setOpen(false);
   };
 
@@ -71,9 +72,12 @@ const LoginPage = () => {
           icon: "success",
         });
         if (user?.role === userRole.CANDIDATE) {
+          
           router.push("/candidate-dashboard");
         } else if (user?.role === userRole.EMPLOYER) {
           router.push("/recruiter/dashboard");
+        } else if (user.role === userRole.ADMIN) {
+          router.push("/admin-dashboard");
         }
         methods.reset();
       } else {
