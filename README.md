@@ -2,8 +2,6 @@
   <img src="src\assets\main\logo-transparent.png" alt="jobsBD" height="150dp">
 </p>
 
-<h1 align="center">JobsBD</h1>
-
 <p align=center>
   <a href="https://jobsbd.vercel.app/">Website Link</a> ·
   <a href="https://github.com/imrannaazir/jobsbd-web">Frontend repository</a> ·
@@ -14,26 +12,38 @@
 
 ## 🚀 Features
 
-### General Features:
+### 🌟 General Features:
 - **Responsive Design**: Fully optimized for all devices (mobile, tablet, desktop).
-- **Modern UI/UX**: Built with a sleek, user-friendly design.
-- **High Performance**: Optimized for fast load times and smooth interactions.
-- **Dynamic Components**: Reusable, modular components.
-- **Seamless Animations**: Integrated animations for enhanced user engagement.
+- **Modern UI/UX**: A sleek, user-friendly interface that enhances the browsing experience.
+- **High Performance**: Optimized for fast load times and smooth user interactions.
+- **Dynamic Components**: Reusable and modular components for efficient development.
+- **Seamless Animations**: Integrated animations for an engaging user experience.
+- **Job Search Functionality**: Search for jobs using advanced filters and keywords.
+- **Job Details Page**: View detailed information about job listings, including descriptions, requirements, and application links.
+- **User Dashboard**: Personalized dashboard to manage job applications and notifications.
+
 ### 🛠️ Admin Features:
-- **Package Management**: Add, view, update, and delete packages.
-- **User Management**: Manage all registered users.
-- **Booking Requests**: View booking requests and either accept or decline them.
-- **Testimonial Management**: Manage user-submitted testimonials.
-- **Admin Overview**: A dashboard providing a quick overview of key statistics and activities.
+- **Job Management**: Add, edit, view, and delete job listings.
+- **User Management**: Oversee user registrations and permissions.
+- **Application Reviews**: View and manage job applications submitted by users.
+- **Analytics Dashboard**: Overview of user activity and job posting trends.
+- **Content Moderation**: Manage and approve user-submitted content.
 
----
+### 👤 Candidate Features:
+- **Job Application**: Apply for jobs directly through the website.
+- **Application History**: Review a list of past applications and their statuses.
+- **Search and Filter Jobs**: Advanced search options to find jobs by category, location and other criteria.
+- **Profile Management**: Edit and update user profile information, including resumes and contact details.
 
-### 👤 User Features:
-- **Booking History**: View a list of past bookings and their statuses.
-- **Feedback System**: Submit feedback and view existing feedback.
-- **Profile Management**: View and update personal information through settings.
-- **User Overview**: A personalized dashboard summarizing key user details and activities.
+
+### 💼 Recruiter Features:
+- **Job Posting**: Easily post job listings directly on the platform.
+- **Application Management**: Review, accept, or decline job applications submitted by candidates.
+- **Advanced Search and Filters**: Find and manage job applications based on job title, location and other criteria.
+- **Profile Management**: Edit and update company profile details, contact information, and branding assets.
+- **Recruitment Dashboard**: Gain insights and an overview of job postings, applicant statistics, and performance metrics.
+
+
 
 ---
 
@@ -41,18 +51,18 @@
 ## 🔐 Credentials
 
 ### Admin:
-- **Email**: `admin100@gmail.com`
-- **Password**: `user12345`
+- **Email**: `admin@gmail.com`
+- **Password**: `@Password123`
 
-### User:  
+### Candidate:  
 You can create a new account or use this demo credential:  
-- **Email**: `candidate100@gmail.com`  
-- **Password**: `user12345`
+- **Email**: `candidate@gmail.com`  
+- **Password**: `@Password123`
 
 ### Recruiter:  
 You can create a new account or use this demo credential:  
-- **Email**: `employer100@gmail.com`  
-- **Password**: `user12345`
+- **Email**: `employer@gmail.com`  
+- **Password**: `@Password123`
 ---
 ## 🛠️ Tech Stack
 
@@ -147,8 +157,11 @@ Follow these steps to set up the project locally:
 
 ## 📸 Screenshots
 
-![Screenshot 1](./assets/screenshot1.png)
-![Screenshot 2](./assets/screenshot2.png)
+![Screenshot 1](src\assets\readme\jobsbd-1.png)
+![Screenshot 2](src\assets\readme\jobsbd-2.png)
+![Screenshot 3](src\assets\readme\jobsbd-3.png)
+![Screenshot 4](src\assets\readme\jobsbd-4.png)
+![Screenshot 5](src\assets\readme\jobsbd-5.png)
 
 ---
 
