@@ -70,7 +70,6 @@ const NotificationPageContent = () => {
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-semibold">Notifications</h1>
             <div className="flex gap-2">
-              <Button variant="outline">EARLIER</Button>
               <Button variant="default">RECENT</Button>
             </div>
           </div>

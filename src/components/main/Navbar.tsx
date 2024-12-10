@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { userRole } from "@/constant/constant-variable";
 import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
 import { logout } from "@/redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -23,7 +24,6 @@ import { Button } from "../ui/button";
 import { NotificationBell } from "../ui/notification-bell";
 import Container from "./Container";
 import MobileNavbar from "./MobileNavbar";
-import { userRole } from "@/constant/constant-variable";
 
 const Navbar = () => {
   const router = useRouter();
@@ -31,8 +31,8 @@ const Navbar = () => {
   const currentPath = usePathname();
   const dispatch = useAppDispatch();
   const [isClient, setIsClient] = useState(false);
-  const token = useAppSelector((state) => state.auth.token);
-  const user = useAppSelector((state) => state.auth.user);
+  const token = useAppSelector((state) => state?.auth?.token);
+  const user = useAppSelector((state) => state?.auth?.user);
   const { data, isLoading } = useGetCandidateInfoQuery("");
 
   useEffect(() => {
@@ -273,10 +273,11 @@ const Navbar = () => {
                   Get Support
                 </Link>
               </li>
-
-              <li className="hidden lg:block">
-                <NotificationBell />
-              </li>
+              {user?.id && (
+                <li>
+                  <NotificationBell />
+                </li>
+              )}
               {renderAuthButtons()}
             </ul>
           </div>

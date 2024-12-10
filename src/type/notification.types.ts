@@ -1,6 +1,6 @@
 type NotificationType =
   | "APPLIED"
-  | "SORT_LISTED"
+  | "SHORT_LISTED"
   | "ACCEPTED"
   | "REJECTED"
   | "HIRED";

@@ -36,15 +36,18 @@ const NotificationCard: FC<TNotificationCardProps> = ({ notification }) => {
     case NotificationType.SAVED_JOB:
       NotificationIcon = Bookmark;
       break;
-    case NotificationType.SORT_LISTED:
+    case NotificationType.SHORT_LISTED:
       NotificationIcon = Star;
+      break;
     case NotificationType.ACCEPTED:
       NotificationIcon = CheckCircle;
+      break;
     case NotificationType.REJECTED:
       NotificationIcon = XCircle;
+      break;
     case NotificationType.SAVED_PROFILE:
       NotificationIcon = UserCheck;
-    default:
+      break;
     case NotificationType.HIRED:
       NotificationIcon = Briefcase;
       break;

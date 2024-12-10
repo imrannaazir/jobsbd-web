@@ -62,9 +62,9 @@ const RecruiterNavbar = () => {
                 >
                   Get Support
                 </Link>
-                <div className="hidden lg:block">
-                  <NotificationBell />
-                </div>
+              </div>
+              <div className="hidden lg:block">
+                <NotificationBell />
               </div>
               {token && (
                 <div>
