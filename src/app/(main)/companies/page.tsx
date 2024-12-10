@@ -1,4 +1,3 @@
-import { getTokenFromCookies } from "@/action/auth-action";
 import JobSection from "@/components/job-page/job-section";
 import JobSidebar from "@/components/job-page/job-sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -9,21 +8,14 @@ const JobsPage = async ({
 }: {
   searchParams: Promise<TSearchParams>;
 }) => {
-  const token = await getTokenFromCookies();
   const params = new URLSearchParams(await searchParams);
 
   const res = await fetch(`${process.env.BASE_API}/job/get-all?${params}`, {
     method: "GET",
     cache: "no-store",
-    headers: {
-      Authorization: `${token}`,
-    },
-    
   });
   const jobsData = await res.json();
   const jobs = jobsData?.data || [];
-
-  console.log(jobsData);
 
   return (
     <section className="relative flex bg-gray-50 flex-col lg:flex-row">

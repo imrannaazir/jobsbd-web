@@ -113,6 +113,24 @@ const candidateApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["experience"],
     }),
+    deleteExperience: builder.mutation({
+      query: (id) => {
+        return {
+          url: `experiences/delete-experience/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["experience"],
+    }),
+
+    updateExperience: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/experiences/update-experience/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["experience"],
+    }),
 
     getAllExperience: builder.query({
       query: () => {
@@ -279,4 +297,6 @@ export const {
   useGetLanguagesQuery,
   useDeleteLanguageMutation,
   useUpdateLanguageMutation,
+  useDeleteExperienceMutation,
+  useUpdateExperienceMutation,
 } = candidateApi;

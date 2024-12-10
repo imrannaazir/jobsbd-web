@@ -19,14 +19,13 @@ const ContactUs = () => {
             <div className="flex justify-start items-center mt-8">
               <Image src={locationImg} alt="location" />
               <p className="text-gray-500 lg:text-left text-center ml-4">
-                11th Floor, ABC Avenue, Plot No. 12, EFG Avenue, Gulshan-2,
-                Dhaka-1212, Bangladesh
+              9th Floor, Zenith Infinity Tower, Plot No. 45, Nova Crescent Road, Eclipse Square, Dhaka-1209, Bangladesh
               </p>
             </div>
             <div className="flex justify-start items-center mt-8">
               <Image src={messageImg} alt="message" />
               <p className="text-gray-500 lg:text-left text-center ml-4">
-                contact@jobs-bd.com
+              contact@jobsbd.vercel.app
               </p>
             </div>
             <div className="flex justify-start items-center mt-8">

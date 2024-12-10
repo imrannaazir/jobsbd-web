@@ -1,5 +1,4 @@
 import {
-  
   MapPin,
   Clock,
   Briefcase,

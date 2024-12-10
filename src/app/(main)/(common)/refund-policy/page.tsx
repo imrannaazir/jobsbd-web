@@ -5,7 +5,7 @@ const RefundPolicy = () => {
       <h1 className="text-primary font-bold text-lg">Refund Policy</h1>
       <p className="mt-6">
         Please read this refund policy ("refund policy") carefully before using{" "}
-        <span className="text-primary underline">www.jobs-bd.com</span> website
+        <span className="text-primary underline">https://jobsbd.vercel.app/</span> website
         ("website", "service") operated by atBJobs ("us", "we", "our").
       </p>
 
@@ -20,7 +20,7 @@ const RefundPolicy = () => {
       <p className="mt-6">
         Since your purchase is a digital product/package, it is deemed “used”
         after the transaction, and all purchases made on{" "}
-        <span className="text-primary underline">www.jobs-bd.com</span> are
+        <span className="text-primary underline">https://jobsbd.vercel.app/</span> are
         non-refundable or exchangeable. Since the products/packages made
         available here are intangible, there is a strict no refund policy.
       </p>

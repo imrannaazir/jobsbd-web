@@ -1,14 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 import RichTextEditor from "@/components/rich-text-editor/rich-text-editor";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import CustomModal from "@/components/ui/custom-modal";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import {
@@ -17,61 +23,98 @@ import {
   SelectField,
 } from "@/components/ui/form-fields";
 import { Label } from "@/components/ui/label";
+
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   bangladeshDistricts,
   EmploymentType,
 } from "@/constant/constant-variable";
 import {
-  useAddExperienceMutation,
   useGetDepartmentsQuery,
   useGetIndustriesQuery,
+  useUpdateExperienceMutation,
 } from "@/redux/api/candidate/candidateApi";
 import {
-  workExperienceFormSchema,
-  WorkExperienceFormValues,
+  updateWorkExperienceFormSchema,
+  UpdateWorkExperienceFormValues,
 } from "@/schemas/profile-form-schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import Swal from "sweetalert2";
 
-const WorkExperienceModel = () => {
+type ExperienceUpdateModalProps = {
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  experience: UpdateWorkExperienceFormValues;
+};
+
+const ExperienceUpdateModal = ({
+  isOpen,
+  setIsOpen,
+  experience,
+}: ExperienceUpdateModalProps) => {
+  const [updateExperience] = useUpdateExperienceMutation();
   const { data: departments } = useGetDepartmentsQuery("");
-  const { data: industries } = useGetIndustriesQuery("")
-  const [addExperience] = useAddExperienceMutation();
-  const [isWorking, setIsWorking] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(false);
-  const form = useForm<WorkExperienceFormValues>({
-    resolver: zodResolver(workExperienceFormSchema),
+  const { data: industries } = useGetIndustriesQuery("");
+  const [isWorking, setIsWorking] = useState<boolean>(
+    experience?.isWorking || false
+  );
+
+  const form = useForm<UpdateWorkExperienceFormValues>({
+    resolver: zodResolver(updateWorkExperienceFormSchema),
+    defaultValues: {
+      ...experience,
+      startDate: experience.startDate
+        ? new Date(experience.startDate)
+        : undefined,
+      endDate: experience.endDate ? new Date(experience.endDate) : undefined,
+    },
   });
 
-  const onSubmit = async (data: WorkExperienceFormValues) => {
-    const response = await addExperience(data);
-    console.log(response);
-    if (response.data) {
-      Swal.fire({
-        title: "Experience Added",
-        text: "Experience has been added successfully",
-        icon: "success",
-      });
-      setOpen(false);
-    } else {
-      Swal.fire({
-        title: "Error",
-        text: "Failed to add Experience",
-        icon: "error",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+  useEffect(() => {
+    if (experience) {
+      const updatedData = {
+        ...experience,
+        startDate: experience.startDate
+          ? new Date(experience.startDate)
+          : undefined,
+        endDate: experience.endDate ? new Date(experience.endDate) : undefined,
+      };
+      form.reset(updatedData);
+      setIsWorking(experience.isWorking || false);
+    }
+  }, [experience, form]);
+
+  const onSubmit = async (data: UpdateWorkExperienceFormValues) => {
+    console.log("Submitting data:", data);
+    try {
+      const response = await updateExperience({
+        id: experience.id,
+        data,
+      }).unwrap();
+
+      if (response?.data) {
+        Swal.fire({
+          title: "Experience Updated",
+          text: "Experience has been updated successfully.",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+        setIsOpen(false);
+      }
+    } catch (error: any) {
+      console.error("Update error:", error);
+      Swal.fire(
+        "Error",
+        "Failed to update the experience. Please try again.",
+        "error"
+      );
     }
   };
 
   return (
     <CustomModal
-      buttonType="add"
-      title="Experience"
-      setOpen={setOpen}
-      open={open}
+      buttonType={null}
+      title="Update Experience"
+      setOpen={setIsOpen}
+      open={isOpen}
     >
       <div className="max-h-[calc(100vh-200px)] overflow-y-auto">
         <Form {...form}>
@@ -93,7 +136,7 @@ const WorkExperienceModel = () => {
                 name="companyName"
                 label="Company Name"
                 type="text"
-                placeholder="Your Institute Name"
+                placeholder="Your Company Name"
               />
               <SelectField
                 name="departmentId"
@@ -117,27 +160,25 @@ const WorkExperienceModel = () => {
                     name="isWorking"
                     control={form.control}
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                         <FormControl>
                           <Checkbox
-                            id="isWorking"
-                            checked={isWorking}
+                            checked={field.value}
                             onCheckedChange={(checked) => {
                               setIsWorking(checked as boolean);
                               field.onChange(checked);
+                              if (checked) {
+                                form.setValue("endDate", undefined);
+                              }
                             }}
                           />
                         </FormControl>
-                        <FormMessage />
+                        <div className="space-y-1 leading-none">
+                          <FormLabel>Currently working</FormLabel>
+                        </div>
                       </FormItem>
                     )}
                   />
-                  <label
-                    htmlFor="isWorking"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Currently working
-                  </label>
                 </div>
               </div>
               <SelectField
@@ -170,20 +211,16 @@ const WorkExperienceModel = () => {
                 )}
               />
             </div>
+            <div className="mt-6 flex items-center justify-end">
+              <Button type="submit" className="uppercase">
+                Update Experience
+              </Button>
+            </div>
           </form>
         </Form>
-      </div>
-      <div className="mt-6 flex items-center justify-end">
-        <Button
-          type="submit"
-          className="uppercase"
-          onClick={form.handleSubmit(onSubmit)}
-        >
-          submit
-        </Button>
       </div>
     </CustomModal>
   );
 };
 
-export default WorkExperienceModel;
+export default ExperienceUpdateModal;

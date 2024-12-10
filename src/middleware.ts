@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 import {
   authRoutes,
@@ -39,7 +39,7 @@ export async function middleware(req: NextRequest) {
         decodedData.role !== userRole.EMPLOYER &&
         pathname.startsWith("/recruiter")
       ) {
-        return NextResponse.redirect(new URL("/", req.url));
+        // return NextResponse.redirect(new URL("/", req.url));
       }
       // condition to protect dynamic candidate routes
       if (

@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import story from "../../../assets/candidate-dashboard/story.png";
+import Container from "@/components/main/Container";
 
 const OurStory = () => {
   return (
@@ -25,7 +26,8 @@ const OurStory = () => {
       </div>
 
       {/* Mission & Vision Section */}
-      <div className="py-12 max-w-5xl mx-auto">
+      <Container>
+      <div className="py-12 mx-auto">
         <div className="grid md:grid-cols-2 gap-6">
           <Card className="bg-[#0A2558] text-white">
             <CardContent className="p-6">
@@ -54,9 +56,11 @@ const OurStory = () => {
           </Card>
         </div>
       </div>
+      </Container>
 
       {/* Who We Are Section */}
-      <div className="bg-[#2A363B] text-white  max-w-5xl mx-auto rounded-2xl">
+      <Container>
+      <div className="bg-[#2A363B] text-white mx-auto rounded-2xl">
         <div className="container mx-auto px-4">
           <Card className="bg-transparent border-none shadow-none">
             <CardContent className="p-6">
@@ -87,7 +91,7 @@ const OurStory = () => {
           </Card>
         </div>
       </div>
-
+      
       {/* Core Strengths Section */}
       <div className="mt-16 mb-24 bg-white">
         <div className="container mx-auto px-4">
@@ -167,6 +171,7 @@ const OurStory = () => {
           </div>
         </div>
       </div>
+      </Container>
     </div>
   );
 };
