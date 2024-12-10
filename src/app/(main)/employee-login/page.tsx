@@ -41,7 +41,7 @@ const EmployeeLoginPage = () => {
 
   const handleFillCredentials = (role: "Admin" | "Employer") => {
     const email = role === "Admin" ? "admin@jobsbd.com" : "employer@gmail.com";
-    const password = "user12345";
+    const password = "@Password123";
     methods.setValue("email", email);
     methods.setValue("password", password);
     setOpen(false);
