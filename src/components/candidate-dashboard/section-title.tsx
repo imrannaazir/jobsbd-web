@@ -8,7 +8,7 @@ const SectionTitle = ({
   component: ReactNode;
 }) => {
   return (
-    <div className="flex items-center justify-between p-4 bg-white border-b">
+    <div className="flex items-center justify-between p-4 bg-white border-b rounded-t-md">
       <h4 className="text-xl font-semibold">{label}</h4>
       {component}
     </div>

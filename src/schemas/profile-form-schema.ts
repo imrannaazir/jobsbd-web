@@ -1,14 +1,14 @@
 import { z } from "zod";
 
 // basic Details
-export const formSchema = z.object({
-  totalExperience: z.coerce.number().min(0).optional(),
-  currentSalary: z.coerce.number().optional(),
-  expectedSalary: z.coerce.number().optional(),
-  employmentType: z.string().optional(),
-  jobLevel: z.string().optional(),
-  district: z.string().optional(),
-  addressLine: z.string().optional(),
+
+export const companyDetailsFormSchema = z.object({
+  companyName: z.string().min(1, "Company name is required"),
+  websiteLink: z.string().optional(),
+  foundedDate: z.date().optional(),
+  businessType: z.string().optional(),
+  numberOfEmployees: z.number().optional(),
+  numberOfOffices: z.number().optional(),
 });
 
 // Education Schema
@@ -124,9 +124,9 @@ export const updateCertificateFormSchema = z.object({
   certificateUrl: z.string().min(1, "Certificate URL is required"),
   description: z.string().min(1, "Description is required"),
 });
-
-// basic details type
-export type FormValues = z.infer<typeof formSchema>;
+export type TBasicCompanyDetailsValues = z.infer<
+  typeof companyDetailsFormSchema
+>;
 // Education type
 export type EducationFormValues = z.infer<typeof educationFormSchema>;
 // work experience type
