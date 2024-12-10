@@ -7,17 +7,13 @@ import { useGetMyCompanyQuery } from "@/redux/api/company/company-api";
 import { TCompany } from "@/type/company.types";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { BsBuildings } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
-import { CiLogout } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineDashboard, MdOutlineWorkHistory } from "react-icons/md";
 import { RiListSettingsLine } from "react-icons/ri";
-import { Button } from "../ui/button";
-import { removeRefreshToken } from "@/action/auth-action";
-import { signOut } from "next-auth/react";
 const navLinks = [
   {
     label: "Dashboard",
@@ -59,7 +55,6 @@ const RecruiterSidebar: React.FC = () => {
   const currentPath = usePathname();
   const { data: companyData, isFetching } = useGetMyCompanyQuery("");
   const company: TCompany = companyData?.data || {};
-  const router = useRouter();
 
   return (
     <div className="bg-white shadow-md lg:min-h-screen rounded z-10">

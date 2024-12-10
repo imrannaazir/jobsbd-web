@@ -2,6 +2,7 @@
 "use client";
 
 import { saveTokenInCookies } from "@/action/auth-action";
+import GoogleSignUp from "@/components/login/GoogleSignUp";
 import { Button } from "@/components/ui/button";
 import CandidateAuthContainer from "@/components/ui/CandidateAuthContainer";
 import FloatingLabelInput from "@/components/ui/CustomInput";
@@ -24,13 +25,10 @@ import { useAppDispatch } from "@/redux/hooks";
 import { verifyToken } from "@/utils/verifyToken";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { LuLoader, LuUserCircle } from "react-icons/lu";
 import Swal from "sweetalert2";
-import { signIn } from "next-auth/react";
-import { getUserSession } from "@/services/getUserSession";
-import GoogleSignUp from "@/components/login/GoogleSignUp";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();

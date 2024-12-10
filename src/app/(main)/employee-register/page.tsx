@@ -6,17 +6,16 @@ import { FieldValues, FormProvider, useForm } from "react-hook-form";
 
 import Link from "next/link";
 
-import EmployeeAuthContainer from "@/components/ui/EmployeeAuthContainer";
-import ORDivider from "@/components/ui/ORDivider";
-import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
-import SocialLogin from "@/components/ui/SocialLogin";
-import EmployeeAuthInput from "@/components/ui/EmployeeAuthInput";
-import { useSignUpMutation } from "@/redux/api/auth/authApi";
-import Swal from "sweetalert2";
-import { useRouter } from "next/navigation";
+import GoogleSignUp from "@/components/login/GoogleSignUp";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import GoogleSignUp from "@/components/login/GoogleSignUp";
+import EmployeeAuthContainer from "@/components/ui/EmployeeAuthContainer";
+import EmployeeAuthInput from "@/components/ui/EmployeeAuthInput";
+import ORDivider from "@/components/ui/ORDivider";
+import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
+import { useSignUpMutation } from "@/redux/api/auth/authApi";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 const EmployeeRegister = () => {
   const router = useRouter();

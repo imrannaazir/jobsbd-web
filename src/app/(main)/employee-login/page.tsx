@@ -11,9 +11,9 @@ import EmployeeAuthContainer from "@/components/ui/EmployeeAuthContainer";
 import EmployeeAuthInput from "@/components/ui/EmployeeAuthInput";
 import ORDivider from "@/components/ui/ORDivider";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
-import SocialLogin from "@/components/ui/SocialLogin";
 import Swal from "sweetalert2";
 
+import GoogleSignUp from "@/components/login/GoogleSignUp";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -28,7 +28,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { TUser } from "@/redux/features/auth/authSlice";
 import { jwtDecode } from "jwt-decode";
 import { LuUserCircle } from "react-icons/lu";
-import GoogleSignUp from "@/components/login/GoogleSignUp";
 
 const EmployeeLoginPage = () => {
   const router = useRouter();

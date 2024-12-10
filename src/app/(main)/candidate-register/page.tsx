@@ -6,17 +6,16 @@ import CandidateAuthContainer from "@/components/ui/CandidateAuthContainer";
 import FloatingLabelInput from "@/components/ui/CustomInput";
 import ORDivider from "@/components/ui/ORDivider";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
-import SocialLogin from "@/components/ui/SocialLogin";
 import { useSignUpMutation } from "@/redux/api/auth/authApi";
 
-import Link from "next/link";
-import React, { useState } from "react";
-import { useForm, FormProvider, FieldValues } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
+import GoogleSignUp from "@/components/login/GoogleSignUp";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import GoogleSignUp from "@/components/login/GoogleSignUp";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const CandidateRegisterPage = () => {
   const router = useRouter();

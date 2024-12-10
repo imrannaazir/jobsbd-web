@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FcGoogle } from "react-icons/fc";
 import { Button } from "./button";
 

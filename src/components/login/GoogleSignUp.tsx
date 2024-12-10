@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import SocialLogin from "../ui/SocialLogin";
+import { saveTokenInCookies } from "@/action/auth-action";
 import {
   Dialog,
   DialogContent,
@@ -8,19 +7,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "../ui/button";
-import { signIn } from "next-auth/react";
-import { getUserSession } from "@/services/getUserSession";
-import Email from "next-auth/providers/email";
-import { useGoogleAuthMutation } from "@/redux/api/auth/authApi";
-import { verifyToken } from "@/utils/verifyToken";
-import { useAppDispatch } from "@/redux/hooks";
-import { TUser } from "@/type/user.types";
-import { setUser } from "@/redux/features/auth/authSlice";
-import { saveTokenInCookies } from "@/action/auth-action";
-import Swal from "sweetalert2";
 import { userRole } from "@/constant/constant-variable";
+import { useGoogleAuthMutation } from "@/redux/api/auth/authApi";
+import { setUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import { getUserSession } from "@/services/getUserSession";
+import { TUser } from "@/type/user.types";
+import { verifyToken } from "@/utils/verifyToken";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
+import SocialLogin from "../ui/SocialLogin";
 
 const GoogleSignUp = () => {
   const [openGoogleModal, setOpenGoogleModal] = useState(false);
@@ -78,7 +76,7 @@ const GoogleSignUp = () => {
       }
     };
     checkSession();
-  }, []);
+  }, [dispatch, router, socialLogin]);
 
   return (
     <>

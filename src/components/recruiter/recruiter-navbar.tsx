@@ -1,9 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
+import { removeRefreshToken } from "@/action/auth-action";
 import logo from "@/assets/main/logo-transparent.png";
-import Container from "../main/Container";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,17 +9,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "../ui/button";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { logout } from "@/redux/features/auth/authSlice";
-import userIcon from "../../assets/candidate-dashboard/candidate-default.png";
+import { useAppSelector } from "@/redux/hooks";
 import { signOut } from "next-auth/react";
-import { removeRefreshToken } from "@/action/auth-action";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import userIcon from "../../assets/candidate-dashboard/candidate-default.png";
+import Container from "../main/Container";
+import { Button } from "../ui/button";
 // import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
 
 const RecruiterNavbar = () => {
-  const dispatch = useAppDispatch();
   const router = useRouter();
   // const userInfo = useAppSelector((state) => state.auth.user);
   const token = useAppSelector((state) => state.auth.token);
