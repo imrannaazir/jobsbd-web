@@ -1,68 +1,69 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useGetAllAppliedJobsQuery } from "@/redux/api/job/jobApi";
-import { jobStatus } from "@/constant/constant-variable";
-import { TJob } from "@/type/job.types";
+import { useGetAllJobApplicantsOfJobQuery } from "@/redux/api/job/jobApi";
+import { TAppliedJob } from "@/type/job.types";
+import { useParams } from "next/navigation";
+import { useMemo, useState } from "react";
 import AppliedCandidateCard from "./applied-candidate-card";
 
-type TAppliedJob = {
-  id: string;
-  status: string;
-  job: TJob;
-};
-
 const CandidateSection = () => {
-  const { data: appliedJobs } = useGetAllAppliedJobsQuery("");
+  const { jobId } = useParams();
+  const { data: jobApplicantData, isFetching } =
+    useGetAllJobApplicantsOfJobQuery(jobId as string, {
+      skip: !jobId,
+    });
+
+  const appliedJobs = (jobApplicantData?.data || []) as TAppliedJob[];
+
   const [activeStatus, setActiveStatus] = useState("ALL");
 
   const statuses = useMemo(
     () => [
-      { label: "All", count: appliedJobs?.data?.length },
-      {
-        label: "Applied",
-        count: appliedJobs?.data?.filter(
-          (job: TAppliedJob) => job.status === jobStatus.APPLIED
-        ).length,
-      },
-      {
-        label: "In Review",
-        count: appliedJobs?.data?.filter(
-          (job: TAppliedJob) => job.status === jobStatus.INREVIEW
-        ).length,
-      },
-      {
-        label: "Rejected",
-        count: appliedJobs?.data?.filter(
-          (job: TAppliedJob) => job.status === jobStatus.REJECTED
-        ).length,
-      },
-      {
-        label: "ShortList",
-        count: appliedJobs?.data?.filter(
-          (job: TAppliedJob) => job.status === jobStatus.SHORTLISTED
-        ).length,
-      },
-      {
-        label: "Interview",
-        count: appliedJobs?.data?.filter(
-          (job: TAppliedJob) => job.status === jobStatus.INTERVIEW
-        ).length,
-      },
-      {
-        label: "Selected",
-        count: appliedJobs?.data?.filter(
-          (job: TAppliedJob) => job.status === jobStatus.SELECTED
-        ).length,
-      },
-      {
-        label: "Hired",
-        count: appliedJobs?.data?.filter(
-          (job: TAppliedJob) => job.status === jobStatus.HIRED
-        ).length,
-      },
+      //   { label: "All", count: appliedJobs?.data?.length },
+      //   {
+      //     label: "Applied",
+      //     count: appliedJobs?.data?.filter(
+      //       (job: TAppliedJob) => job.status === jobStatus.APPLIED
+      //     ).length,
+      //   },
+      //   {
+      //     label: "In Review",
+      //     count: appliedJobs?.data?.filter(
+      //       (job: TAppliedJob) => job.status === jobStatus.INREVIEW
+      //     ).length,
+      //   },
+      //   {
+      //     label: "Rejected",
+      //     count: appliedJobs?.data?.filter(
+      //       (job: TAppliedJob) => job.status === jobStatus.REJECTED
+      //     ).length,
+      //   },
+      //   {
+      //     label: "ShortList",
+      //     count: appliedJobs?.data?.filter(
+      //       (job: TAppliedJob) => job.status === jobStatus.SHORTLISTED
+      //     ).length,
+      //   },
+      //   {
+      //     label: "Interview",
+      //     count: appliedJobs?.data?.filter(
+      //       (job: TAppliedJob) => job.status === jobStatus.INTERVIEW
+      //     ).length,
+      //   },
+      //   {
+      //     label: "Selected",
+      //     count: appliedJobs?.data?.filter(
+      //       (job: TAppliedJob) => job.status === jobStatus.SELECTED
+      //     ).length,
+      //   },
+      //   {
+      //     label: "Hired",
+      //     count: appliedJobs?.data?.filter(
+      //       (job: TAppliedJob) => job.status === jobStatus.HIRED
+      //     ).length,
+      //   },
     ],
-    [appliedJobs?.data]
+    []
   );
   return (
     <div>
@@ -76,13 +77,13 @@ const CandidateSection = () => {
         </div>
 
         <div className="p-5">
-          <div className="hidden md:flex flex-wrap gap-2 justify-center">
+          {/*  <div className="hidden md:flex flex-wrap gap-2 justify-center">
             {statuses.map((status) => (
               <button
-                key={status.label}
-                onClick={() => setActiveStatus(status.label)}
+                key={status?.label}
+                onClick={() => setActiveStatus(status?.label)}
                 className={`px-6 py-4 rounded-md text-primary text-sm font-semibold ${
-                  activeStatus === status.label
+                  activeStatus === status?.label
                     ? "bg-primary text-white"
                     : "bg-[#E6F3FF] text-gray-700 hover:bg-gray-300"
                 }`}
@@ -91,15 +92,14 @@ const CandidateSection = () => {
                 {status.count !== undefined && ` - [${status.count}]`}
               </button>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-5">
-        <AppliedCandidateCard/>
-        <AppliedCandidateCard/>
-        <AppliedCandidateCard/>
-        <AppliedCandidateCard/>
+        {appliedJobs?.map((item) => (
+          <AppliedCandidateCard key={item?.id} appliedJob={item} />
+        ))}
       </div>
     </div>
   );

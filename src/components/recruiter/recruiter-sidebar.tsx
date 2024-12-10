@@ -81,18 +81,6 @@ const RecruiterSidebar: React.FC = () => {
             {company?.companyName}
           </h3>
         )}
-
-        <div className="flex items-center justify-center">
-          <Image
-            alt="Profile Default"
-            src={img}
-            className="w-[100px] h-[100px] transform"
-          />
-        </div>
-        {/* User Name */}
-        <h3 className="text-lg font-bold text-primary text-center">
-          Employer Account
-        </h3>
       </div>
 
       <ul className="mt-2 md:mt-0 grid grid-cols-2 md:grid-cols-1 gap-2 md:gap-0">

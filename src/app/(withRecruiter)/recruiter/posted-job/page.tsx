@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import CandidateNotfound from "@/components/recruiter/candidate-notfound";
 import { Button } from "@/components/ui/button";
@@ -16,7 +17,6 @@ const PostedJobsPage = () => {
   const handleDeleteJob = async (jobId: string) => {
     try {
       const response: any = await deleteCompanyJob({ jobId });
-      console.log(response);
 
       if (response?.data) {
         Swal.fire({
@@ -54,8 +54,6 @@ const PostedJobsPage = () => {
                 <p className="justify-self-center">Action</p>
               </div>
               {companyPostedJobs?.data?.map((job: any) => {
-                console.log(job?.id);
-
                 const date = new Date(job.createdAt);
                 return (
                   <div
@@ -68,9 +66,11 @@ const PostedJobsPage = () => {
                     <p className="text-blue-400 font-semibold">{job?.title}</p>
                     <p className="justify-self-center">{job?.totalApplicant}</p>
                     <div className="justify-self-center flex items-center gap-2">
-                      <button className="p-2 rounded-lg bg-blue-100/80 border border-blue-100 hover:shadow-md transition-shadow duration-300 ease-in-out">
-                        <IoEye className="text-blue-400" />
-                      </button>
+                      <Link href={`/recruiter/posted-job/${job?.id}`}>
+                        <button className="p-2 rounded-lg bg-blue-100/80 border border-blue-100 hover:shadow-md transition-shadow duration-300 ease-in-out">
+                          <IoEye className="text-blue-400" />
+                        </button>
+                      </Link>
                       <button
                         onClick={() => handleDeleteJob(job?.id)}
                         className="p-2 rounded-lg bg-red-100/80 border border-red-100 hover:shadow-md transition-shadow duration-300 ease-in-out"

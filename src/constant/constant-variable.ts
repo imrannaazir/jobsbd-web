@@ -96,4 +96,5 @@ export const jobStatus = {
   SHORTLISTED: "SHORTLISTED",
   REJECTED: "REJECTED",
   ACCEPTED: "ACCEPTED",
+  HIRED: "HIRED",
 } as const;

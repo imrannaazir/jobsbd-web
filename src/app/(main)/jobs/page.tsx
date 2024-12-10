@@ -17,6 +17,8 @@ const JobsPage = async ({
   const jobsData = await res.json();
   const jobs = jobsData?.data || [];
 
+  console.log(jobsData);
+
   return (
     <section className="relative flex bg-gray-50 flex-col lg:flex-row">
       {/* Sidebar */}
