@@ -11,7 +11,6 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { BsBuildings } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
-import { CiLogout } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineDashboard, MdOutlineWorkHistory } from "react-icons/md";
 import { RiListSettingsLine } from "react-icons/ri";
@@ -46,11 +45,11 @@ const navLinks = [
     icon: <RiListSettingsLine size={25} />,
     href: "/recruiter/recruiter-settings",
   },
-  {
-    label: "Logout",
-    icon: <CiLogout size={25} />,
-    href: "/logout",
-  },
+  // {
+  //   label: "Logout",
+  //   icon: <CiLogout size={25} />,
+  //   href: "/",
+  // },
 ];
 const RecruiterSidebar: React.FC = () => {
   const currentPath = usePathname();
@@ -69,7 +68,9 @@ const RecruiterSidebar: React.FC = () => {
             <Image
               alt="Profile Default"
               src={company?.image || img}
-              className="w-[60px] h-[60px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              className="rounded-full w-[60px] h-[60px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              width={200}
+              height={200}
             />
           </div>
         )}

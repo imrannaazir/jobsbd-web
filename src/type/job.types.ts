@@ -1,3 +1,4 @@
+import { TCompany } from "./company.types";
 import { TCandidate } from "./candidate.types";
 import { TDepartment } from "./department.types";
 import { TIndustry } from "./industry.types";
@@ -25,10 +26,7 @@ export type TJob = {
   title: string;
   updatedAt: string;
   vacancy: number;
-  company: {
-    companyName: string;
-    id: string;
-  };
+  company: TCompany;
   address: {
     district: string;
   };

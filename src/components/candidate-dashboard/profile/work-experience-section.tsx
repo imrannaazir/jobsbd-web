@@ -1,32 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import {
-  useDeleteExperienceMutation,
-  // useDeleteExperienceMutation,
-  useGetAllExperienceQuery,
-} from "@/redux/api/candidate/candidateApi";
-import { convertIntoDateString } from "@/utils/convert-into-date-string";
-import { useState } from "react";
-import { FiDelete, FiEdit } from "react-icons/fi";
-import Swal from "sweetalert2";
+import { TExperience } from "@/type/experience.types";
 import SectionTitle from "../section-title";
 import WorkExperienceModel from "./work-experience-model";
+import { useDeleteExperienceMutation, useGetAllExperienceQuery } from "@/redux/api/candidate/candidateApi";
+import { convertIntoDateString } from "@/utils/convert-into-date-string";
+import { removeUnderscore } from "@/utils/remove-underscore";
+import { useState } from "react";
+import Swal from "sweetalert2";
+import { FiDelete, FiEdit } from "react-icons/fi";
 import ExperienceUpdateModal from "./work-update-experience-modal";
-
-type TExperience = {
-  id: string;
-  designation: string;
-  companyName: string;
-  startDate: Date;
-  endDate?: Date;
-  isWorking?: boolean;
-  district: string;
-  addressLine: string;
-  industryId: string;
-  jobResponsibilities: string;
-  departmentId: string;
-  employmentType: string;
-};
 
 const WorkExperienceSection = () => {
   const { data: experiences, isLoading } = useGetAllExperienceQuery("");
@@ -105,7 +88,7 @@ const WorkExperienceSection = () => {
               <div className="flex items-center gap-2 mb-2">
                 <p className="font-bold">{experience?.companyName} |</p>
                 <p className="text-sm text-primary px-2 py-1 bg-bgColour rounded-full">
-                  {experience?.employmentType}
+                  {removeUnderscore(experience?.employmentType)}
                 </p>
               </div>
               <div className="flex items-center gap-2">

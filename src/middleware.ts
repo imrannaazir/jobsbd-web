@@ -32,7 +32,7 @@ export async function middleware(req: NextRequest) {
 
       if (token && isAuthRoute) {
         // Redirect logged-in users away from auth routes
-        // return NextResponse.redirect(new URL("/", req.url));
+        return NextResponse.redirect(new URL("/", req.url));
       }
 
       if (
@@ -40,6 +40,13 @@ export async function middleware(req: NextRequest) {
         pathname.startsWith("/recruiter")
       ) {
         // return NextResponse.redirect(new URL("/", req.url));
+      }
+      // condition to protect dynamic candidate routes
+      if (
+        decodedData.role !== userRole.EMPLOYER &&
+        (pathname === "/candidate" || pathname.startsWith("/candidate/"))
+      ) {
+        return NextResponse.redirect(new URL("/", req.url));
       }
 
       if (

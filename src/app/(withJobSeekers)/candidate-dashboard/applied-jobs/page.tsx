@@ -18,7 +18,7 @@ type TAppliedJob = {
 const AppliedJobs = () => {
   const { data: appliedJobs, isFetching } = useGetAllAppliedJobsQuery("");
   const [activeStatus, setActiveStatus] = useState("ALL");
-
+console.log(appliedJobs);
   const filteredJobs = useMemo(() => {
     if (!appliedJobs?.data) return [];
     if (activeStatus === "ALL") return appliedJobs.data;

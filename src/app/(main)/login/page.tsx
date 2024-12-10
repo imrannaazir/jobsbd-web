@@ -1,7 +1,7 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { saveTokenInCookies } from "@/action/auth-action";
+import GoogleSignUp from "@/components/login/GoogleSignUp";
 import { Button } from "@/components/ui/button";
 import CandidateAuthContainer from "@/components/ui/CandidateAuthContainer";
 import FloatingLabelInput from "@/components/ui/CustomInput";
@@ -17,7 +17,6 @@ import { Label } from "@/components/ui/label";
 import ORDivider from "@/components/ui/ORDivider";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import SocialLogin from "@/components/ui/SocialLogin";
 import { userRole } from "@/constant/constant-variable";
 import { useLoginMutation } from "@/redux/api/auth/authApi";
 import { setUser, TUser } from "@/redux/features/auth/authSlice";
@@ -29,6 +28,7 @@ import { useState } from "react";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { LuLoader, LuUserCircle } from "react-icons/lu";
 import Swal from "sweetalert2";
+import { ForgotPasswordModal } from "./ForgotPasswordModal";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
@@ -44,9 +44,8 @@ const LoginPage = () => {
   }>();
 
   const handleFillCredentials = (role: "Admin" | "Candidate") => {
-    const email =
-      role === "Admin" ? "admin100@gmail.com" : "candidate100@gmail.com";
-    const password = "user12345";
+    const email = role === "Admin" ? "admin@jobsbd.com" : "candidate@gmail.com";
+    const password = "@Password123";
 
     methods.setValue("email", email);
     methods.setValue("password", password);
@@ -65,14 +64,13 @@ const LoginPage = () => {
             phoneNumber: response.data.data.phoneNumber,
           })
         );
-        saveTokenInCookies(response.data.data.accessToken);
+        await saveTokenInCookies(response.data.data.accessToken);
         Swal.fire({
           title: "Success",
           text: "You have been logged in successfully",
           icon: "success",
         });
         if (user?.role === userRole.CANDIDATE) {
-          
           router.push("/candidate-dashboard");
         } else if (user?.role === userRole.EMPLOYER) {
           router.push("/recruiter/dashboard");
@@ -105,6 +103,15 @@ const LoginPage = () => {
         });
       }
     }
+  };
+
+  const handleForgotPassword = async (email: string) => {
+    console.log("Forgot password for email:", email);
+    await Swal.fire({
+      title: "Password Reset",
+      text: "If the email exists in our system, you will receive password reset instructions.",
+      icon: "info",
+    });
   };
 
   return (
@@ -185,7 +192,9 @@ const LoginPage = () => {
             type="password"
             rules={{ required: "Password is required" }}
           />
-          <p className="text-end text-gray-500 text-sm">Forgot Password?</p>
+          <div className="text-end">
+            <ForgotPasswordModal onSubmit={handleForgotPassword} />
+          </div>
           <Button
             disabled={isLoading}
             type="submit"
@@ -201,14 +210,12 @@ const LoginPage = () => {
             )}
           </Button>
           <ORDivider />
-          <div className="lg:w-[400px] lg:mx-auto">
-            <SocialLogin />
-          </div>
         </form>
       </FormProvider>
+      <GoogleSignUp />
 
       <p className="font-semibold text-center mt-20 pb-10">
-        Don't have an account yet?
+        Don&apos;t have an account yet?
         <Link href="/candidate-register" className="text-primary ml-1">
           Register here
         </Link>

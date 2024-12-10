@@ -17,7 +17,7 @@ export default function RootLayout({
     <section className="relative">
       <Navbar />
       <div className="mt-28">
-        <div className="h-[70px] bg-primary fixed z-10 w-full"></div>
+        <div className="h-[70px] bg-primary hidden lg:fixed z-10 w-full"></div>
         <div className="flex flex-col lg:flex-row">
           {/* side nav */}
           <CandidateDashboardNavbar />

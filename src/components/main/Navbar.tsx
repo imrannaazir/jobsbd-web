@@ -13,6 +13,7 @@ import { userRole } from "@/constant/constant-variable";
 import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
 import { logout } from "@/redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -46,6 +47,7 @@ const Navbar = () => {
   const handleLogOut = async () => {
     dispatch(logout());
     await removeRefreshToken();
+    await signOut();
     router.push("/");
   };
 

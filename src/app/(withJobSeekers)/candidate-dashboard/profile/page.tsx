@@ -1,4 +1,4 @@
-import CandidateDashboardTopNav from "@/components/candidate-dashboard/candidate-dashboard-top-nav";
+// import CandidateDashboardTopNav from "@/components/candidate-dashboard/candidate-dashboard-top-nav";
 import BasicDetails from "@/components/candidate-dashboard/profile/basic-details";
 import CertificateSection from "@/components/candidate-dashboard/profile/certificate-section";
 import EducationSection from "@/components/candidate-dashboard/profile/education-section";
@@ -10,14 +10,14 @@ import WorkExperienceSection from "@/components/candidate-dashboard/profile/work
 
 const page = () => {
   // Navigation items
-  const navItems = [
-    { name: "Basic Details", href: "/candidate-dashboard/profile/#details" },
-    { name: "Profile Summary", href: "/candidate-dashboard/profile/#summary" },
-    { name: "Education", href: "/candidate-dashboard/profile/#education" },
-  ];
+  // const navItems = [
+  //   { name: "Basic Details", href: "/candidate-dashboard/profile/#details" },
+  //   { name: "Profile Summary", href: "/candidate-dashboard/profile/#summary" },
+  //   { name: "Education", href: "/candidate-dashboard/profile/#education" },
+  // ];
   return (
     <>
-      <CandidateDashboardTopNav navItems={navItems} />
+      {/* <CandidateDashboardTopNav navItems={navItems} /> */}
       <div className="relative top-14 py-5 space-y-8">
         <BasicDetails />
         <Summary />

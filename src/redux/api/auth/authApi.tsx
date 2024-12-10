@@ -14,7 +14,7 @@ const authApi = baseApi.injectEndpoints({
     googleAuth: builder.mutation({
       query: (data) => {
         return {
-          url: "/auth/google",
+          url: "/auth/social-login",
           method: "POST",
           body: data,
         };
@@ -29,6 +29,26 @@ const authApi = baseApi.injectEndpoints({
         };
       },
     }),
+    forgotPassword: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/auth/forgot-password",
+          method: "POST",
+          body: data,
+        };
+      },
+    }),
+    resetPassword: builder.mutation({
+      query: (data) => {
+        console.log("Reset Password Data:", data);
+        return {
+          url: `/auth/reset-password`,
+          method: "POST",
+          body: data,
+        };
+      },
+    }),
+
     changePassword: builder.mutation({
       query: (data) => {
         return {
@@ -41,5 +61,11 @@ const authApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useSignUpMutation, useLoginMutation, useGoogleAuthMutation,useChangePasswordMutation } =
-  authApi;
+export const {
+  useSignUpMutation,
+  useLoginMutation,
+  useGoogleAuthMutation,
+  useChangePasswordMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+} = authApi;

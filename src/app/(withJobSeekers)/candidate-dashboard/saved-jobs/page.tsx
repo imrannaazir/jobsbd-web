@@ -15,13 +15,13 @@ const SavedJobs = () => {
           <h1 className="text-2xl font-bold text-gray-800 mb-4">Saved Jobs</h1>
 
           <p className=" text-sm text-primary font-bold mb-8">
-            You have applied 0 jobs
+            You have applied {jobs?.length} jobs
           </p>
         </div>
         {/* saved-jobs card container*/}
         <div className="grid grid-cols-2 p-5 gap-5">
           {jobs?.map((job) => (
-            <JobCard key={job?.id} job={job} />
+            <JobCard key={job?.id} job={job} status={null} />
           ))}
         </div>
       </div>

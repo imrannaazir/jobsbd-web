@@ -6,17 +6,16 @@ import { FieldValues, FormProvider, useForm } from "react-hook-form";
 
 import Link from "next/link";
 
-import EmployeeAuthContainer from "@/components/ui/EmployeeAuthContainer";
-import ORDivider from "@/components/ui/ORDivider";
-import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
-import SocialLogin from "@/components/ui/SocialLogin";
-import EmployeeAuthInput from "@/components/ui/EmployeeAuthInput";
-import { useSignUpMutation } from "@/redux/api/auth/authApi";
-import Swal from "sweetalert2";
-import { useRouter } from "next/navigation";
+import GoogleSignUp from "@/components/login/GoogleSignUp";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-
+import EmployeeAuthContainer from "@/components/ui/EmployeeAuthContainer";
+import EmployeeAuthInput from "@/components/ui/EmployeeAuthInput";
+import ORDivider from "@/components/ui/ORDivider";
+import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
+import { useSignUpMutation } from "@/redux/api/auth/authApi";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 const EmployeeRegister = () => {
   const router = useRouter();
@@ -46,7 +45,6 @@ const EmployeeRegister = () => {
         text: "Registration failed",
         icon: "error",
       });
-      
     }
   };
 
@@ -128,8 +126,8 @@ const EmployeeRegister = () => {
         </FormProvider>
 
         <ORDivider />
-        <div className="lg:w-[180px] lg:mx-auto mt-5">
-          <SocialLogin />
+        <div className="mt-5">
+          <GoogleSignUp />
         </div>
 
         <p className="font-semibold text-center mt-8 pb-10">

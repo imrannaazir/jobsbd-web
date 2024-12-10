@@ -1,3 +1,4 @@
+
 import { TAddress } from "./address.types";
 import { TUser } from "./user.types";
 
@@ -16,4 +17,5 @@ export type TCompany = {
   companyDetails?: string;
   createdAt: Date;
   updatedAt: Date;
+  postedJobsCount?: number
 };

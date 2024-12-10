@@ -47,6 +47,7 @@ const WorkExperienceModel = () => {
 
   const onSubmit = async (data: WorkExperienceFormValues) => {
     const response = await addExperience(data);
+    console.log(response);
     if (response.data) {
       Swal.fire({
         title: "Experience Added",

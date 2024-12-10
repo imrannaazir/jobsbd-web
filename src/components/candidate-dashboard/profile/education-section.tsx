@@ -13,18 +13,8 @@ import Swal from "sweetalert2";
 import SectionTitle from "../section-title";
 import EducationAddModal from "./education-add-modal";
 import EducationUpdateModal from "./education-update-modal"; // Import the update modal
+import { TEducation } from "@/type/education.types";
 
-type TEducation = {
-  id: string;
-  degree: string;
-  instituteName: string;
-  currentlyStudying?: boolean | null | undefined;
-  fieldOfStudy: string;
-  description?: string;
-  grade: number;
-  startDate: Date;
-  endDate?: Date;
-};
 
 const EducationSection = () => {
   const { data, isLoading } = useGetAllEducationQuery("");

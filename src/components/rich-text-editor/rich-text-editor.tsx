@@ -1,15 +1,17 @@
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
-import TextEditorMenuBar from "./text-editor-menubar";
-import BulletList from "@tiptap/extension-bullet-list";
-import OrderedList from "@tiptap/extension-ordered-list";
-import Heading from "@tiptap/extension-heading";
+"use client"
+
+import { useEditor, EditorContent } from "@tiptap/react"
+import StarterKit from "@tiptap/starter-kit"
+import Underline from "@tiptap/extension-underline"
+import TextEditorMenuBar from "./text-editor-menubar"
+import BulletList from "@tiptap/extension-bullet-list"
+import OrderedList from "@tiptap/extension-ordered-list"
+import Heading from "@tiptap/extension-heading"
 
 type TextEditorProps = {
-  onChange: (content: string) => void;
-  initialContent?: string;
-};
+  onChange: (content: string) => void
+  initialContent?: string
+}
 
 export default function RichTextEditor({
   onChange,
@@ -31,20 +33,21 @@ export default function RichTextEditor({
     ],
     content: initialContent,
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML());
+      onChange(editor.getHTML())
     },
     editorProps: {
       attributes: {
         class:
-          "min-h-[150px] cursor-text rounded-md border p-5 ring-offset-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2",
+          "min-h-[150px] cursor-text rounded-md border p-2 sm:p-5 ring-offset-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2",
       },
     },
-  });
+  })
 
   return (
-    <div>
+    <div className="w-full max-w-3xl mx-auto">
       <TextEditorMenuBar editor={editor} />
       <EditorContent editor={editor} />
     </div>
-  );
+  )
 }
+
