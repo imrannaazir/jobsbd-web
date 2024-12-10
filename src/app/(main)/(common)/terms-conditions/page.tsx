@@ -6,7 +6,7 @@ const TermsAndConditions = () => {
       <p className="mt-6">
         Please read this terms and conditions ("terms and conditions", "terms")
         carefully before using{" "}
-        <span className="text-primary underline">www.jobs-bd.com</span> website
+        <span className="text-primary underline">https://jobsbd.vercel.app/</span> website
         ("website", "service") operated by JobsBD ("us", "we", "our").
       </p>
       <p className="text-center mt-6 font-bold px-12 py-3 bg-bgColour lg:mx-20 rounded-tl-3xl rounded-br-3xl">

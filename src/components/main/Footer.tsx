@@ -25,7 +25,7 @@ const Footer = () => {
                 <Link href="/login" className="footer-link">
                   Login
                 </Link>
-                <Link href="#" className="footer-link">
+                <Link href="/jobs" className="footer-link">
                   Find Jobs
                 </Link>
               </div>
@@ -35,7 +35,7 @@ const Footer = () => {
               <p className="footer-title">For Employers</p>
 
               <div className="flex flex-col items-start mt-5 space-y-2 text-white">
-                <Link href="#" className="footer-link">
+                <Link href="/recruiter/new-job" className="footer-link">
                   Post a Job
                 </Link>
                 <Link href="/employee-register" className="footer-link">
@@ -102,8 +102,8 @@ const Footer = () => {
                     <FaLocationDot className="size-5" />
                   </span>
                   <span className="text-lg font-semibold text-white">
-                    11th Floor, MMK-Aakash Avenue, Plot No. 12, Kamal Ataturk
-                    Avenue, Gulshan-2, Dhaka-1212, Bangladesh
+                    9th Floor, Zenith Infinity Tower, Plot No. 45, Nova Crescent
+                    Road, Eclipse Square, Dhaka-1209, Bangladesh
                   </span>
                 </p>
               </div>
