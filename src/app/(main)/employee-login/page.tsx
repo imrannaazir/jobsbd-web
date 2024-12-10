@@ -28,6 +28,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { TUser } from "@/redux/features/auth/authSlice";
 import { jwtDecode } from "jwt-decode";
 import { LuUserCircle } from "react-icons/lu";
+import { ForgotPasswordModal } from "../login/ForgotPasswordModal";
 
 const EmployeeLoginPage = () => {
   const router = useRouter();
@@ -39,9 +40,8 @@ const EmployeeLoginPage = () => {
   const [login] = useLoginMutation();
 
   const handleFillCredentials = (role: "Admin" | "Employer") => {
-    const email =
-      role === "Admin" ? "admin100@gmail.com" : "employer100@gmail.com";
-    const password = "user12345";
+    const email = role === "Admin" ? "admin@jobsbd.com" : "employer@gmail.com";
+    const password = "@Password123";
     methods.setValue("email", email);
     methods.setValue("password", password);
     setOpen(false);
@@ -70,6 +70,15 @@ const EmployeeLoginPage = () => {
         icon: "error",
       });
     }
+  };
+
+  const handleForgotPassword = async (email: string) => {
+    console.log("Forgot password for email:", email);
+    await Swal.fire({
+      title: "Password Reset",
+      text: "If the email exists in our system, you will receive password reset instructions.",
+      icon: "info",
+    });
   };
 
   return (
@@ -169,7 +178,9 @@ const EmployeeLoginPage = () => {
               },
             }}
           />
-          <p className="text-end text-gray-500 text-sm">Forgot Password?</p>
+          <p className="text-end text-gray-500 text-sm">
+            <ForgotPasswordModal onSubmit={handleForgotPassword} />
+          </p>
           <div className="flex items-center justify-center">
             <Button
               type="submit"

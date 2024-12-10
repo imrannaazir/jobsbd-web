@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { saveTokenInCookies } from "@/action/auth-action";
@@ -29,6 +28,7 @@ import { useState } from "react";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { LuLoader, LuUserCircle } from "react-icons/lu";
 import Swal from "sweetalert2";
+import { ForgotPasswordModal } from "./ForgotPasswordModal";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
@@ -44,9 +44,8 @@ const LoginPage = () => {
   }>();
 
   const handleFillCredentials = (role: "Admin" | "Candidate") => {
-    const email =
-      role === "Admin" ? "admin100@gmail.com" : "candidate100@gmail.com";
-    const password = "user12345";
+    const email = role === "Admin" ? "admin@jobsbd.com" : "candidate@gmail.com";
+    const password = "@Password123";
 
     methods.setValue("email", email);
     methods.setValue("password", password);
@@ -104,6 +103,15 @@ const LoginPage = () => {
         });
       }
     }
+  };
+
+  const handleForgotPassword = async (email: string) => {
+    console.log("Forgot password for email:", email);
+    await Swal.fire({
+      title: "Password Reset",
+      text: "If the email exists in our system, you will receive password reset instructions.",
+      icon: "info",
+    });
   };
 
   return (
@@ -184,7 +192,9 @@ const LoginPage = () => {
             type="password"
             rules={{ required: "Password is required" }}
           />
-          <p className="text-end text-gray-500 text-sm">Forgot Password?</p>
+          <div className="text-end">
+            <ForgotPasswordModal onSubmit={handleForgotPassword} />
+          </div>
           <Button
             disabled={isLoading}
             type="submit"
@@ -205,7 +215,7 @@ const LoginPage = () => {
       <GoogleSignUp />
 
       <p className="font-semibold text-center mt-20 pb-10">
-        Don't have an account yet?
+        Don&apos;t have an account yet?
         <Link href="/candidate-register" className="text-primary ml-1">
           Register here
         </Link>
