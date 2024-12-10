@@ -96,5 +96,9 @@ export const baseApi = createApi({
     "savedJobs",
     "resume",
     "notification",
+    "language",
+    "company",
+    "followedCompany",
+    "appliedJob",
   ],
 });

@@ -1,54 +1,109 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import React, { useState } from "react";
-import { useForm, FormProvider, FieldValues } from "react-hook-form";
+import { useLoginMutation } from "@/redux/api/auth/authApi";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useLoginMutation } from "@/redux/api/auth/authApi";
+import { useState } from "react";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
 
 import EmployeeAuthContainer from "@/components/ui/EmployeeAuthContainer";
+import EmployeeAuthInput from "@/components/ui/EmployeeAuthInput";
 import ORDivider from "@/components/ui/ORDivider";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
 import SocialLogin from "@/components/ui/SocialLogin";
 import Swal from "sweetalert2";
-import EmployeeAuthInput from "@/components/ui/EmployeeAuthInput";
 
 import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { TUser } from "@/redux/features/auth/authSlice";
+import { jwtDecode } from "jwt-decode";
+import { LuUserCircle } from "react-icons/lu";
 
 const EmployeeLoginPage = () => {
   const router = useRouter();
   const [loginMethod, setLoginMethod] = useState("email");
   const [phone, setPhone] = useState("");
+  const [open, setOpen] = useState(false);
   const methods = useForm<FieldValues>();
-  // employee register
+
   const [login] = useLoginMutation();
-  // on submit handle
+
+  const handleFillCredentials = (role: "Admin" | "Employer") => {
+    const email =
+      role === "Admin" ? "admin100@gmail.com" : "employer100@gmail.com";
+    const password = "user12345";
+    methods.setValue("email", email);
+    methods.setValue("password", password);
+    setOpen(false);
+  };
+
   const onSubmit = async (data: FieldValues) => {
     const response = await login(data);
+    const token = response?.data?.data?.accessToken;
+    const decodeToken = (await jwtDecode(token)) as TUser;
     if (response.data) {
       Swal.fire({
         title: "Success",
         text: "You have been logged in successfully",
         icon: "success",
       });
-      router.push("/candidate-dashboard");
+      if (decodeToken?.role === "ADMIN") {
+        router.push("/admin-dashboard");
+      } else {
+        router.push("/candidate-dashboard");
+      }
       methods.reset();
-      
     } else {
       Swal.fire({
         title: "Error",
         text: "Login failed",
         icon: "error",
       });
-      
     }
   };
 
   return (
     <EmployeeAuthContainer>
+      <div className="absolute top-5 right-5">
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <LuUserCircle className="cursor-pointer text-2xl text-primary" />
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Select Role</DialogTitle>
+              <DialogDescription>
+                Select a role to autofill credentials.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="flex flex-col gap-3 mt-4">
+              <Button
+                onClick={() => handleFillCredentials("Admin")}
+                className="w-full bg-primary text-white"
+              >
+                Admin
+              </Button>
+              <Button
+                onClick={() => handleFillCredentials("Employer")}
+                className="w-full bg-secondary text-white"
+              >
+                Employer
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </div>
+
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
@@ -62,21 +117,21 @@ const EmployeeLoginPage = () => {
             </p>
           </div>
           <div className="flex items-center justify-center py-5">
-      <RadioGroup
-        defaultValue="email"
-        onValueChange={(value) => setLoginMethod(value)}
-        className="flex flex-row space-x-4"
-      >
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="email" id="email" />
-          <Label htmlFor="email">Email Address</Label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="phone" id="phone" />
-          <Label htmlFor="phone">Mobile Number</Label>
-        </div>
-      </RadioGroup>
-    </div>
+            <RadioGroup
+              defaultValue="email"
+              onValueChange={(value) => setLoginMethod(value)}
+              className="flex flex-row space-x-4"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="email" id="email" />
+                <Label htmlFor="email">Email Address</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="phone" id="phone" />
+                <Label htmlFor="phone">Mobile Number</Label>
+              </div>
+            </RadioGroup>
+          </div>
 
           {loginMethod === "email" ? (
             <EmployeeAuthInput

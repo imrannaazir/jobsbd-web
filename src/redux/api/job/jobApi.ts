@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import { TAppliedStatus } from "@/type/job.types";
 import { baseApi } from "../api";
 
 const jobApi = baseApi.injectEndpoints({
@@ -33,6 +34,7 @@ const jobApi = baseApi.injectEndpoints({
         };
       },
     }),
+
     toggleInSavedJob: builder.mutation({
       query: (jobId: string) => ({
         url: "/saved-jobs/toggle",
@@ -48,6 +50,27 @@ const jobApi = baseApi.injectEndpoints({
       }),
       providesTags: ["savedJobs"],
     }),
+
+    getAllJobApplicantsOfJob: builder.query({
+      query: (jobId: string) => ({
+        url: `/applied-jobs/applicants/${jobId}`,
+      }),
+      providesTags: ["appliedJob"],
+    }),
+    updateApplyStatus: builder.mutation({
+      query: ({
+        appliedJobId,
+        status,
+      }: {
+        appliedJobId: string;
+        status: TAppliedStatus;
+      }) => ({
+        url: `/applied-jobs/update-status/${appliedJobId}`,
+        method: "PATCH",
+        body: { status },
+      }),
+      invalidatesTags: ["appliedJob"],
+    }),
   }),
 });
 
@@ -57,4 +80,6 @@ export const {
   useGetAllAppliedJobsQuery,
   useGetAllMySavedJobsQuery,
   useToggleInSavedJobMutation,
+  useGetAllJobApplicantsOfJobQuery,
+  useUpdateApplyStatusMutation,
 } = jobApi;

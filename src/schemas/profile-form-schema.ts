@@ -11,6 +11,18 @@ export const formSchema = z.object({
   addressLine: z.string().optional(),
 });
 
+export const companyDetailsFormSchema = z.object({
+  companyName: z.string().optional(),
+  companyDetails: z.string().optional(),
+  websiteLink: z.string().url().optional(),
+  foundedDate: z.date().optional(),
+  businessType: z.string().optional(),
+  numberOfEmployees: z.number().optional(),
+  numberOfOffices: z.number().optional(),
+  district: z.string().optional(),
+  addressLine: z.string().optional(),
+});
+
 // Education Schema
 export const educationFormSchema = z.object({
   degree: z.string().min(1, "Degree is required"),
@@ -47,6 +59,20 @@ export const workExperienceFormSchema = z.object({
   district: z.string().min(1, "Company Location is required"),
   addressLine: z.string().min(1, "Company Location is required"),
   jobResponsibilities: z.string().min(1, "Description is required"),
+  isWorking: z.boolean().optional(),
+});
+export const updateWorkExperienceFormSchema = z.object({
+  id: z.string(),
+  designation: z.string().optional(),
+  employmentType: z.string().optional(),
+  departmentId: z.string().optional(),
+  industryId: z.string().optional(),
+  companyName: z.string().optional(),
+  startDate: z.date().optional(),
+  endDate: z.date().optional(),
+  district: z.string().optional(),
+  addressLine: z.string().optional(),
+  jobResponsibilities: z.string().optional(),
   isWorking: z.boolean().optional(),
 });
 
@@ -124,13 +150,18 @@ export const updateCertificateFormSchema = z.object({
   certificateUrl: z.string().min(1, "Certificate URL is required"),
   description: z.string().min(1, "Description is required"),
 });
-
-// basic details type
+export type TBasicCompanyDetailsValues = z.infer<
+  typeof companyDetailsFormSchema
+>;
 export type FormValues = z.infer<typeof formSchema>;
+
 // Education type
 export type EducationFormValues = z.infer<typeof educationFormSchema>;
 // work experience type
 export type WorkExperienceFormValues = z.infer<typeof workExperienceFormSchema>;
+export type UpdateWorkExperienceFormValues = z.infer<
+  typeof updateWorkExperienceFormSchema
+>;
 
 // work experience type
 export type ProjectFormValues = z.infer<typeof projectFormSchema>;

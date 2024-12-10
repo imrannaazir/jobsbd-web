@@ -53,3 +53,13 @@ export type TSearchParams = {
   maxSalary?: string;
   negotiable?: string;
 };
+
+export type TCompanySearchParams = {
+  comapnyName?: string;
+  address?: string;
+};
+
+export type TItem = {
+  id: string;
+  name: string;
+};

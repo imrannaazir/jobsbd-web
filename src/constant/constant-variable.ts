@@ -74,6 +74,16 @@ export const jobLevel = [
   { id: "SENIOR", name: "Senior" },
 ];
 
+export const medicalAllowance = [
+  { id: "yes", label: "Yes" },
+  { id: "no", label: "No" },
+];
+
+export const subOffices = [
+  { id: "yes", label: "Yes" },
+  { id: "no", label: "No" },
+];
+
 export const userRole = {
   CANDIDATE: "CANDIDATE",
   EMPLOYER: "EMPLOYER",
@@ -90,3 +100,10 @@ export const NotificationType = {
   REJECTED: "REJECTED",
   SAVED_PROFILE: "SAVED_PROFILE",
 };
+export const jobStatus = {
+  APPLIED: "APPLIED",
+  SHORTLISTED: "SHORTLISTED",
+  REJECTED: "REJECTED",
+  ACCEPTED: "ACCEPTED",
+  HIRED: "HIRED",
+} as const;

@@ -13,7 +13,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useState } from "react";
-
 import {
   Command,
   CommandEmpty,
@@ -23,7 +22,6 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Check, ChevronsUpDown } from "lucide-react";
-
 import { Button } from "./button";
 import {
   useGetAllResumeQuery,
@@ -35,8 +33,22 @@ import ORDivider from "./ORDivider";
 import { useApplyJobMutation } from "@/redux/api/job/jobApi";
 import Swal from "sweetalert2";
 import ResumeUploader from "../candidate-dashboard/cv-manager/resume-uploader";
+import { useAppSelector } from "@/redux/hooks";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
-const ApplyJobModal = ({ jobId }: { jobId: string }) => {
+const ApplyJobModal = ({
+  jobId,
+  status,
+}: {
+  jobId: string;
+  status: string | null;
+}) => {
+  const { token } = useAppSelector((state) => state?.auth);
   const [applyJob] = useApplyJobMutation();
   const [markAsDefault] = useUpdateResumeStatusMutation();
   const { data: resumes } = useGetAllResumeQuery("");
@@ -68,75 +80,103 @@ const ApplyJobModal = ({ jobId }: { jobId: string }) => {
     }
   };
 
+  const ApplyButton = () => (
+    <span
+      className={`text-sm font-semibold rounded px-2 py-[5px] border border-green-500 ${
+        status ? "text-green-500 bg-white" : "bg-green-500 text-white"
+      }`}
+    >
+      {status ? status : "Apply Now"}
+    </span>
+  );
+
   return (
-    <>
-      <Dialog onOpenChange={setOpenModal} open={openModal}>
-        <DialogTrigger>
-          <button className="bg-green-500 text-white text-sm font-semibold rounded px-2 py-[5px]">
-            Apply Now
-          </button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[600px]">
-          <DialogHeader>
-            <DialogTitle>Apply for the job</DialogTitle>
-          </DialogHeader>
-          {/* popover content goes here */}
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={open}
-                className="justify-between"
-              >
-                {defaultResume?.file_name || "upload Resume"}
-                <ChevronsUpDown className="opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-full p-0">
-              <Command>
-                <CommandInput placeholder="Search framework..." />
-                <CommandList>
-                  <CommandEmpty>No framework found.</CommandEmpty>
-                  <CommandGroup>
-                    {resumes?.data?.map((resume: TResume) => (
-                      <CommandItem
-                        key={resume.id}
-                        value={resume.id}
-                        onSelect={(currentValue) =>
-                          handleResumeChange(currentValue)
-                        }
-                      >
-                        {resume.file_name}
-                        <Check
-                          className={cn(
-                            "ml-auto",
-                            resume?.isDefault ? "opacity-100" : "opacity-0"
-                          )}
-                        />
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
-          {/* divider */}
-          <ORDivider />
-          {/* upload goes here */}
-          <ResumeUploader />
-          <DialogFooter>
+    <Dialog onOpenChange={setOpenModal} open={openModal}>
+      <DialogTrigger asChild>
+        {token ? (
+          <Button
+            variant="ghost"
+            className="p-0 h-auto"
+            disabled={!token || status !== null}
+          >
+            <ApplyButton />
+          </Button>
+        ) : (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="p-0 h-auto"
+                  disabled={!token || status !== null}
+                >
+                  <ApplyButton />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Please login to apply for this job</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[600px]">
+        <DialogHeader>
+          <DialogTitle>Apply for the job</DialogTitle>
+        </DialogHeader>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
             <Button
-              type="submit"
-              onClick={handleApplyJob}
-              className="bg-green-500 text-white text-sm font-semibold rounded hover:bg-green-500"
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className="justify-between"
             >
-              Apply
+              {defaultResume?.file_name || "upload Resume"}
+              <ChevronsUpDown className="opacity-50" />
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </>
+          </PopoverTrigger>
+          <PopoverContent className="w-full p-0">
+            <Command>
+              <CommandInput placeholder="Search framework..." />
+              <CommandList>
+                <CommandEmpty>No framework found.</CommandEmpty>
+                <CommandGroup>
+                  {resumes?.data?.map((resume: TResume) => (
+                    <CommandItem
+                      key={resume.id}
+                      value={resume.id}
+                      onSelect={(currentValue) =>
+                        handleResumeChange(currentValue)
+                      }
+                    >
+                      {resume.file_name}
+                      <Check
+                        className={cn(
+                          "ml-auto",
+                          resume?.isDefault ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+        <ORDivider />
+        <ResumeUploader />
+        <DialogFooter>
+          <Button
+            type="submit"
+            onClick={handleApplyJob}
+            className="bg-green-500 text-white text-sm font-semibold rounded hover:bg-green-500"
+          >
+            Apply
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

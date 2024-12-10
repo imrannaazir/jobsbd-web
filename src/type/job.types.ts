@@ -1,3 +1,4 @@
+import { TCandidate } from "./candidate.types";
 import { TDepartment } from "./department.types";
 import { TIndustry } from "./industry.types";
 export type TEmploymentType = "FULL_TIME" | "PART_TIME" | "INTERNSHIP";
@@ -24,6 +25,13 @@ export type TJob = {
   title: string;
   updatedAt: string;
   vacancy: number;
+  company: {
+    companyName: string;
+    id: string;
+  };
+  address: {
+    district: string;
+  };
 };
 
 export type TSavedJob = {
@@ -31,6 +39,25 @@ export type TSavedJob = {
   job?: TJob;
   jobId: string;
   candidateId: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type TAppliedStatus =
+  | "APPLIED"
+  | "SHORTLISTED"
+  | "REJECTED"
+  | "ACCEPTED"
+  | "HIRED";
+
+export type TAppliedJob = {
+  id: string;
+  status: TAppliedStatus;
+  candidateId: string;
+  candidate: TCandidate;
+  companyId: string;
+  jobId: string;
+  resumeId: string;
   createdAt: string;
   updatedAt: string;
 };

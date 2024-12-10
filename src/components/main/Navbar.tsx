@@ -23,6 +23,7 @@ import { Button } from "../ui/button";
 import { NotificationBell } from "../ui/notification-bell";
 import Container from "./Container";
 import MobileNavbar from "./MobileNavbar";
+import { userRole } from "@/constant/constant-variable";
 
 const Navbar = () => {
   const router = useRouter();
@@ -31,6 +32,7 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
   const [isClient, setIsClient] = useState(false);
   const token = useAppSelector((state) => state.auth.token);
+  const user = useAppSelector((state) => state.auth.user);
   const { data, isLoading } = useGetCandidateInfoQuery("");
 
   useEffect(() => {
@@ -47,77 +49,8 @@ const Navbar = () => {
     router.push("/");
   };
 
-  const renderAuthButtons = () => {
-    if (!isClient) return null; // Return null on the server-side
-
-    return token ? (
-      <li>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <div className="flex items-center justify-center gap-3 cursor-pointer">
-              <Image
-                src={userIcon}
-                width={40}
-                height={40}
-                className="size-10 rounded-full"
-                alt="user"
-              />
-              <div>
-                <h2 className="text-sm font-semibold">
-                  {!isLoading && data?.data?.fullName}
-                </h2>
-                <p className="text-sm">Candidate</p>
-              </div>
-              <div>
-                <FaChevronDown className="size-4" />
-              </div>
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56 mt-3">
-            <DropdownMenuGroup className="cursor-pointer">
-              <Link href="/candidate-dashboard">
-                <DropdownMenuItem className="cursor-pointer">
-                  <div className="flex items-center justify-center gap-3 cursor-pointer">
-                    <Image
-                      src={userIcon}
-                      width={40}
-                      height={40}
-                      className="size-10 rounded-full"
-                      alt="user"
-                    />
-                    <div>
-                      <h2 className="text-sm font-semibold">
-                        {!isLoading && data?.data?.fullName}
-                      </h2>
-                      <p className="text-sm">Go To Dashboard</p>
-                    </div>
-                  </div>
-                </DropdownMenuItem>
-              </Link>
-              <Link href="/candidate-dashboard/profile">
-                <DropdownMenuItem className="cursor-pointer">
-                  View Profile
-                </DropdownMenuItem>
-              </Link>
-              <Link href="/candidate-dashboard/candidate-change-password">
-                <DropdownMenuItem className="cursor-pointer">
-                  Settings
-                </DropdownMenuItem>
-              </Link>
-            </DropdownMenuGroup>
-
-            <div className="p-2">
-              <Button
-                onClick={handleLogOut}
-                className="bg-white w-full border-2 border-primary text-primary cursor-pointer hover:bg-[#ECF0F3]"
-              >
-                Logout
-              </Button>
-            </div>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </li>
-    ) : (
+  const defaultRoutesForNav = () => {
+    return (
       <>
         <li>
           <Link
@@ -143,6 +76,144 @@ const Navbar = () => {
             For Employers
           </Link>
         </li>
+      </>
+    );
+  };
+
+  const renderAuthButtons = () => {
+    if (!isClient) return null; // Return null on the server-side
+
+    return (
+      <>
+        {token ? (
+          user?.role === userRole.CANDIDATE ? (
+            <li>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <div className="flex items-center justify-center gap-3 cursor-pointer">
+                    <Image
+                      src={userIcon}
+                      width={40}
+                      height={40}
+                      className="size-10 rounded-full"
+                      alt="user"
+                    />
+                    <div>
+                      <h2 className="text-sm font-semibold">
+                        {!isLoading && (data?.data?.fullName || "Loading...")}
+                      </h2>
+                      <p className="text-sm">Candidate</p>
+                    </div>
+                    <div>
+                      <FaChevronDown className="size-4" />
+                    </div>
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56 mt-3">
+                  <DropdownMenuGroup className="cursor-pointer">
+                    <Link href="/candidate-dashboard">
+                      <DropdownMenuItem className="cursor-pointer">
+                        <div className="flex items-center justify-center gap-3 cursor-pointer">
+                          <Image
+                            src={userIcon}
+                            width={40}
+                            height={40}
+                            className="size-10 rounded-full"
+                            alt="user"
+                          />
+                          <div>
+                            <h2 className="text-sm font-semibold">
+                              {!isLoading &&
+                                (data?.data?.fullName || "Loading...")}
+                            </h2>
+                            <p className="text-sm">Go To Dashboard</p>
+                          </div>
+                        </div>
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link href="/candidate-dashboard/profile">
+                      <DropdownMenuItem className="cursor-pointer">
+                        View Profile
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link href="/candidate-dashboard/candidate-change-password">
+                      <DropdownMenuItem className="cursor-pointer">
+                        Settings
+                      </DropdownMenuItem>
+                    </Link>
+                  </DropdownMenuGroup>
+
+                  <div className="p-2">
+                    <Button
+                      onClick={handleLogOut}
+                      className="bg-white w-full border-2 border-primary text-primary cursor-pointer hover:bg-[#ECF0F3]"
+                    >
+                      Logout
+                    </Button>
+                  </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </li>
+          ) : user?.role === userRole.EMPLOYER ? (
+            <li>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <div className="flex items-center justify-center gap-5 cursor-pointer">
+                    <Image
+                      src={userIcon}
+                      width={40}
+                      height={40}
+                      className="size-10 rounded-full"
+                      alt="user"
+                    />
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56 mt-3">
+                  <DropdownMenuGroup className="cursor-pointer">
+                    <Link href="/">
+                      <DropdownMenuItem className="cursor-pointer">
+                        Candidate
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link href="/contact-us">
+                      <DropdownMenuItem className="cursor-pointer">
+                        Get Support
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link href="/recruiter/dashboard">
+                      <DropdownMenuItem className="cursor-pointer">
+                        Dashboard
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link href="/recruiter/company-profile">
+                      <DropdownMenuItem className="cursor-pointer">
+                        Company Profile
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link href="/recruiter/recruiter-settings">
+                      <DropdownMenuItem className="cursor-pointer">
+                        Settings
+                      </DropdownMenuItem>
+                    </Link>
+                  </DropdownMenuGroup>
+
+                  <div className="p-2">
+                    <Button
+                      onClick={handleLogOut}
+                      className="bg-white w-full border-2 border-primary text-primary cursor-pointer hover:bg-[#ECF0F3]"
+                    >
+                      Logout
+                    </Button>
+                  </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </li>
+          ) : (
+            <>{defaultRoutesForNav()}</>
+          )
+        ) : (
+          <>{defaultRoutesForNav()}</>
+        )}
       </>
     );
   };

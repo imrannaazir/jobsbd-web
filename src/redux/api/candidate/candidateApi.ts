@@ -105,11 +105,29 @@ const candidateApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["experience"],
     }),
+    deleteExperience: builder.mutation({
+      query: (id) => {
+        return {
+          url: `experiences/delete-experience/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["experience"],
+    }),
+
+    updateExperience: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/experiences/update-experience/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["experience"],
+    }),
 
     getAllExperience: builder.query({
       query: () => {
         return {
-          url: "experience/",
+          url: "experiences/all",
         };
       },
       providesTags: ["experience"],
@@ -204,6 +222,42 @@ const candidateApi = baseApi.injectEndpoints({
       },
       providesTags: ["industry"],
     }),
+
+    addLanguage: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/languages/create-language",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["language"],
+    }),
+    getLanguages: builder.query({
+      query: () => {
+        return {
+          url: "/languages/all",
+        };
+      },
+      providesTags: ["language"],
+    }),
+    deleteLanguage: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/languages/delete-language/${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["language"],
+    }),
+    updateLanguage: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/languages/update-language/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["language"],
+    }),
   }),
 });
 
@@ -230,4 +284,10 @@ export const {
   useUpdateProjectMutation,
   useDeleteSkillMutation,
   useUpdateSkillMutation,
+  useAddLanguageMutation,
+  useGetLanguagesQuery,
+  useDeleteLanguageMutation,
+  useUpdateLanguageMutation,
+  useDeleteExperienceMutation,
+  useUpdateExperienceMutation,
 } = candidateApi;

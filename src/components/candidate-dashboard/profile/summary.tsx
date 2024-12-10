@@ -1,15 +1,15 @@
 "use client";
 
 import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
-import { useState } from "react";
-import { FiEdit } from "react-icons/fi";
+// import { useState } from "react";
+// import { FiEdit } from "react-icons/fi";
 import SectionTitle from "../section-title";
 import SummaryModal from "./summary-modal";
-import SummaryUpdateModal from "./summary-update-modal";
+// import SummaryUpdateModal from "./summary-update-modal";
 
 const Summary = () => {
   const { data: candidateInfo, isLoading } = useGetCandidateInfoQuery("");
-  const [isModalOpen, setModalOpen] = useState(false);
+  // const [isModalOpen, setModalOpen] = useState(false);
 
   return (
     <div id="summary" className="section-design relative">
@@ -22,7 +22,7 @@ const Summary = () => {
               __html: candidateInfo.data.bio,
             }}
           ></div>
-          <div className="flex justify-end absolute items-center top-20 right-5 gap-4">
+          {/* <div className="flex justify-end absolute items-center top-20 right-5 gap-4">
             <button
               className="p-2 text-sm font-medium bg-[#E5F4FF] rounded text-blue-500"
               title="Edit"
@@ -30,7 +30,7 @@ const Summary = () => {
             >
               <FiEdit />
             </button>
-          </div>
+          </div> */}
         </div>
       ) : (
         !isLoading && (
@@ -40,7 +40,7 @@ const Summary = () => {
         )
       )}
 
-      <SummaryUpdateModal isOpen={isModalOpen} setIsOpen={setModalOpen} />
+      {/* <SummaryUpdateModal isOpen={isModalOpen} setIsOpen={setModalOpen} /> */}
     </div>
   );
 };

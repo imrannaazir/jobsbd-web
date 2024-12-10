@@ -1,28 +1,53 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import img from "@/assets/candidate-dashboard/candidate-default.png";
-import CircularProgressBar from "@/components/candidate-dashboard/circular-progress-bar";
 
-import Image from "next/image";
+import { useEffect, useState } from "react";
+
 import Link from "next/link";
-import React from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { BsBuildings } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
-import { MdOutlineContactPage, MdOutlineDashboard, MdOutlineWorkHistory } from "react-icons/md";
+import {
+  MdOutlineContactPage,
+  MdOutlineDashboard,
+  MdOutlineWorkHistory,
+} from "react-icons/md";
 import { RiListSettingsLine } from "react-icons/ri";
-import Divider from "../ui/Divider";
-import { usePathname } from "next/navigation";
-import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
-import { useAppDispatch } from "@/redux/hooks";
+
 import { removeRefreshToken } from "@/action/auth-action";
+import defaultImg from "@/assets/candidate-dashboard/candidate-default.png";
+import CircularProgressBar from "@/components/candidate-dashboard/circular-progress-bar";
 import { logout } from "@/redux/features/auth/authSlice";
-import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/redux/hooks";
+import {
+  useGetCandidateInfoQuery,
+  useUpdateCandidateInfoMutation,
+} from "@/redux/api/candidate/candidateApi";
+import Divider from "../ui/Divider";
+import NameDesignationEditModal from "./name-designation-edit-modal";
+import { ImageUpload } from "./image-upload";
+import type { StaticImageData } from "next/image";
+import { uploadImage } from "@/action/file-upload-action";
+import Swal from "sweetalert2";
+
 const CandidateDashboardNavbar: React.FC = () => {
   const { data } = useGetCandidateInfoQuery("");
+  const [updateImage] = useUpdateCandidateInfoMutation();
   const router = useRouter();
   const currentPath = usePathname();
   const dispatch = useAppDispatch();
+  const [profileImage, setProfileImage] = useState<string | StaticImageData>(
+    defaultImg || data?.data?.image
+  );
+
+  useEffect(() => {
+    if (data?.data?.image) {
+      setProfileImage(data.data.image);
+    }
+  }, [data]);
+
   const navLinks = [
     {
       label: "Dashboard",
@@ -36,7 +61,7 @@ const CandidateDashboardNavbar: React.FC = () => {
     },
     {
       label: "CV Manager",
-      icon: <MdOutlineContactPage size={25}/>,
+      icon: <MdOutlineContactPage size={25} />,
       href: "/candidate-dashboard/cv-manager",
     },
     {
@@ -60,30 +85,55 @@ const CandidateDashboardNavbar: React.FC = () => {
       href: "/candidate-dashboard/candidate-change-password",
     },
   ];
+
   const handleLogOut = async () => {
     dispatch(logout());
     await removeRefreshToken();
-    router.push('/')
+    router.push("/");
   };
+
+  const handleImageUpload = async (file: File) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const imageUrl = await uploadImage(formData);
+      setProfileImage(imageUrl);
+      const res = await updateImage({
+        image: imageUrl,
+      });
+      if (res?.data) {
+        Swal.fire("Success", "Profile Image Uploaded successfully!", "success");
+      }
+    } catch (error) {
+      Swal.fire("Error", "Something went wrong while deleting.", "error");
+    }
+  };
+
   return (
     <>
       <div className="bg-white lg:w-[316px] shadow-md lg:min-h-screen rounded z-10">
-        <div className="flex flex-row lg:flex-col items-center gap-5  sticky lg:static top-14 bg-white lg:bg-transparent p-5 lg:p-0 border-b lg:border-b-0 shadow-md lg:shadow-none">
-          {/* profile picture image */}
+        <div className="flex flex-row lg:flex-col items-center gap-5 sticky lg:static top-14 bg-white lg:bg-transparent p-5 lg:p-0 border-b lg:border-b-0 shadow-md lg:shadow-none">
           <div className="relative flex items-center justify-center">
-            {/* Circular Progress Bar */}
             <CircularProgressBar />
-            {/* Centered Image */}
-            <Image
-              alt="profile default image"
-              src={img}
-              className="w-[60px] h-[60px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <ImageUpload
+                currentImage={profileImage}
+                onUpload={handleImageUpload}
+              />
+            </div>
           </div>
-          {/* user Name */}
-          <h3 className="text-xl font-bold text-center py-5">
-            {data?.data?.fullName}
-          </h3>
+          <div className="flex items-center justify-center gap-5 mb-2">
+            <div>
+              <h3 className="text-xl font-bold text-center">
+                {data?.data?.fullName}
+              </h3>
+              <p className="text-center text-gray-500 mt-2">
+                {data?.data?.designation}
+              </p>
+            </div>
+            <NameDesignationEditModal />
+          </div>
         </div>
         <Divider />
         <ul className="mt-2 md:mt-0 grid grid-cols-2 lg:grid-cols-1 gap-2 md:gap-0">
@@ -104,7 +154,7 @@ const CandidateDashboardNavbar: React.FC = () => {
           ))}
           <li
             onClick={handleLogOut}
-            className="flex items-center text-sm lg:text-base gap-3 py-2 px-3 font-semibold  cursor-pointer"
+            className="flex items-center text-sm lg:text-base gap-3 py-2 px-3 font-semibold cursor-pointer"
           >
             <span className="p-2 rounded-full shadow">
               <CiLogout size={25} />
