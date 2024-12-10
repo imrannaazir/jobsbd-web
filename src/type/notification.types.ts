@@ -1,4 +1,9 @@
-type NotificationType = "APPLIED" | "SORT_LISTED" | "ACCEPTED" | "REJECTED";
+type NotificationType =
+  | "APPLIED"
+  | "SORT_LISTED"
+  | "ACCEPTED"
+  | "REJECTED"
+  | "HIRED";
 
 export type TNotification = {
   id: string;

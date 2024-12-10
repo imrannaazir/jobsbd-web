@@ -1,13 +1,13 @@
 "use client";
 
-import Image from "next/image";
-import { useState, useMemo } from "react";
-import noJobsFound from "../../../../assets/candidate-dashboard/no-results-found.png";
-import { useGetAllAppliedJobsQuery } from "@/redux/api/job/jobApi";
 import Loader from "@/components/job-page/Loader";
 import JobCard from "@/components/ui/job-card";
-import { TJob } from "@/type/job.types";
 import { jobStatus } from "@/constant/constant-variable";
+import { useGetAllAppliedJobsQuery } from "@/redux/api/job/jobApi";
+import { TJob } from "@/type/job.types";
+import Image from "next/image";
+import { useMemo, useState } from "react";
+import noJobsFound from "../../../../assets/candidate-dashboard/no-results-found.png";
 
 type TAppliedJob = {
   id: string;
@@ -22,16 +22,41 @@ const AppliedJobs = () => {
   const filteredJobs = useMemo(() => {
     if (!appliedJobs?.data) return [];
     if (activeStatus === "ALL") return appliedJobs.data;
-    return appliedJobs.data.filter((job: TAppliedJob) => job.status === activeStatus);
+    return appliedJobs.data.filter(
+      (job: TAppliedJob) => job.status === activeStatus
+    );
   }, [appliedJobs?.data, activeStatus]);
 
-  const statuses = useMemo(() => [
-    { label: "ALL", count: appliedJobs?.data?.length },
-    { label: "APPLIED", count: appliedJobs?.data?.filter((job: TAppliedJob) => job.status === jobStatus.APPLIED).length },
-    { label: "ACCEPTED", count: appliedJobs?.data?.filter((job: TAppliedJob) => job.status === jobStatus.ACCEPTED).length },
-    { label: "REJECTED", count: appliedJobs?.data?.filter((job: TAppliedJob) => job.status === jobStatus.REJECTED).length },
-    { label: "SHORTLISTED", count: appliedJobs?.data?.filter((job: TAppliedJob) => job.status === jobStatus.SHORTLISTED).length },
-  ], [appliedJobs?.data]);
+  const statuses = useMemo(
+    () => [
+      { label: "ALL", count: appliedJobs?.data?.length },
+      {
+        label: "APPLIED",
+        count: appliedJobs?.data?.filter(
+          (job: TAppliedJob) => job.status === jobStatus.APPLIED
+        ).length,
+      },
+      {
+        label: "ACCEPTED",
+        count: appliedJobs?.data?.filter(
+          (job: TAppliedJob) => job.status === jobStatus.ACCEPTED
+        ).length,
+      },
+      {
+        label: "REJECTED",
+        count: appliedJobs?.data?.filter(
+          (job: TAppliedJob) => job.status === jobStatus.REJECTED
+        ).length,
+      },
+      {
+        label: "SHORTLISTED",
+        count: appliedJobs?.data?.filter(
+          (job: TAppliedJob) => job.status === jobStatus.SHORT_LISTED
+        ).length,
+      },
+    ],
+    [appliedJobs?.data]
+  );
 
   return (
     <div className="container mx-auto px-4 py-6 bg-white rounded-md relative z-20">
@@ -92,4 +117,3 @@ const AppliedJobs = () => {
 };
 
 export default AppliedJobs;
-

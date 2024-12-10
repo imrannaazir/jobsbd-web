@@ -5,6 +5,7 @@ import { TNotification } from "@/type/notification.types";
 import {
   Bell,
   Bookmark,
+  Briefcase,
   CheckCircle,
   FileText,
   Loader,
@@ -44,6 +45,8 @@ const NotificationCard: FC<TNotificationCardProps> = ({ notification }) => {
     case NotificationType.SAVED_PROFILE:
       NotificationIcon = UserCheck;
     default:
+    case NotificationType.HIRED:
+      NotificationIcon = Briefcase;
       break;
   }
 

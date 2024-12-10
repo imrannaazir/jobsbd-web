@@ -45,7 +45,7 @@ export type TSavedJob = {
 
 export type TAppliedStatus =
   | "APPLIED"
-  | "SHORTLISTED"
+  | "SHORT_LISTED"
   | "REJECTED"
   | "ACCEPTED"
   | "HIRED";
