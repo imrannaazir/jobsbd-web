@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import GoogleSignUp from "@/components/login/GoogleSignUp";
 
 const CandidateRegisterPage = () => {
   const router = useRouter();
@@ -46,7 +47,6 @@ const CandidateRegisterPage = () => {
         text: "Registration failed",
         icon: "error",
       });
-
     }
   };
 
@@ -67,8 +67,8 @@ const CandidateRegisterPage = () => {
             </h3>
             <p className="text-lg font-semibold">New member registration</p>
           </div>
-          <div className="w-[198px] mx-auto mt-16 mb-8">
-            <SocialLogin />
+          <div className="mt-10 mb-8">
+            <GoogleSignUp />
           </div>
           <ORDivider />
         </div>

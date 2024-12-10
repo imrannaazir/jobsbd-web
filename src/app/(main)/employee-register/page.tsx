@@ -16,7 +16,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-
+import GoogleSignUp from "@/components/login/GoogleSignUp";
 
 const EmployeeRegister = () => {
   const router = useRouter();
@@ -46,7 +46,6 @@ const EmployeeRegister = () => {
         text: "Registration failed",
         icon: "error",
       });
-      
     }
   };
 
@@ -128,8 +127,8 @@ const EmployeeRegister = () => {
         </FormProvider>
 
         <ORDivider />
-        <div className="lg:w-[180px] lg:mx-auto mt-5">
-          <SocialLogin />
+        <div className="mt-5">
+          <GoogleSignUp />
         </div>
 
         <p className="font-semibold text-center mt-8 pb-10">

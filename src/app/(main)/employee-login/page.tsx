@@ -28,6 +28,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { TUser } from "@/redux/features/auth/authSlice";
 import { jwtDecode } from "jwt-decode";
 import { LuUserCircle } from "react-icons/lu";
+import GoogleSignUp from "@/components/login/GoogleSignUp";
 
 const EmployeeLoginPage = () => {
   const router = useRouter();
@@ -179,11 +180,11 @@ const EmployeeLoginPage = () => {
             </Button>
           </div>
           <ORDivider />
-          <div className="lg:w-[180px] lg:mx-auto">
-            <SocialLogin />
-          </div>
         </form>
       </FormProvider>
+      <div>
+        <GoogleSignUp />
+      </div>
       <p className="font-semibold text-center mt-8 pb-10">
         Don't have an account yet?
         <Link href="/employee-register" className="text-primary ml-1">

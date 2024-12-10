@@ -43,7 +43,7 @@
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.460.0",
     "next": "15.0.3",
-    "next-auth": "^4.24.10",
+    "next-auth": "^4.24.11",
     "next-cloudinary": "^6.16.0",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-day-picker": "8.10.1",

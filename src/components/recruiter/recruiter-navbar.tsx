@@ -15,16 +15,22 @@ import { Button } from "../ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/redux/features/auth/authSlice";
 import userIcon from "../../assets/candidate-dashboard/candidate-default.png";
+import { signOut } from "next-auth/react";
+import { removeRefreshToken } from "@/action/auth-action";
+import { useRouter } from "next/navigation";
 // import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
 
 const RecruiterNavbar = () => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   // const userInfo = useAppSelector((state) => state.auth.user);
   const token = useAppSelector((state) => state.auth.token);
   // const { data, isLoading } = useGetCandidateInfoQuery("");
 
-  const handleLogOut = () => {
-    dispatch(logout());
+  const handleLogOut = async () => {
+    await removeRefreshToken();
+    await signOut();
+    router.push("/");
   };
 
   return (
