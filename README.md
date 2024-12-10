@@ -157,11 +157,11 @@ Follow these steps to set up the project locally:
 
 ## 📸 Screenshots
 
-![Screenshot 1](src/assets/readme/jobsbd-1.png)
-![Screenshot 2](src/assets/readme/jobsbd-2.png)
-![Screenshot 3](src/assets/readme/jobsbd-3.png)
-![Screenshot 4](src/assets/readme/jobsbd-4.png)
-![Screenshot 5](src/assets/readme/jobsbd-5.png)
+![Screenshot 1](src/assets/readme/jobsbd-1.PNG)
+![Screenshot 2](src/assets/readme/jobsbd-2.PNG)
+![Screenshot 3](src/assets/readme/jobsbd-3.PNG)
+![Screenshot 4](src/assets/readme/jobsbd-4.PNG)
+![Screenshot 5](src/assets/readme/jobsbd-5.PNG)
 
 ---
 
