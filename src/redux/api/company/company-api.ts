@@ -1,4 +1,3 @@
-import { TBasicCompanyDetailsValues } from "@/schemas/profile-form-schema";
 import { baseApi } from "../api";
 
 const candidateApi = baseApi.injectEndpoints({
@@ -9,16 +8,44 @@ const candidateApi = baseApi.injectEndpoints({
       }),
       providesTags: ["company"],
     }),
+    getCompanyById: builder.query({
+      query: (companyId: string) => ({
+        url: `/companies/get-single/${companyId}`,
+      }),
+      providesTags: ["company"],
+    }),
     updateCompany: builder.mutation({
-      query: (data: TBasicCompanyDetailsValues) => ({
+      query: (data) => ({
         url: "/companies/update",
         method: "PUT",
         body: data,
       }),
       invalidatesTags: ["company"],
     }),
-    // getAllCompanies
+
+    toggleCompanyFollow: builder.mutation({
+      query: (companyId: string) => ({
+        url: `/followed-companies/follow`,
+        method: "POST",
+        body: {
+          companyId,
+        },
+      }),
+      invalidatesTags: ["followedCompany"],
+    }),
+    getAllMyFollowedCompany: builder.query({
+      query: () => ({
+        url: "/followed-companies/me/all",
+      }),
+      providesTags: ["followedCompany"],
+    }),
   }),
 });
 
-export const { useGetMyCompanyQuery, useUpdateCompanyMutation } = candidateApi;
+export const {
+  useGetMyCompanyQuery,
+  useUpdateCompanyMutation,
+  useGetCompanyByIdQuery,
+  useToggleCompanyFollowMutation,
+  useGetAllMyFollowedCompanyQuery,
+} = candidateApi;

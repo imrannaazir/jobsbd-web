@@ -97,5 +97,6 @@ export const baseApi = createApi({
     "resume",
     "language",
     "company",
+    "followedCompany",
   ],
 });

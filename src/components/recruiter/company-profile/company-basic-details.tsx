@@ -1,7 +1,8 @@
 "use client";
 import ProfileIconInfo from "@/components/candidate-dashboard/profile/profile-icon-info";
 import SectionTitle from "@/components/candidate-dashboard/section-title";
-import { useGetMyCompanyQuery } from "@/redux/api/company/company-api";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppSelector } from "@/redux/hooks";
 import { TCompany } from "@/type/company.types";
 import { getYear } from "date-fns";
 import { FaLink } from "react-icons/fa";
@@ -12,10 +13,13 @@ import { LuCalendarCheck } from "react-icons/lu";
 import { PiUsersFourFill } from "react-icons/pi";
 import BasicDetailsModal from "./basic-details-modal";
 
-const CompanyBasicDetails = () => {
-  const { data: companyData, isFetching } = useGetMyCompanyQuery("");
-  const company: TCompany = companyData?.data || {};
-
+const CompanyBasicDetails = ({
+  company,
+  isFetching,
+}: {
+  company: TCompany;
+  isFetching: boolean;
+}) => {
   const data = [
     {
       icon: <LuCalendarCheck />,
@@ -52,7 +56,8 @@ const CompanyBasicDetails = () => {
       data: company?.websiteLink || "Not Added",
     },
   ];
-  console.log({ data });
+
+  const user = useAppSelector(selectCurrentUser);
 
   return (
     <>
@@ -61,7 +66,13 @@ const CompanyBasicDetails = () => {
         <SectionTitle
           label="Company Information"
           component={
-            company?.companyName && <BasicDetailsModal company={company} />
+            isFetching ? (
+              <div />
+            ) : company.userId === user?.id ? (
+              <BasicDetailsModal company={company} />
+            ) : (
+              <div />
+            )
           }
         />
         {/* details info */}

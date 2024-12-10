@@ -48,7 +48,9 @@ const BasicDetailsModal = ({ company }: { company: TCompany }) => {
       companyName: company?.companyName || "blah blah",
       websiteLink: company?.websiteLink || "",
       businessType: company?.businessType || "",
-      foundedDate: company?.foundedDate || undefined,
+      foundedDate: company?.foundedDate
+        ? new Date(company?.foundedDate)
+        : undefined,
       numberOfEmployees: company?.numberOfEmployees || 0,
       numberOfOffices: company?.numberOfOffices || 0,
     },

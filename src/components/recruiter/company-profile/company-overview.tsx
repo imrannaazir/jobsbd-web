@@ -1,21 +1,43 @@
 "use client";
 import SectionTitle from "@/components/candidate-dashboard/section-title";
-import { useGetMyCompanyQuery } from "@/redux/api/company/company-api";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppSelector } from "@/redux/hooks";
 import { TCompany } from "@/type/company.types";
 import CompanyOverviewModal from "./company-overview-modal";
 
-const CompanyOverview = () => {
-  const { data: companyData, isFetching } = useGetMyCompanyQuery("");
-  const company: TCompany = companyData?.data || {};
+const CompanyOverview = ({
+  company,
+  isFetching,
+}: {
+  company: TCompany;
+  isFetching: boolean;
+}) => {
+  const user = useAppSelector(selectCurrentUser);
+  console.log({
+    userId: user?.id,
+    compUserId: company?.userId,
+  });
 
   return (
     <>
       <div id="details" className="section-design rounded-md">
         {/* headline */}
-        <SectionTitle
-          label="Company Overview"
-          component={<CompanyOverviewModal />}
-        />
+        {
+          <SectionTitle
+            label="Company Overview"
+            component={
+              isFetching ? (
+                <div />
+              ) : company.userId === user?.id ? (
+                <CompanyOverviewModal
+                  companyDetails={company?.companyDetails || ""}
+                />
+              ) : (
+                <div />
+              )
+            }
+          />
+        }
         {/* details info */}
         <div className="p-4">
           {isFetching ? (
