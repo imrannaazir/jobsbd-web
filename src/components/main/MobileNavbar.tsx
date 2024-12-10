@@ -1,7 +1,7 @@
 import { MenuManager } from "@/type";
 import Link from "next/link";
 import { BiX } from "react-icons/bi";
-import logo from "@/assets/main/logo-transparent.png";
+import logo from "@/assets/jobsbd-logo.png";
 import Image from "next/image";
 
 const MobileNavbar = ({ toggleMenu }: MenuManager) => {
@@ -15,7 +15,7 @@ const MobileNavbar = ({ toggleMenu }: MenuManager) => {
           <div className="flex items-center justify-between">
             {/* Logo Section */}
             <div className="inline-flex items-center space-x-2">
-              <Image src={logo} width={100} height={100} alt="logo" />
+              <Image src={logo} width={60} height={60} alt="logo" />
             </div>
             {/* Close Button */}
             <div className="-mr-2">

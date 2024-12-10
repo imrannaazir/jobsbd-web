@@ -1,7 +1,7 @@
 "use client";
 
 import { removeRefreshToken } from "@/action/auth-action";
-import logo from "@/assets/main/logo-transparent.png";
+import logo from "@/assets/jobsbd-logo.png";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -228,7 +228,7 @@ const Navbar = () => {
                 width={100}
                 height={100}
                 alt="logo"
-                className=""
+                className="size-16 lg:size-24"
               />
             </Link>
           </div>

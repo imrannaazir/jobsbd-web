@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src\assets\main\logo-transparent.png" alt="jobsBD" height="150dp">
+  <img src="src\assets\jobsbd-logo.png" alt="jobsBD" height="150dp">
 </p>
 
 <p align=center>
