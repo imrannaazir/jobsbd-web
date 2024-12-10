@@ -1,35 +1,44 @@
 import {
-  Heart,
+  
   MapPin,
   Clock,
   Briefcase,
   Calendar,
   DollarSign,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import JobInfoItem from "./job-info-item";
+import { removeUnderscore } from "@/utils/remove-underscore";
+import { formatDeadline } from "@/utils/format-deadline";
+import SectionCard from "./section-card";
+import ApplyJobModal from "../ui/apply-job-modal";
+import SavedJobButton from "../ui/saved-job-button";
 
-export default function JobDetailsCard() {
+export default async function JobDetailsCard({ jobId }: { jobId: string }) {
+  const res = await fetch(`${process.env.BASE_API}/job/get-single/${jobId}`);
+  const { data } = await res.json();
+  console.log(data, "from job details page");
   return (
     <Card className="flex-1">
       <CardContent className="p-6">
         {/* Job Header */}
         <div className="flex justify-between items-start mb-6">
           <div className="space-y-2">
-            <h1 className="text-2xl font-bold">সেলসম্যান-কিশোরগঞ্জ</h1>
+            <h1 className="text-2xl font-bold">{data?.title}</h1>
             <div className="inline-block bg-blue-50 text-sm px-3 py-1 rounded-full">
-              <span className="text-red-500">Application Deadline:</span>{" "}
-              December 12th 2024
+              <span className="text-red-500 mr-1">Application Deadline:</span>
+              {formatDeadline(data?.deadline)}
             </div>
           </div>
-          <div className="flex gap-2">
-            <Button className="bg-green-500 hover:bg-green-600">
-              Apply Now
-            </Button>
-            <Button variant="outline" size="icon">
-              <Heart className="w-4 h-4" />
-            </Button>
+          <div>
+            <p className="p-2 mb-5 bg-bgColour font-semibold rounded-l-full">
+              <span className="mr-1">Vacancy:</span>
+              {data?.vacancy}
+            </p>
+            <div className="flex gap-2">
+              <ApplyJobModal jobId={data?.id} status={null} />
+              <SavedJobButton id={data?.id} />
+            </div>
           </div>
         </div>
 
@@ -37,23 +46,29 @@ export default function JobDetailsCard() {
         <div className="bg-[#F8F8F8] grid grid-cols-1 md:grid-cols-5 gap-4 mb-8 p-4 border">
           <JobInfoItem
             icon={DollarSign}
-            title="Salary : Negotiable"
+            title={`Salary: ${
+              data?.negotiable ? "Negotiable" : data.minSalary - data?.maxSalary
+            }`}
             subtitle="Monthly Salary in Taka"
           />
-          <JobInfoItem icon={Clock} title="N/A" subtitle="Experience" />
+          <JobInfoItem
+            icon={Clock}
+            title={data?.experienceInMonths}
+            subtitle="Experience(In month)"
+          />
           <JobInfoItem
             icon={Briefcase}
-            title="Full time"
+            title={removeUnderscore(data?.jobType)}
             subtitle="Employment Type"
           />
-          <JobInfoItem icon={Calendar} title="N/A" subtitle="Age" />
+          <JobInfoItem icon={Calendar} title={data?.minAge} subtitle="Age" />
           <JobInfoItem icon={MapPin} title="N/A" subtitle="Location" />
         </div>
 
         <div className="space-y-6">
           {/* Job Description */}
           <section>
-            <h2 className="text-xl font-semibold text-primary mb-4">
+            <h2 className="text-3xl font-semibold text-primary mb-4">
               Job Description
             </h2>
             <h3 className="text-lg font-semibold mb-2">Company Overview</h3>
@@ -69,46 +84,28 @@ export default function JobDetailsCard() {
             </p>
           </section>
 
-          {/* Job Responsibilities */}
-          <section>
-            <h2 className="text-xl font-semibold text-primary mb-4">
-              Job Responsibilities
-            </h2>
-            <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-              <li>
-                টেকনো মোবাইলের সকল পণ্যের (স্মার্টফোন, এক্সেসরিজ, ফিচার,
-                স্পেসিফিকেশন) ব্যাপারে গভীর জ্ঞান থাকা।
-              </li>
-              <li>
-                সম্ভাব্য বিক্রয় ও সুবিধাভোগী গ্রাহকদের কাছে উপস্থাপন করা এবং
-                বুঝিয়ে বলা।
-              </li>
-              <li>নতুন পণ্য এবং অফারগুলো ডিস্ট্রিবিউটর মাধ্যমে আপলোড করা।</li>
-              <li>
-                গ্রাহকদের স্বতঃস্ফূর্তভাবে, তাদের প্রয়োজন বুঝে উপযুক্ত মোবাইল
-                ফোন বা এক্সেসরিজ পরামর্শ দেওয়া।
-              </li>
-              <li>
-                পণ্যের মূল্য, ওয়ারেন্টি এবং সার্ভিস সম্পর্কে বিস্তারিত তথ্য
-                দেওয়া।
-              </li>
-              <li>
-                গ্রাহকদের অভাব উত্তর দেওয়া এবং তাদের সন্তুষ্টি নিশ্চিত করা।
-              </li>
-              <li>
-                মার্কেট এবং ব্যক্তি বিক্রির লক্ষ্য বৃদ্ধি এবং অর্জিকাম করা।
-              </li>
-              <li>
-                বিক্রির সুযোগ সৃষ্টি করা, গ্রাহকদের সাথে সম্পর্ক মেইনটেইন করা
-                এবং ডিস্ট্রিবিউটরকে রিজিওন কাভার করা।
-              </li>
-            </ul>
-          </section>
+          {/* Job Description */}
+          <SectionCard
+            headline="Job Description"
+            description={data?.jobDescription}
+          />
+          {/* Job Requirements */}
+          <SectionCard
+            headline="Job Requirements"
+            description={data?.jobRequirements}
+          />
+          {/* Education Qualifications */}
+          <SectionCard
+            headline="Education Qualifications"
+            description={`${data?.degreeTitle} in ${data?.degreeName}`}
+          />
+          {/* Job Requirements */}
+          <SectionCard
+            headline="Company Benefits"
+            description={data?.compensationBenefits}
+          />
         </div>
-        
       </CardContent>
     </Card>
   );
 }
-
-

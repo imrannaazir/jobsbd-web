@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { jwtDecode } from "jwt-decode";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
@@ -14,29 +13,38 @@ const protectedRoutes = [...candidateRoutes, ...recruiterRoutes];
 
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
-  console.log(token, 'token from req');
   const { pathname } = req.nextUrl;
 
   const isProtectedRoute = protectedRoutes.some((route) =>
     pathname.startsWith(route)
   );
-  const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
-
-  if (!token && isProtectedRoute) {
-    return NextResponse.redirect(new URL("/login", req.url));
-  }
-
-  if (token && isAuthRoute) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-
-  if (token) {
+  const isAuthRoute = authRoutes.some((route) => pathname === route);
+  console.log(isAuthRoute, "auth");
+  if (!token) {
+    // User is not logged in
+    if (isProtectedRoute) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+  } else {
+    // User is logged in
     try {
-      const decodedData = jwtDecode(token) as any;
-      console.log(decodedData, 'decoded token from mid');
+      const decodedData = jwtDecode(token) as { role: string };
+
+      if (token && isAuthRoute) {
+        // Redirect logged-in users away from auth routes
+        return NextResponse.redirect(new URL("/", req.url));
+      }
+
       if (
         decodedData.role !== userRole.EMPLOYER &&
         pathname.startsWith("/recruiter")
+      ) {
+        return NextResponse.redirect(new URL("/", req.url));
+      }
+      // condition to protect dynamic candidate routes
+      if (
+        decodedData.role !== userRole.EMPLOYER &&
+        (pathname === "/candidate" || pathname.startsWith("/candidate/"))
       ) {
         return NextResponse.redirect(new URL("/", req.url));
       }
@@ -45,11 +53,11 @@ export async function middleware(req: NextRequest) {
         decodedData.role !== userRole.CANDIDATE &&
         pathname.startsWith("/candidate-")
       ) {
-        
         return NextResponse.redirect(new URL("/", req.url));
       }
     } catch (error) {
       console.error("Error decoding token", error);
+      // Invalid token, clear it and redirect to login
       const response = NextResponse.redirect(new URL("/login", req.url));
       response.cookies.delete("token");
       return response;

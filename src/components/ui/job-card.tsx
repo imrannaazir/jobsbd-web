@@ -1,5 +1,3 @@
-// "use client";
-import img from "@/assets/location.png";
 import {
   Card,
   CardContent,
@@ -21,6 +19,7 @@ import ApplyJobModal from "./apply-job-modal";
 import SavedJobButton from "./saved-job-button";
 import { removeUnderscore } from "@/utils/remove-underscore";
 import { formatDeadline } from "@/utils/format-deadline";
+import { BsBuildings } from "react-icons/bs";
 
 type TJobCardProps = {
   job: TJob;
@@ -56,7 +55,20 @@ const JobCard: FC<TJobCardProps> = ({ job, status }) => {
                 </span>
               </p>
             </div>
-            <Image src={img} alt="company image" width={60} height={60} />
+            <Link href={`/companies/${job?.companyId}`}>
+              {job?.company?.image ? (
+                <Image
+                  src={job?.company?.image}
+                  alt="company image"
+                  width={60}
+                  height={60}
+                />
+              ) : (
+                <div className="p-2 text-primary">
+                  <BsBuildings size={60} />
+                </div>
+              )}
+            </Link>
           </div>
           {/* benefits */}
           <div className="flex items-center gap-4">
@@ -86,7 +98,7 @@ const JobCard: FC<TJobCardProps> = ({ job, status }) => {
         </div>
         <div className="flex items-center gap-4">
           <Link
-            href="/"
+            href={`/jobs/${job?.id}`}
             className="text-primary font-semibold border border-primary hover:bg-primary hover:text-white text-sm transition-all duration-300 rounded px-2 py-1"
           >
             View Details

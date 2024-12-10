@@ -1,3 +1,4 @@
+import { TCompany } from "./company.types";
 import { TDepartment } from "./department.types";
 import { TIndustry } from "./industry.types";
 export type TEmploymentType = "FULL_TIME" | "PART_TIME" | "INTERNSHIP";
@@ -24,10 +25,7 @@ export type TJob = {
   title: string;
   updatedAt: string;
   vacancy: number;
-  company: {
-    companyName: string;
-    id: string;
-  };
+  company: TCompany;
   address: {
     district: string;
   };

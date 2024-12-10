@@ -21,6 +21,14 @@ const candidateApi = baseApi.injectEndpoints({
       providesTags: ["candidate"],
     }),
 
+    getSingleCandidateInfo: builder.query({
+      query: (candidateId: string) => {
+        return {
+          url: `/candidates/get-single/${candidateId}`,
+        };
+      },
+      providesTags: ["candidate"],
+    }),
     addEducation: builder.mutation({
       query: (data) => {
         return {
@@ -98,7 +106,7 @@ const candidateApi = baseApi.injectEndpoints({
     addExperience: builder.mutation({
       query: (data) => {
         return {
-          url: "experience/create-experience",
+          url: "experiences/create-experience",
           method: "POST",
           body: data,
         };
@@ -109,7 +117,7 @@ const candidateApi = baseApi.injectEndpoints({
     getAllExperience: builder.query({
       query: () => {
         return {
-          url: "experience/",
+          url: "/experiences/all/",
         };
       },
       providesTags: ["experience"],
@@ -244,6 +252,7 @@ const candidateApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useGetSingleCandidateInfoQuery,
   useUpdateCandidateInfoMutation,
   useGetCandidateInfoQuery,
   useAddEducationMutation,

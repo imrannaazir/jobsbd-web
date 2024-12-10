@@ -60,7 +60,7 @@ export const bangladeshDistricts = [
   { id: "sylhet", name: "Sylhet" },
   { id: "tangail", name: "Tangail" },
   { id: "thakurgaon", name: "Thakurgaon" },
-] as const;
+] ;
 
 export const EmploymentType = [
   { id: "FULL_TIME", name: "Full-Time" },

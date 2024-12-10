@@ -12,17 +12,9 @@ import Swal from "sweetalert2";
 import SectionTitle from "../section-title";
 import CertificateModal from "./certificate-modal";
 import CertificateUpdateModal from "./certificate-update-modal";
+import { TCertificate } from "@/type/certificate.types";
 
-type TCertificate = {
-  id: string;
-  certificateName: string;
-  certificateUrl: string;
-  description: string;
-  duration: string;
-  institution: string;
-  endDate: Date;
-  startDate: Date;
-};
+
 
 const CertificateSection = () => {
   const { data, isLoading } = useGetAllCertificatesQuery("");

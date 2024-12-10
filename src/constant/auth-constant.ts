@@ -9,7 +9,7 @@ export const recruiterRoutes = [
 
 export const authRoutes = [
   "/login",
-  "/register",
+  "/candidate-register",
   "/employee-login",
   "/employee-register",
 ];

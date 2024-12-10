@@ -1,24 +1,10 @@
-"use client"
+"use client";
+import { TExperience } from "@/type/experience.types";
 import SectionTitle from "../section-title";
 import WorkExperienceModel from "./work-experience-model";
 import { useGetAllExperienceQuery } from "@/redux/api/candidate/candidateApi";
 import { convertIntoDateString } from "@/utils/convert-into-date-string";
-
-
-type TExperience = {
-  id: string;
-  designation: string;
-  companyName: string;
-  startDate: Date;
-  endDate?: Date;
-  isWorking?: boolean;
-  district: string;
-  addressLine: string;
-  industryId: string;
-  jobResponsibilities: string;
-  departmentId: string;
-  employmentType: string;
-};
+import { removeUnderscore } from "@/utils/remove-underscore";
 
 const WorkExperienceSection = () => {
   const { data: experiences, isLoading } = useGetAllExperienceQuery("");
@@ -38,7 +24,7 @@ const WorkExperienceSection = () => {
               <div className="flex items-center gap-2 mb-2">
                 <p className="font-bold">{experience?.companyName} |</p>
                 <p className="text-sm text-primary px-2 py-1 bg-bgColour rounded-full">
-                  {experience?.employmentType}
+                  {removeUnderscore(experience?.employmentType)}
                 </p>
               </div>
               <div className="flex items-center gap-2">

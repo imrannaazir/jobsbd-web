@@ -9,10 +9,12 @@ import ProfileIconInfo from "./profile-icon-info";
 
 import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
 import { FiPhone } from "react-icons/fi";
+import { removeUnderscore } from "@/utils/remove-underscore";
 
 const BasicDetails = () => {
   const { data: candidateInfo, isLoading } = useGetCandidateInfoQuery("");
-
+  const type =
+    !isLoading && removeUnderscore(candidateInfo?.data?.employmentType);
   const data = [
     {
       icon: <MdOutlineWorkHistory />,
@@ -32,17 +34,17 @@ const BasicDetails = () => {
     {
       icon: <FaBriefcase />,
       label: "Employment Type",
-      data: candidateInfo?.data?.employmentType,
+      data: type,
     },
     {
       icon: <FiPhone />,
       label: "Contact Number",
-      data: candidateInfo?.data?.phoneNumber,
+      data: candidateInfo?.data?.user?.phoneNumber,
     },
     {
       icon: <MdOutlineEmail />,
       label: "Email Address",
-      data: candidateInfo?.data?.email,
+      data: candidateInfo?.data?.user?.email,
     },
     {
       icon: <SlLocationPin />,
@@ -57,7 +59,7 @@ const BasicDetails = () => {
         {/* headline */}
         <SectionTitle label="Basic Details" component={<ProfileEditModal />} />
         {/* details info */}
-        <div className="grid grid-cols-4 items-center justify- gap-5 p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center justify- gap-5 p-4">
           {data?.map((item, index) => (
             <ProfileIconInfo
               key={index}
