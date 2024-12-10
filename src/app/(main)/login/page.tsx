@@ -17,7 +17,6 @@ import { Label } from "@/components/ui/label";
 import ORDivider from "@/components/ui/ORDivider";
 import PhoneNumberInput from "@/components/ui/PhoneNumberInput";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import SocialLogin from "@/components/ui/SocialLogin";
 import { userRole } from "@/constant/constant-variable";
 import { useLoginMutation } from "@/redux/api/auth/authApi";
 import { setUser, TUser } from "@/redux/features/auth/authSlice";
@@ -25,10 +24,13 @@ import { useAppDispatch } from "@/redux/hooks";
 import { verifyToken } from "@/utils/verifyToken";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import { LuLoader, LuUserCircle } from "react-icons/lu";
 import Swal from "sweetalert2";
+import { signIn } from "next-auth/react";
+import { getUserSession } from "@/services/getUserSession";
+import GoogleSignUp from "@/components/login/GoogleSignUp";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
@@ -65,14 +67,13 @@ const LoginPage = () => {
             phoneNumber: response.data.data.phoneNumber,
           })
         );
-        saveTokenInCookies(response.data.data.accessToken);
+        await saveTokenInCookies(response.data.data.accessToken);
         Swal.fire({
           title: "Success",
           text: "You have been logged in successfully",
           icon: "success",
         });
         if (user?.role === userRole.CANDIDATE) {
-          
           router.push("/candidate-dashboard");
         } else if (user?.role === userRole.EMPLOYER) {
           router.push("/recruiter/dashboard");
@@ -201,11 +202,9 @@ const LoginPage = () => {
             )}
           </Button>
           <ORDivider />
-          <div className="lg:w-[400px] lg:mx-auto">
-            <SocialLogin />
-          </div>
         </form>
       </FormProvider>
+      <GoogleSignUp />
 
       <p className="font-semibold text-center mt-20 pb-10">
         Don't have an account yet?

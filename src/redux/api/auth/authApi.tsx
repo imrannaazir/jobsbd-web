@@ -14,7 +14,7 @@ const authApi = baseApi.injectEndpoints({
     googleAuth: builder.mutation({
       query: (data) => {
         return {
-          url: "/auth/google",
+          url: "/auth/social-login",
           method: "POST",
           body: data,
         };
@@ -41,5 +41,9 @@ const authApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useSignUpMutation, useLoginMutation, useGoogleAuthMutation,useChangePasswordMutation } =
-  authApi;
+export const {
+  useSignUpMutation,
+  useLoginMutation,
+  useGoogleAuthMutation,
+  useChangePasswordMutation,
+} = authApi;

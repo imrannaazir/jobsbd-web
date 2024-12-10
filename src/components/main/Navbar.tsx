@@ -23,6 +23,7 @@ import { Button } from "../ui/button";
 import Container from "./Container";
 import MobileNavbar from "./MobileNavbar";
 import { userRole } from "@/constant/constant-variable";
+import { signOut } from "next-auth/react";
 
 const Navbar = () => {
   const router = useRouter();
@@ -45,6 +46,7 @@ const Navbar = () => {
   const handleLogOut = async () => {
     dispatch(logout());
     await removeRefreshToken();
+    await signOut();
     router.push("/");
   };
 

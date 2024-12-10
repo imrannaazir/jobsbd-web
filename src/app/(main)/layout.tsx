@@ -19,9 +19,9 @@ export default function RootLayout({
       <body className="">
         <Navbar />
         <div className="mt-20 lg:mt-28">{children}</div>
-        <TopFooter/>
+        <TopFooter />
         <Footer />
-        <BackToTop/>
+        <BackToTop />
       </body>
     </html>
   );
