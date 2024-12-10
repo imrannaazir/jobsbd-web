@@ -5,7 +5,7 @@
 <p align=center>
   <a href="https://jobsbd.vercel.app/">Website Link</a> ·
   <a href="https://github.com/imrannaazir/jobsbd-web">Frontend repository</a> ·
-  <a href="https://github.com/imrannaazir/jobsbd-apir">Backend repository</a>
+  <a href="https://github.com/imrannaazir/jobsbd-api">Backend repository</a>
 </p>
 
 ---
@@ -157,11 +157,11 @@ Follow these steps to set up the project locally:
 
 ## 📸 Screenshots
 
-![Screenshot 1](src\assets\readme\jobsbd-1.png)
-![Screenshot 2](src\assets\readme\jobsbd-2.png)
-![Screenshot 3](src\assets\readme\jobsbd-3.png)
-![Screenshot 4](src\assets\readme\jobsbd-4.png)
-![Screenshot 5](src\assets\readme\jobsbd-5.png)
+![Screenshot 1](src/assets/readme/jobsbd-1.png)
+![Screenshot 2](src/assets/readme/jobsbd-2.png)
+![Screenshot 3](src/assets/readme/jobsbd-3.png)
+![Screenshot 4](src/assets/readme/jobsbd-4.png)
+![Screenshot 5](src/assets/readme/jobsbd-5.png)
 
 ---
 
