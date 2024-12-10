@@ -61,6 +61,20 @@ export const workExperienceFormSchema = z.object({
   jobResponsibilities: z.string().min(1, "Description is required"),
   isWorking: z.boolean().optional(),
 });
+export const updateWorkExperienceFormSchema = z.object({
+  id: z.string(),
+  designation: z.string().optional(),
+  employmentType: z.string().optional(),
+  departmentId: z.string().optional(),
+  industryId: z.string().optional(),
+  companyName: z.string().optional(),
+  startDate: z.date().optional(),
+  endDate: z.date().optional(),
+  district: z.string().optional(),
+  addressLine: z.string().optional(),
+  jobResponsibilities: z.string().optional(),
+  isWorking: z.boolean().optional(),
+});
 
 // project schema
 export const projectFormSchema = z.object({
@@ -145,6 +159,9 @@ export type FormValues = z.infer<typeof formSchema>;
 export type EducationFormValues = z.infer<typeof educationFormSchema>;
 // work experience type
 export type WorkExperienceFormValues = z.infer<typeof workExperienceFormSchema>;
+export type UpdateWorkExperienceFormValues = z.infer<
+  typeof updateWorkExperienceFormSchema
+>;
 
 // work experience type
 export type ProjectFormValues = z.infer<typeof projectFormSchema>;
