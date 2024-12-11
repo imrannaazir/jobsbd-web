@@ -72,7 +72,7 @@ const Navbar = () => {
         </li>
         <li>
           <Link
-            href="/employee-login"
+            href="/employee-register"
             className="nav-link text-[#424447] bg-[#93949572] hover:bg-[#DCEFFF]"
           >
             For Employers

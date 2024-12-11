@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { BsBuildingsFill } from "react-icons/bs";
 import { FaRegBuilding } from "react-icons/fa";
@@ -25,13 +24,16 @@ export default function HeroSection() {
           }}
         >
           {/* Search Form */}
-          <SearchJobByLocation/>
+          <SearchJobByLocation />
 
           <div className="flex items-center justify-center gap-2">
             <IoMegaphoneOutline size={40} className=" text-blue-500" />
             <p className="text-lg">
               2 Minute{" "}
-              <Link href="/registration" className="text-[#0179C0] underline">
+              <Link
+                href="/candidate-register"
+                className="text-[#0179C0] underline"
+              >
                 Registration
               </Link>
               , For a Lifetime of Opportunities!

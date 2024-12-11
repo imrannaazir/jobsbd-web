@@ -132,7 +132,7 @@ const EmployeeRegister = () => {
 
         <p className="font-semibold text-center mt-8 pb-10">
           Already have an account?
-          <Link href="/employee-login" className="text-primary ml-1">
+          <Link href="/login" className="text-primary ml-1">
             Login In
           </Link>
         </p>

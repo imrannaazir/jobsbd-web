@@ -43,8 +43,13 @@ const LoginPage = () => {
     password: string;
   }>();
 
-  const handleFillCredentials = (role: "Admin" | "Candidate") => {
-    const email = role === "Admin" ? "admin@jobsbd.com" : "candidate@gmail.com";
+  const handleFillCredentials = (role: "Admin" | "Candidate" | "Employer") => {
+    const email =
+      role === "Admin"
+        ? "admin@jobsbd.com"
+        : role === "Candidate"
+        ? "candidate@gmail.com"
+        : "employer@gmail.com";
     const password = "@Password123";
 
     methods.setValue("email", email);
@@ -140,6 +145,12 @@ const LoginPage = () => {
                 className="w-full bg-secondary text-white"
               >
                 Candidate
+              </Button>
+              <Button
+                onClick={() => handleFillCredentials("Employer")}
+                className="w-full bg-secondary text-white"
+              >
+                Employer
               </Button>
             </div>
           </DialogContent>
