@@ -86,11 +86,8 @@ export default function SearchByBenefit() {
       <Container>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl md:text-3xl font-semibold">
-            Search By Benefit <span className="text-[#DB1517]">(5,741)</span>
+            Benefits Of Companies
           </h2>
-          <button className="hidden lg:block px-5 py-2 text-base font-semibold rounded border text-primary border-primary hover:bg-[#DCEFFF]">
-            EXPLORE ALL
-          </button>
         </div>
 
         {/* Desktop View */}

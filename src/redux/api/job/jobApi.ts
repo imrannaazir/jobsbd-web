@@ -52,6 +52,18 @@ const jobApi = baseApi.injectEndpoints({
       }),
       providesTags: ["appliedJob"],
     }),
+    getJobsCount: builder.query({
+      query: () => ({
+        url: `/job/count`,
+      }),
+      providesTags: ["job"],
+    }),
+    getSingleJobDetails: builder.query({
+      query: (jobId: string) => ({
+        url: `/job/get-single/${jobId}`,
+      }),
+      providesTags: ["job"],
+    }),
     updateApplyStatus: builder.mutation({
       query: ({
         appliedJobId,
@@ -77,4 +89,6 @@ export const {
   useToggleInSavedJobMutation,
   useGetAllJobApplicantsOfJobQuery,
   useUpdateApplyStatusMutation,
+  useGetJobsCountQuery,
+  useGetSingleJobDetailsQuery,
 } = jobApi;

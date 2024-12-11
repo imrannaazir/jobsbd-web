@@ -1,22 +1,24 @@
-import {
-  MapPin,
-  Clock,
-  Briefcase,
-  Calendar,
-  DollarSign,
-} from "lucide-react";
+"use client";
 import { Card, CardContent } from "@/components/ui/card";
-import JobInfoItem from "./job-info-item";
-import { removeUnderscore } from "@/utils/remove-underscore";
+import { TJob } from "@/type/job.types";
 import { formatDeadline } from "@/utils/format-deadline";
-import SectionCard from "./section-card";
+import { Briefcase, Calendar, Clock, DollarSign, MapPin } from "lucide-react";
+import JobDetailsCardSkeleton from "../loading-files/job-details-skeletons";
 import ApplyJobModal from "../ui/apply-job-modal";
 import SavedJobButton from "../ui/saved-job-button";
+import JobInfoItem from "./job-info-item";
+import SectionCard from "./section-card";
 
-export default async function JobDetailsCard({ jobId }: { jobId: string }) {
-  const res = await fetch(`${process.env.BASE_API}/job/get-single/${jobId}`);
-  const { data } = await res.json();
-  console.log(data, "from job details page");
+export default function JobDetailsCard({
+  data,
+  isFetching,
+}: {
+  data: TJob;
+  isFetching: boolean;
+}) {
+  if (isFetching) {
+    return <JobDetailsCardSkeleton />;
+  }
   return (
     <Card className="flex-1">
       <CardContent className="p-6">
@@ -52,15 +54,19 @@ export default async function JobDetailsCard({ jobId }: { jobId: string }) {
           />
           <JobInfoItem
             icon={Clock}
-            title={data?.experienceInMonths}
+            title={`${data?.experienceInMonths || "Not Added"}`}
             subtitle="Experience(In month)"
           />
           <JobInfoItem
             icon={Briefcase}
-            title={removeUnderscore(data?.jobType)}
+            title={data?.jobType}
             subtitle="Employment Type"
           />
-          <JobInfoItem icon={Calendar} title={data?.minAge} subtitle="Age" />
+          <JobInfoItem
+            icon={Calendar}
+            title={`${data?.minAge || "Not Added"}`}
+            subtitle="Age"
+          />
           <JobInfoItem icon={MapPin} title="N/A" subtitle="Location" />
         </div>
 
@@ -72,14 +78,7 @@ export default async function JobDetailsCard({ jobId }: { jobId: string }) {
             </h2>
             <h3 className="text-lg font-semibold mb-2">Company Overview</h3>
             <p className="text-muted-foreground">
-              টেকনো মোবাইল বাংলাদেশ অত্র ট্রান্সশন টেকনোলজি একটি সম্মানক
-              প্রতিষ্ঠান, যা একটি চীনা মোবাইল ফোন প্রস্তুতকারী কোম্পানি। টেকনো
-              বিশ্বব্যাপী তার সামগ্রী মূল্যে উৎপাদনে মাইলফলক সরবরাহের জন্য, যা
-              ব্যাজেট-conscious গ্রাহকদের চাহিদা মেটাতে সক্ষম, একই সাথে
-              প্রযুক্তি হস্তান্তর জন্য প্রিমিয়াম মডেলও প্রদান করে। বাংলাদেশে
-              টেকনো মোবাইলের একটি শক্তিশালী উপস্থিতি রয়েছে, যেখানে এটি
-              প্রতিযোগিতামূলক মূল্যে আধুনিক প্রযুক্তি এবং ফীচারিং মোবাইল ডিভাইস
-              সরবরাহের লক্ষ্য নিয়ে অগ্রজ হয়েছে।
+              {data?.company?.companyDetails || "Not Added"}
             </p>
           </section>
 

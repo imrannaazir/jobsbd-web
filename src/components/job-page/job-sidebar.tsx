@@ -31,7 +31,6 @@ const JobSidebar = () => {
       minExperience: searchParams.get("minExperience") || "",
       minSalary: searchParams.get("minSalary") || "",
       maxSalary: searchParams.get("maxSalary") || "",
-      negotiable: String(false),
     },
   });
 
@@ -63,7 +62,6 @@ const JobSidebar = () => {
       minExperience: "",
       minSalary: "",
       maxSalary: "",
-      negotiable: String(false),
     });
   };
 
