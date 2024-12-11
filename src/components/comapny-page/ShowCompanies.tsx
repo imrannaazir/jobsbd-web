@@ -2,33 +2,40 @@
 import Image from "next/image";
 import { IoLocationOutline } from "react-icons/io5";
 import { LiaStopwatchSolid } from "react-icons/lia";
-
-const ShowCompanies = async ({ companies }: { companies: any }) => {
-  console.log("comapnies", companies);
-
+import { CompanyCardSkeletonGroup } from "../loading-files/company-card-skeleton";
+import { BsBuildings } from "react-icons/bs";
+import Link from "next/link";
+import companyCover from "@/assets/company/comapny-cover.jpeg";
+import { TCompany } from "@/type/company.types";
+const ShowCompanies = async ({
+  companies,
+  isFetching,
+}: {
+  companies: TCompany[];
+  isFetching: boolean;
+}) => {
   return (
     <div>
       <div className="border rounded shadow-lg mt-5 px-5 py-5 bg-white">
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
           <h2 className="text-lg md:text-xl font-extrabold w-full text-center md:text-left">
-            Showing companies{" "}
-            <span className="text-primary mr-1">({companies?.length})</span>
+            Showing companies
+            <span className="text-primary ml-1">({companies?.length})</span>
           </h2>
         </div>
       </div>
 
       <div>
-        {companies?.length ? (
+        {isFetching ? (
+          <CompanyCardSkeletonGroup />
+        ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-col-3 lg:grid-cols-4 gap-5 my-10">
-            {companies?.map((company: any) => (
-              <div key={company?.id} className="">
+            {companies?.map((company: TCompany) => (
+              <div key={company?.id}>
                 {/* Top Banner */}
                 <div>
                   <Image
-                    src={
-                      company?.image ||
-                      "https://atbjobs.s3.ap-southeast-1.amazonaws.com/employer/workspace/image-630x450%20(3)_1719398273_1731234907.png"
-                    }
+                    src={company?.image || companyCover}
                     alt="Company Banner"
                     width={100}
                     height={100}
@@ -39,13 +46,18 @@ const ShowCompanies = async ({ companies }: { companies: any }) => {
                   {/* Content */}
                   <div>
                     <div className="flex items-center  gap-3">
-                      <Image
-                        src="https://atbjobs.s3.ap-southeast-1.amazonaws.com/employer/profile_photo/blob_1731916855."
-                        alt="Company Logo"
-                        width={60}
-                        height={60}
-                        className="w-12 h-12 object-cover rounded-md"
-                      />
+                      {company?.image ? (
+                        <Image
+                          src={company?.image}
+                          alt="company image"
+                          width={60}
+                          height={60}
+                        />
+                      ) : (
+                        <div className="p-2 text-primary rounded-full bg-bgColour h-[60px]">
+                          <BsBuildings size={30} />
+                        </div>
+                      )}{" "}
                       <h3 className="text-base font-bold">
                         {company?.companyName}
                       </h3>
@@ -71,15 +83,19 @@ const ShowCompanies = async ({ companies }: { companies: any }) => {
                         <span> ({company?.postedJobsCount})</span>
                       </p>
                     </div>
-                    <button className="nav-link bg-[#155EAD] text-white hover:bg-primary py-2 cursor-pointer text-sm">
+                    <Link
+                      href={`/companies/${company?.id}`}
+                      className="nav-link bg-[#155EAD] text-white hover:bg-primary py-2 cursor-pointer text-sm"
+                    >
                       View Profile
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-        ) : (
+        )}
+        {!isFetching && !companies?.length && (
           <p className="text-red-500 text-center text-lg font-semibold mt-10">
             No Company found!!
           </p>

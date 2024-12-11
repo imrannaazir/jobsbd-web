@@ -1,37 +1,32 @@
-import JobSection from "@/components/job-page/job-section";
-import JobSidebar from "@/components/job-page/job-sidebar";
+"use client";
+import FilterCompanies from "@/components/comapny-page/FilterCompanies";
+import ShowCompanies from "@/components/comapny-page/ShowCompanies";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { TSearchParams } from "@/type";
+import { useGetAllCompaniesQuery } from "@/redux/api/company/companyApi";
+import { useSearchParams } from "next/navigation";
 
-const JobsPage = async ({
-  searchParams,
-}: {
-  searchParams: Promise<TSearchParams>;
-}) => {
-  const params = new URLSearchParams(await searchParams);
+const CompanyPage = () => {
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams).toString();
+  const { data: companiesData, isFetching } = useGetAllCompaniesQuery(params);
 
-  const res = await fetch(`${process.env.BASE_API}/job/get-all?${params}`, {
-    method: "GET",
-    cache: "no-store",
-  });
-  const jobsData = await res.json();
-  const jobs = jobsData?.data || [];
+  const companies = companiesData?.data || [];
 
   return (
     <section className="relative flex bg-gray-50 flex-col lg:flex-row">
       {/* Sidebar */}
       <div className="lg:sticky top-28 h-full md:h-[calc(100vh-7rem)] w-full lg:w-96 shadow-lg">
         <ScrollArea className="h-full">
-          <JobSidebar />
+          <FilterCompanies />
         </ScrollArea>
       </div>
 
       {/* Main Content */}
       <div className="flex-1 p-5 overflow-y-auto">
-        <JobSection jobs={jobs} />
+        <ShowCompanies companies={companies} isFetching={isFetching} />
       </div>
     </section>
   );
 };
 
-export default JobsPage;
+export default CompanyPage;

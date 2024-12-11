@@ -2,6 +2,13 @@ import { baseApi } from "../api";
 
 const companyApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getAllCompanies: builder.query({
+      query: (filterString: string) => ({
+        url: `/companies/all?${filterString}`,
+        method: "GET",
+      }),
+      providesTags: ["company"],
+    }),
     getCompanyJobs: builder.query({
       query: () => ({
         url: "/job/me/all",
@@ -19,5 +26,5 @@ const companyApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetCompanyJobsQuery, useDeleteCompanyJobMutation } =
+export const {useGetAllCompaniesQuery, useGetCompanyJobsQuery, useDeleteCompanyJobMutation } =
   companyApi;
