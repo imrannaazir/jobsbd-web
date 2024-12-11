@@ -97,6 +97,7 @@ export const baseApi = createApi({
     "notification",
     "language",
     "company",
+    "companyJobs",
     "followedCompany",
     "appliedJob",
     "job",

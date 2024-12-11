@@ -14,17 +14,20 @@ const companyApi = baseApi.injectEndpoints({
         url: "/job/me/all",
         method: "GET",
       }),
-      providesTags: ["company"],
+      providesTags: ["companyJobs"],
     }),
     deleteCompanyJob: builder.mutation({
       query: ({ jobId }) => ({
         url: `/job/${jobId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["company"],
+      invalidatesTags: ["companyJobs"],
     }),
   }),
 });
 
-export const {useGetAllCompaniesQuery, useGetCompanyJobsQuery, useDeleteCompanyJobMutation } =
-  companyApi;
+export const {
+  useGetAllCompaniesQuery,
+  useGetCompanyJobsQuery,
+  useDeleteCompanyJobMutation,
+} = companyApi;

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
@@ -15,7 +15,10 @@ interface SkillsProps {
   initialSkills?: Skill[];
 }
 
-const SkillsComponent: React.FC<SkillsProps> = ({ onSkillsChange, initialSkills = [{ skill: "", duration: 0 }] }) => {
+const SkillsComponent: React.FC<SkillsProps> = ({
+  onSkillsChange,
+  initialSkills = [{ skill: "", duration: 0 }],
+}) => {
   const [skills, setSkills] = useState<Skill[]>(initialSkills);
 
   useEffect(() => {
@@ -35,9 +38,7 @@ const SkillsComponent: React.FC<SkillsProps> = ({ onSkillsChange, initialSkills 
 
   const handleAddSection = () => {
     if (
-      skills.some(
-        (skill) => skill.skill.trim() === "" || skill.duration === 0
-      )
+      skills.some((skill) => skill.skill.trim() === "" || skill.duration === 0)
     ) {
       Swal.fire({
         title: "Error",

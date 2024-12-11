@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,15 +18,18 @@ import userIcon from "../../assets/candidate-dashboard/candidate-default.png";
 import Container from "../main/Container";
 import { Button } from "../ui/button";
 import { NotificationBell } from "../ui/notification-bell";
+import { logout } from "@/redux/features/auth/authSlice";
 // import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
 
 const RecruiterNavbar = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   // const userInfo = useAppSelector((state) => state.auth.user);
   const token = useAppSelector((state) => state.auth.token);
   // const { data, isLoading } = useGetCandidateInfoQuery("");
 
   const handleLogOut = async () => {
+    dispatch(logout());
     await removeRefreshToken();
     await signOut();
     router.push("/");

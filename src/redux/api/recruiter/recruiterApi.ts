@@ -8,7 +8,7 @@ const recruiterApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["recruiter"],
+      invalidatesTags: ["companyJobs"],
     }),
   }),
 });

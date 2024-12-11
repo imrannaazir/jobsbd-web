@@ -109,6 +109,13 @@ const BasicsJobDetails = () => {
       });
       return;
     }
+    console.log(skills);
+    const formattedSkills = skills?.map((item) => {
+      return {
+        skill: item.skill,
+        duration: Number(item.duration),
+      };
+    });
 
     try {
       const info = {
@@ -130,11 +137,12 @@ const BasicsJobDetails = () => {
         addressLine: data.addressLine,
         industryId: data.industryId,
         departmentId: data.departmentId,
-        skills: skills,
+        skills: formattedSkills,
       };
       console.log("On submit", info);
 
       const response = await createJobPost(info);
+
       console.log("On submit res", info);
       if (response) {
         Swal.fire({

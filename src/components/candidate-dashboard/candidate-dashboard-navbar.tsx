@@ -31,6 +31,7 @@ import { ImageUpload } from "./image-upload";
 import type { StaticImageData } from "next/image";
 import { uploadImage } from "@/action/file-upload-action";
 import Swal from "sweetalert2";
+import { signOut } from "next-auth/react";
 
 const CandidateDashboardNavbar: React.FC = () => {
   const { data } = useGetCandidateInfoQuery("");
@@ -89,6 +90,7 @@ const CandidateDashboardNavbar: React.FC = () => {
   const handleLogOut = async () => {
     dispatch(logout());
     await removeRefreshToken();
+    await signOut();
     router.push("/");
   };
 
@@ -137,7 +139,7 @@ const CandidateDashboardNavbar: React.FC = () => {
         </div>
         <Divider />
         <ul className="mt-2 md:mt-0 grid grid-cols-2 lg:grid-cols-1 gap-2 md:gap-0">
-          {navLinks.map((link, index) => (
+          {navLinks?.map((link, index) => (
             <li key={index} className="border lg:border-none p-2 lg:p-0">
               <Link
                 href={link.href}
@@ -152,7 +154,7 @@ const CandidateDashboardNavbar: React.FC = () => {
               </Link>
             </li>
           ))}
-          <li
+          {/* <li
             onClick={handleLogOut}
             className="flex items-center text-sm lg:text-base gap-3 py-2 px-3 font-semibold cursor-pointer"
           >
@@ -160,7 +162,7 @@ const CandidateDashboardNavbar: React.FC = () => {
               <CiLogout size={25} />
             </span>
             Logout
-          </li>
+          </li> */}
         </ul>
       </div>
     </>
