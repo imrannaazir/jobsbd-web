@@ -28,7 +28,7 @@ export const NotificationBell: React.FC = () => {
 
   const socket = useMemo(
     () =>
-      io("http://localhost:5000", {
+      io(process.env.NEXT_PUBLIC_BASE_API_SOCKET, {
         withCredentials: true,
       }),
     []

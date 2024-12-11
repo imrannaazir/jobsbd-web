@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
 import {
   Select,
   SelectContent,
@@ -9,10 +8,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import JobCard from "../ui/job-card";
 import { TJob } from "@/type/job.types";
+import { useEffect, useMemo, useState } from "react";
+import JobCard from "../ui/job-card";
+import JobCardSkeleton from "../ui/job-card-skeleton";
 
-const JobSection = ({ jobs: initialJobs }: { jobs: TJob[] }) => {
+const JobSection = ({
+  jobs: initialJobs,
+  isLoading,
+}: {
+  jobs: TJob[];
+  isLoading: boolean;
+}) => {
   const [sortOption, setSortOption] = useState<string>("latestJobs");
 
   useEffect(() => {
@@ -67,7 +74,13 @@ const JobSection = ({ jobs: initialJobs }: { jobs: TJob[] }) => {
       </div>
 
       <div>
-        {sortedJobs.length ? (
+        {isLoading ? (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
+            {Array.from({ length: 10 }).map((_item, index) => (
+              <JobCardSkeleton key={index} />
+            ))}
+          </div>
+        ) : sortedJobs.length ? (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
             {sortedJobs.map((job: TJob) => (
               <JobCard job={job} key={job.id} status={null} />

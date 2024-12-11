@@ -99,5 +99,6 @@ export const baseApi = createApi({
     "company",
     "followedCompany",
     "appliedJob",
+    "job",
   ],
 });

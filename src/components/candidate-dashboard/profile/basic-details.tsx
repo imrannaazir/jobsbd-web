@@ -9,47 +9,44 @@ import ProfileIconInfo from "./profile-icon-info";
 
 import { useGetCandidateInfoQuery } from "@/redux/api/candidate/candidateApi";
 import { FiPhone } from "react-icons/fi";
-import { removeUnderscore } from "@/utils/remove-underscore";
 
 const BasicDetails = () => {
   const { data: candidateInfo, isLoading } = useGetCandidateInfoQuery("");
-  const type =
-    !isLoading && removeUnderscore(candidateInfo?.data?.employmentType);
   const data = [
     {
       icon: <MdOutlineWorkHistory />,
       label: "Work Experience",
-      data: `${candidateInfo?.data?.totalExperience} years`,
+      data: `${candidateInfo?.data?.totalExperience} years` || "Not Added",
     },
     {
       icon: <TbMoneybag />,
       label: "Present Salary",
-      data: candidateInfo?.data?.currentSalary,
+      data: candidateInfo?.data?.currentSalary || "Not Added",
     },
     {
       icon: <TbMoneybag />,
       label: "Expected Salary",
-      data: candidateInfo?.data?.expectedSalary,
+      data: candidateInfo?.data?.expectedSalary || "Not Added",
     },
     {
       icon: <FaBriefcase />,
       label: "Employment Type",
-      data: type,
+      data: candidateInfo?.data?.employmentType || "Not Added",
     },
     {
       icon: <FiPhone />,
       label: "Contact Number",
-      data: candidateInfo?.data?.user?.phoneNumber,
+      data: candidateInfo?.data?.user?.phoneNumber || "Not Added",
     },
     {
       icon: <MdOutlineEmail />,
       label: "Email Address",
-      data: candidateInfo?.data?.user?.email,
+      data: candidateInfo?.data?.user?.email || "Not Added",
     },
     {
       icon: <SlLocationPin />,
       label: "Current Location",
-      data: candidateInfo?.data?.address?.district,
+      data: candidateInfo?.data?.address?.district || "Not Added",
     },
   ];
 

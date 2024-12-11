@@ -5,18 +5,12 @@ import { baseApi } from "../api";
 const jobApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllJobs: builder.query({
-      query: (filters) => {
-        const params = new URLSearchParams();
-        if (Object.keys(filters).length) {
-          Object.entries(filters).forEach(([key, value]) => {
-            // @ts-ignore
-            if (value) params.append(key, value);
-          });
-        }
+      query: (params: string) => {
         return {
-          url: `/job/get-all?${params.toString()}`,
+          url: `/job/get-all?${params}`,
         };
       },
+      providesTags: ["job"],
     }),
     applyJob: builder.mutation({
       query: (jobId) => {
@@ -26,6 +20,7 @@ const jobApi = baseApi.injectEndpoints({
           body: { jobId },
         };
       },
+      invalidatesTags: ["job", "appliedJob"],
     }),
     getAllAppliedJobs: builder.query({
       query: () => {

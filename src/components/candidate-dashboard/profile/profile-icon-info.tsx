@@ -1,4 +1,5 @@
-import React, { ReactNode } from "react";
+"use client";
+import { ReactNode } from "react";
 import ProfileIconInfoSkeleton from "./profile-cion-info-skeleton";
 
 const ProfileIconInfo = ({
@@ -12,14 +13,12 @@ const ProfileIconInfo = ({
   data?: string;
   isLoading: boolean;
 }) => {
-
-
   return (
     <>
-    {
-      isLoading ? (
+      {isLoading ? (
         <ProfileIconInfoSkeleton />
-        ) : (<div className="flex items-center gap-3">
+      ) : (
+        <div className="flex items-center gap-3">
           {/* icon */}
           <div className="bg-bgColour text-primary text-xl p-2 rounded-full">
             {icon}
@@ -30,8 +29,7 @@ const ProfileIconInfo = ({
             <p className="text-primary font-semibold">{data}</p>
           </div>
         </div>
-        )
-    }
+      )}
     </>
   );
 };
