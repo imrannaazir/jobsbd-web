@@ -113,38 +113,6 @@ const CompanyProfilePage = () => {
       </section>
 
       {/* Section Content */}
-      {/* <section className="relative z-20">
-        <section
-          id="company-information"
-          className="mt-4 rounded-md shadow-sm border-b-1 border-gray-900 shadow-gray-400"
-        >
-          <div>
-            <h1 className="text-center text-5xl font-bold px-20 py-20">
-              company-information
-            </h1>
-          </div>
-        </section>
-        <section
-          id="company-overview"
-          className="mt-4 rounded-md shadow-sm border-b-1 border-gray-900 shadow-gray-400"
-        >
-          <div>
-            <h1 className="text-center text-5xl font-bold px-20 py-20">
-              company-overview
-            </h1>
-          </div>
-        </section>
-        <section
-          id="organizational-structure"
-          className="mt-4 rounded-md shadow-sm border-b-1 border-gray-900 shadow-gray-400"
-        >
-          <div>
-            <h1 className="text-center text-5xl font-bold px-20 py-20">
-              organizational-structure
-            </h1>
-          </div>
-        </section>
-      </section> */}
     </section>
   );
 };
